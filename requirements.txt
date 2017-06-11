@@ -1,0 +1,7 @@
+Django==1.11
+bpython
+celery==4.0.2
+isort
+psycopg2==2.7.1
+selenium==2.53.6
+soundcloud
