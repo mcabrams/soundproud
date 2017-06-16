@@ -1,0 +1,13 @@
+{% extends "_base.html" %}
+
+{% block content %}
+  {% for track in tracks %}
+    <div class="soundcloud-track">
+      {{ track.title }} - {{ track.username }}
+      <audio controls>
+        <source src="{{ track.stream_url }}?client_id=***REMOVED***">
+      </audio>
+      <a href="">Hide</a>
+    </div>
+  {% endfor %}
+{% endblock content %}
