@@ -1,5 +1,8 @@
 version: '3'
 
+volumes:
+  nodemodules:
+
 services:
   db:
     image: postgres
@@ -31,3 +34,12 @@ services:
       - "8002:8000"
     tty: true
     stdin_open: true
+
+  assets:
+    build:
+      context: ./
+      dockerfile: Dockerfile.assets
+    volumes:
+      - .:/django
+      - nodemodules:/django/node_modules
+    command: echo 'ready'

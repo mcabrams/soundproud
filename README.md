@@ -13,6 +13,21 @@ Then run in the container
 ./manage.py migrate
 ```
 
+Then outside run
+`docker-compose exec assets bash`
+
+Then run in the container
+
+```
+npm run watch
+```
+
+
+```
+Then open localhost:8082/stream
+```
+
+
 ## Tests
 
 Unit/Integration:
