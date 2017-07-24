@@ -12,10 +12,6 @@ class Main extends React.Component {
       activeTrack: null,
       tracks: []
     }
-
-    this.setActiveTrack = this.setActiveTrack.bind(this)
-    this.playNextTrack = this.playNextTrack.bind(this)
-    this.playFirstTrack = this.playFirstTrack.bind(this)
   }
 
   componentDidMount() {
@@ -26,12 +22,24 @@ class Main extends React.Component {
     })
   }
 
-  playNextTrack() {
+  playNextTrack = () => {
     if (!this.state.activeTrack) {
       return this.playFirstTrack()
     }
 
     return this.setActiveTrack(this.nextTrack)
+  }
+
+  playFirstTrack = () => {
+    this.setActiveTrack(this.firstTrack)
+  }
+
+  setActiveTrack = (track) => {
+    this.setState(function() {
+      return {
+        activeTrack: track
+      }
+    })
   }
 
   get currentTrackIndex() {
@@ -46,18 +54,6 @@ class Main extends React.Component {
 
   get firstTrack() {
     return this.state.tracks[0]
-  }
-
-  playFirstTrack() {
-    this.setActiveTrack(this.state.tracks[0])
-  }
-
-  setActiveTrack(track) {
-    this.setState(function() {
-      return {
-        activeTrack: track
-      }
-    })
   }
 
   render() {
