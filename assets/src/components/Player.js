@@ -18,15 +18,17 @@ export default class Player extends React.Component {
 
     return (
       <div>
-          <p>Currently playing: {activeTrack.title}</p>
+        <p>Currently playing: {activeTrack.title}</p>
         <audio
             controls
             ref={audio => this.audio = audio}
             src={activeTrack.stream_url + '?client_id=' + CLIENT_ID}
+            onEnded={this.props.playNextTrack}
           >
         </audio>
         <button
-          onClick={this.props.playNextTrack}>
+          onClick={this.props.playNextTrack}
+        >
           Play Next Song
         </button>
       </div>
