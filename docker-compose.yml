@@ -42,4 +42,4 @@ services:
     volumes:
       - .:/django
       - nodemodules:/django/node_modules
-    command: echo 'ready'
+    command: npm run build
