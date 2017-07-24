@@ -72,6 +72,11 @@ class SoundcloudGatewayGetStreamTracksTests(TestCase):
         usernames = [c['origin']['user']['username'] for c in self.collection]
         self.assertEqual(set(t.username for t in tracks), set(usernames))
 
+    def test_get_stream_tracks_creates_gateway_id(self):
+        tracks = self.gateway.get_stream_tracks()
+        ids = [c['origin']['id'] for c in self.collection]
+        self.assertEqual(set(t.gateway_id for t in tracks), set(ids))
+
     def test_get_stream_tracks_excludes_playlists(self):
         track, playlist = (factories.soundcloud_track(),
                            factories.soundcloud_playlist())
