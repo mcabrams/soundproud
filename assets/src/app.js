@@ -1,11 +1,32 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import Stream from './components/Stream'
+import Player from './components/Player'
 
 class Main extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      activeTrack: null
+    }
+
+    this.setActiveTrack = this.setActiveTrack.bind(this)
+  }
+
+  setActiveTrack(track) {
+    this.setState(function() {
+      return {
+        activeTrack: track
+      }
+    })
+  }
+
   render() {
     return (
       <div>
-        <h1>Hello World!</h1>
+        <Stream setActiveTrack={this.setActiveTrack}/>
+        <Player activeTrack={this.state.activeTrack}/>
       </div>
     )
   }

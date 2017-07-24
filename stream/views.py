@@ -1,6 +1,4 @@
 from django.shortcuts import render
-
-from .gateways.soundcloud import SoundcloudGateway
 from track.models import Track
 from track.serializers import TrackSerializer
 from rest_framework import mixins
@@ -8,11 +6,7 @@ from rest_framework import generics
 
 
 def stream(request):
-    gateway = SoundcloudGateway()
-    tracks = gateway.get_stream_tracks()
-    return render(request, 'stream.html', {
-        'tracks': tracks,
-    })
+    return render(request, 'stream.html')
 
 
 class TrackList(mixins.ListModelMixin, generics.GenericAPIView):
