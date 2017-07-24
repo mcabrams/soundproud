@@ -1,5 +1,4 @@
 import React from 'react'
-import {getTracks} from '../utils/api'
 
 function Track(props) {
   const track = props.track
@@ -14,36 +13,18 @@ function Track(props) {
   )
 }
 
-export default class Stream extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      tracks: []
-    }
-  }
-
-  componentDidMount() {
-    getTracks().then(tracks => {
-      this.setState({
-        tracks: tracks
-      })
-    })
-  }
-
-  render() {
-    return (
-      <ul>
-        {this.state.tracks.map(track => {
-          return (
-            <Track
-              key={track.gateway_id}
-              track={track}
-              playTrack={this.props.setActiveTrack}
-            />
-          )
-        })}
-      </ul>
-    )
-  }
+export default function Stream(props) {
+  return (
+    <ul>
+      {props.tracks.map(track => {
+        return (
+          <Track
+            key={track.gateway_id}
+            track={track}
+            playTrack={props.setActiveTrack}
+          />
+        )
+      })}
+    </ul>
+  )
 }

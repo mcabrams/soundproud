@@ -25,6 +25,10 @@ export default class Player extends React.Component {
             src={activeTrack.stream_url + '?client_id=' + CLIENT_ID}
           >
         </audio>
+        <button
+          onClick={this.props.playNextTrack}>
+          Play Next Song
+        </button>
       </div>
     )
   }
