@@ -2,6 +2,7 @@ Django==1.11
 Faker==0.7.16
 bpython
 celery==4.0.2
+djangorestframework==3.6.3
 factory_boy==2.8.1
 isort
 psycopg2==2.7.1
