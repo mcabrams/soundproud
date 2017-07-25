@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Stream from './components/Stream'
 import Player from './components/Player'
-import {getTracks} from './utils/api'
+import * as api from './utils/api'
 
 class Main extends React.Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class Main extends React.Component {
   }
 
   componentDidMount() {
-    getTracks().then(tracks => {
+    api.getTracks().then(tracks => {
       this.setState({
         tracks: tracks
       })
@@ -42,6 +42,16 @@ class Main extends React.Component {
     })
   }
 
+  archiveTrack = (track) => {
+    api.archiveTrack(track).then(() => {
+      api.getTracks().then(tracks => {
+        this.setState({
+          tracks: tracks
+        })
+      })
+    })
+  }
+
   get currentTrackIndex() {
     return this.state.tracks.findIndex(track => {
       return track.gateway_id === this.state.activeTrack.gateway_id
@@ -63,6 +73,7 @@ class Main extends React.Component {
         <Stream
           tracks={this.state.tracks}
           setActiveTrack={this.setActiveTrack}
+          archiveTrack={this.archiveTrack}
         />
         <Player
           activeTrack={this.state.activeTrack}

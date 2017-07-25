@@ -4,8 +4,17 @@ function Track(props) {
   const track = props.track
 
   return (
-    <li className='track'>
-      <button onClick={props.playTrack.bind(null, track)}>Play</button>
+    <li className='track'
+      data-id={track.id}
+    >
+      <button
+        onClick={props.playTrack.bind(null, track)}
+        className='play-button'
+      >Play</button>
+      <button
+        onClick={props.archiveTrack.bind(null, track)}
+        className='archive-button'
+      >Archive</button>
       <span>
         {track.title} - {track.username}
       </span>
@@ -22,6 +31,7 @@ export default function Stream(props) {
             key={track.gateway_id}
             track={track}
             playTrack={props.setActiveTrack}
+            archiveTrack={props.archiveTrack}
           />
         )
       })}

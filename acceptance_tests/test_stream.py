@@ -27,8 +27,34 @@ class TriggerTestCase(FunctionalTestCase):
         self.assertNotEqual(second_audio_source, third_audio_source)
         self.assertTrue(page.audio.source_is_prefixed_properly)
 
+    def test_no_tracks_present(self):
+        self.skipTest('TODO')
+
     def test_plays_next_track_automatically(self):
         self.skipTest('TODO')
+
+    def test_archives_tracks(self):
+        self.driver.get(self.url('/stream/'))
+        page = StreamPage(self.driver)
+        track = page.tracks[0]
+
+        track.archive_button.click()
+        self.assertFalse(page.is_track_with_id_present(track.id))
+
+        self.driver.refresh()
+        self.assertFalse(page.is_track_with_id_present(track.id))
+
+    def test_archiving_track_plays_next_track(self):
+        self.skipTest('TODO')
+
+    def test_track_is_displayed_between_refreshes(self):
+        self.driver.get(self.url('/stream/'))
+        page = StreamPage(self.driver)
+        track = page.tracks[0]
+        self.assertTrue(page.is_track_with_id_present(track.id))
+
+        self.driver.refresh()
+        self.assertTrue(page.is_track_with_id_present(track.id))
 
 
 class Page:
@@ -37,6 +63,11 @@ class Page:
 
 
 class StreamPage(Page):
+    def is_track_with_id_present(self, track_id):
+        selector = '[data-id="{}"]'.format(track_id)
+        matches = self.driver.find_elements_by_css_selector(selector)
+        return (len(matches) == 1)
+
     @property
     def tracks(self):
         return [Track(t) for t
@@ -75,6 +106,15 @@ class Audio(Element):
 
 
 class Track(Element):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.id = self.element.get_attribute('data-id')
+
     @property
     def play_button(self):
-        return self.element.find_element_by_tag_name('button')
+        return self.element.find_element_by_class_name('play-button')
+
+    @property
+    def archive_button(self):
+        return self.element.find_element_by_class_name('archive-button')

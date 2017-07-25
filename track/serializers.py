@@ -5,4 +5,5 @@ from . import models
 class TrackSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Track
-        fields = ('gateway_id', 'title', 'stream_url', 'username')
+        fields = ('id', 'archived', 'gateway_id', 'title', 'stream_url',
+                  'username')
