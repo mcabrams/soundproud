@@ -23,5 +23,5 @@ function get(path) {
 }
 
 export function getTracks() {
-  return get('http://localhost:8002/tracks/')
+  return get('/tracks/')
 }

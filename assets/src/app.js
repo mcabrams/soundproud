@@ -59,6 +59,7 @@ class Main extends React.Component {
   render() {
     return (
       <div>
+        <h1>SoundProud</h1>
         <Stream
           tracks={this.state.tracks}
           setActiveTrack={this.setActiveTrack}

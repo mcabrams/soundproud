@@ -17,7 +17,7 @@ export default class Player extends React.Component {
     const streamUrl = activeTrack.stream_url + '?client_id=' + CLIENT_ID
 
     return (
-      <div>
+      <div className="player">
         <p>Currently playing: {activeTrack.title}</p>
         <audio
             controls

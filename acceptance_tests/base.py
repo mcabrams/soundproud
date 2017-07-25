@@ -1,13 +1,13 @@
 import time
 
 from django.core import urlresolvers
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.remote import webdriver
 
 
-class FunctionalTestCase(LiveServerTestCase):
+class FunctionalTestCase(StaticLiveServerTestCase):
     host = 'web'
 
     @classmethod

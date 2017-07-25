@@ -2,10 +2,79 @@ from base import FunctionalTestCase
 
 
 class TriggerTestCase(FunctionalTestCase):
-    def test_shows_latest_ten_tracks_in_stream(self):
+    fixtures = ('track',)
+
+    def test_playing_tracks(self):
         self.driver.get(self.url('/stream/'))
-        tracks = self.driver.find_elements_by_class_name('soundcloud-track')
-        self.assertGreater(len(tracks), 0)
-        tracks[0].find_element_by_link_text('Hide').click()
-        hidden_track_classes = tracks[0].get_attribute('class')
-        self.assertIn('hidden', hidden_track_classes)
+        page = StreamPage(self.driver)
+
+        self.assertGreater(len(page.tracks), 0)
+
+        first_track = page.tracks[0]
+        first_track.play_button.click()
+        first_audio_source = page.audio.source
+        self.assertTrue(page.audio.source_is_prefixed_properly)
+        # TODO: Test that song plays
+
+        next_track = page.tracks[1]
+        next_track.play_button.click()
+        second_audio_source = page.audio.source
+        self.assertNotEqual(first_audio_source, second_audio_source)
+        self.assertTrue(page.audio.source_is_prefixed_properly)
+
+        page.player.play_next_button.click()
+        third_audio_source = page.audio.source
+        self.assertNotEqual(second_audio_source, third_audio_source)
+        self.assertTrue(page.audio.source_is_prefixed_properly)
+
+    def test_plays_next_track_automatically(self):
+        self.skipTest('TODO')
+
+
+class Page:
+    def __init__(self, driver):
+        self.driver = driver
+
+
+class StreamPage(Page):
+    @property
+    def tracks(self):
+        return [Track(t) for t
+                in self.driver.find_elements_by_class_name('track')]
+
+    @property
+    def audio(self):
+        return Audio(self.driver.find_element_by_tag_name('audio'))
+
+    @property
+    def player(self):
+        return Player(self.driver.find_element_by_class_name('player'))
+
+
+class Element:
+    def __init__(self, element):
+        self.element = element
+
+
+class Player(Element):
+    @property
+    def play_next_button(self):
+        return self.element.find_element_by_tag_name('button')
+
+
+class Audio(Element):
+    URL_PREFIX = 'https://api.soundcloud.com/tracks'
+
+    @property
+    def source(self):
+        return self.element.get_attribute('src')
+
+    @property
+    def source_is_prefixed_properly(self):
+        return self.source.startswith(self.URL_PREFIX)
+
+
+class Track(Element):
+    @property
+    def play_button(self):
+        return self.element.find_element_by_tag_name('button')

@@ -4,7 +4,7 @@ function Track(props) {
   const track = props.track
 
   return (
-    <li>
+    <li className='track'>
       <button onClick={props.playTrack.bind(null, track)}>Play</button>
       <span>
         {track.title} - {track.username}
