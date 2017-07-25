@@ -5,7 +5,7 @@ services:
     links:
       - "selenium"
   selenium:
-    image: selenium/standalone-chrome:2.53.0
+    image: selenium/standalone-chrome:3.4.0
     ports:
       - 4444
     environment:
