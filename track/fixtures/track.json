@@ -3,150 +3,117 @@
   "model": "track.track",
   "pk": 1,
   "fields": {
-    "gateway_id": 328360787,
-    "title": "Tigers - Alien Sauce (Riddim Network Exclusive)",
-    "stream_url": "https://api.soundcloud.com/tracks/328360787/stream",
-    "username": "Riddim Network"
+    "created_at": "2017-07-26T06:00:34.554Z",
+    "updated_at": "2017-07-26T06:00:34.554Z",
+    "gateway_id": 334174032,
+    "title": "Gramatik & Galactic Marvl - Voyager Twins",
+    "stream_url": "https://api.soundcloud.com/tracks/334174032/stream",
+    "username": "Gramatik",
+    "archived": false
   }
 },
 {
   "model": "track.track",
   "pk": 2,
   "fields": {
-    "gateway_id": 333222528,
-    "title": "Mr. Carmack - Evil Ways (Carlos Santana x A$AP Ferg)",
-    "stream_url": "https://api.soundcloud.com/tracks/333222528/stream",
-    "username": "\u2728\u2728\u2728\u2728\u2728"
+    "created_at": "2017-07-26T06:00:35.554Z",
+    "updated_at": "2017-07-26T06:00:35.554Z",
+    "gateway_id": 334206063,
+    "title": "Molly Kate Kestner - It's You (Spirix Remix)",
+    "stream_url": "https://api.soundcloud.com/tracks/334206063/stream",
+    "username": "Spirix",
+    "archived": false
   }
 },
 {
   "model": "track.track",
   "pk": 3,
   "fields": {
-    "gateway_id": 334350533,
-    "title": "in my feelings w/ little pain (prod. savior)",
-    "stream_url": "https://api.soundcloud.com/tracks/334350533/stream",
-    "username": "smrtdeath"
+    "created_at": "2017-07-26T06:00:36.554Z",
+    "updated_at": "2017-07-26T06:00:36.554Z",
+    "gateway_id": 334813397,
+    "title": "Burning Down [FREE DOWNLOAD]",
+    "stream_url": "https://api.soundcloud.com/tracks/334813397/stream",
+    "username": "Silent Riot",
+    "archived": false
   }
 },
 {
   "model": "track.track",
   "pk": 4,
   "fields": {
-    "gateway_id": 333195513,
-    "title": "Chris Lake - I Want You (QUIX Remix)",
-    "stream_url": "https://api.soundcloud.com/tracks/333195513/stream",
-    "username": "QUIX"
+    "created_at": "2017-07-26T06:00:37.554Z",
+    "updated_at": "2017-07-26T06:00:37.554Z",
+    "gateway_id": 331696403,
+    "title": "Robotaki & Manila Killa - I Want You (feat. Matthew John Kurz)",
+    "stream_url": "https://api.soundcloud.com/tracks/331696403/stream",
+    "username": "Moving Castle",
+    "archived": false
   }
 },
 {
   "model": "track.track",
   "pk": 5,
   "fields": {
-    "gateway_id": 333586763,
-    "title": "Lukas Graham - You're Not There (Autograf Remix)",
-    "stream_url": "https://api.soundcloud.com/tracks/333586763/stream",
-    "username": "Autograf"
+    "created_at": "2017-07-26T06:00:38.554Z",
+    "updated_at": "2017-07-26T06:00:38.554Z",
+    "gateway_id": 334595722,
+    "title": "Feather (piano)",
+    "stream_url": "https://api.soundcloud.com/tracks/334595722/stream",
+    "username": "Emmit Fenn",
+    "archived": false
   }
 },
 {
   "model": "track.track",
   "pk": 6,
   "fields": {
-    "gateway_id": 332045431,
-    "title": "Until The Dawn - Supernatural - OUT 7/25/17",
-    "stream_url": "https://api.soundcloud.com/tracks/332045431/stream",
-    "username": "Patrol The Skies"
+    "created_at": "2017-07-26T06:00:39.554Z",
+    "updated_at": "2017-07-26T06:00:39.554Z",
+    "gateway_id": 334809581,
+    "title": "This Is Night Bass Vol 5 (Preview)",
+    "stream_url": "https://api.soundcloud.com/tracks/334809581/stream",
+    "username": "Night Bass",
+    "archived": false
   }
 },
 {
   "model": "track.track",
   "pk": 7,
   "fields": {
-    "gateway_id": 325227296,
-    "title": "discipline",
-    "stream_url": "https://api.soundcloud.com/tracks/325227296/stream",
-    "username": "motti"
+    "created_at": "2017-07-26T06:00:40.554Z",
+    "updated_at": "2017-07-26T06:00:40.554Z",
+    "gateway_id": 330548514,
+    "title": "The Fitness & Pony Boiler Room Montr\u00e9al Live Set",
+    "stream_url": "https://api.soundcloud.com/tracks/330548514/stream",
+    "username": "BOILER ROOM",
+    "archived": false
   }
 },
 {
   "model": "track.track",
   "pk": 8,
   "fields": {
-    "gateway_id": 334579558,
-    "title": "Darko & Ken - Lost Room (Natural Mix) FREE DOWNLOAD",
-    "stream_url": "https://api.soundcloud.com/tracks/334579558/stream",
-    "username": "DARKO."
+    "created_at": "2017-07-26T06:00:41.554Z",
+    "updated_at": "2017-07-26T06:00:41.554Z",
+    "gateway_id": 330333606,
+    "title": "Takahiro Yoshihira & Francesco Sparacello - Get Dwn (Radio Edit)(OUT NOW)",
+    "stream_url": "https://api.soundcloud.com/tracks/330333606/stream",
+    "username": "Sick Bedroom Records",
+    "archived": false
   }
 },
 {
   "model": "track.track",
   "pk": 9,
   "fields": {
-    "gateway_id": 327343763,
-    "title": "Waves",
-    "stream_url": "https://api.soundcloud.com/tracks/327343763/stream",
-    "username": "Will See"
-  }
-},
-{
-  "model": "track.track",
-  "pk": 10,
-  "fields": {
-    "gateway_id": 334595286,
-    "title": "Tropix Summer Mix 2017",
-    "stream_url": "https://api.soundcloud.com/tracks/334595286/stream",
-    "username": "Tropix VIP"
-  }
-},
-{
-  "model": "track.track",
-  "pk": 11,
-  "fields": {
-    "gateway_id": 334588638,
-    "title": "Mike Serr - Talkin'",
-    "stream_url": "https://api.soundcloud.com/tracks/334588638/stream",
-    "username": "MAXD OUT RECORDS"
-  }
-},
-{
-  "model": "track.track",
-  "pk": 12,
-  "fields": {
-    "gateway_id": 334452579,
-    "title": "Pajane - Fire [Panther's Groove EXCLUSIVE]",
-    "stream_url": "https://api.soundcloud.com/tracks/334452579/stream",
-    "username": "Panthers Groove"
-  }
-},
-{
-  "model": "track.track",
-  "pk": 13,
-  "fields": {
-    "gateway_id": 322750360,
-    "title": "Illusions (Original Mix)",
-    "stream_url": "https://api.soundcloud.com/tracks/322750360/stream",
-    "username": "BLOODTONE"
-  }
-},
-{
-  "model": "track.track",
-  "pk": 14,
-  "fields": {
-    "gateway_id": 333559733,
-    "title": "High 'n' Rich - Sensei (Radio Edit)",
-    "stream_url": "https://api.soundcloud.com/tracks/333559733/stream",
-    "username": "ILLICIT"
-  }
-},
-{
-  "model": "track.track",
-  "pk": 15,
-  "fields": {
-    "gateway_id": 334595275,
-    "title": "TwoWorldsApart & Marvin Vogel - Wild (Debris & Clarx Remix)",
-    "stream_url": "https://api.soundcloud.com/tracks/334595275/stream",
-    "username": "ILLICIT"
+    "created_at": "2017-07-26T06:00:42.554Z",
+    "updated_at": "2017-07-26T06:00:42.554Z",
+    "gateway_id": 333313856,
+    "title": "Heads\u00b2 - Up N Down",
+    "stream_url": "https://api.soundcloud.com/tracks/333313856/stream",
+    "username": "Classy Records",
+    "archived": false
   }
 }
 ]

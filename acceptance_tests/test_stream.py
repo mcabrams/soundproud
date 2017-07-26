@@ -1,4 +1,5 @@
 from base import FunctionalTestCase
+import time
 
 
 class TriggerTestCase(FunctionalTestCase):
@@ -33,12 +34,17 @@ class TriggerTestCase(FunctionalTestCase):
     def test_plays_next_track_automatically(self):
         self.skipTest('TODO')
 
+    def test_tracks_sorted_by_date_created_descending(self):
+        self.skipTest('TODO')
+
     def test_archives_tracks(self):
         self.driver.get(self.url('/stream/'))
         page = StreamPage(self.driver)
         track = page.tracks[0]
 
         track.archive_button.click()
+        # TODO: Better fix here for implicit wait
+        time.sleep(1)
         self.assertFalse(page.is_track_with_id_present(track.id))
 
         self.driver.refresh()

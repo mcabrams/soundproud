@@ -7,5 +7,12 @@ export function archiveTrack(track) {
 }
 
 export function getTracks() {
-  return axios.get('/tracks/').then(tracks => tracks.data.filter(track => !track.archived))
+  return axios.get('/tracks/')
+    .then(tracks => tracks.data.filter(track => !track.archived))
+    .then(tracks => tracks.map(track => {
+      track['created_at'] = Date.parse(track['created_at'])
+      track['updated_at'] = Date.parse(track['updated_at'])
+      return track
+    }))
+    .then(tracks => tracks.sort((a, b) => b.created_at - a.created_at))
 }
