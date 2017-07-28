@@ -27,11 +27,14 @@ export default class Player extends React.Component {
         <p className="player__track-info">
           Currently playing: {activeTrack.title}
         </p>
-        <button
-          onClick={this.props.playPreviousTrack}
-        >
-          Play Previous Song
-        </button>
+        <div className="player__button">
+          <button
+            className="button"
+            onClick={this.props.playPreviousTrack}
+          >
+            Play Previous Song
+          </button>
+        </div>
         <audio
             ref={audio => this.audio = audio}
             src={activeTrack.stream_url + '?client_id=' + CLIENT_ID}
@@ -39,17 +42,22 @@ export default class Player extends React.Component {
           >
         </audio>
 
-        <PausePlayButton
-          showPauseButton={!this.props.isPaused}
-          play={this.props.play}
-          pause={this.props.pause}
-        />
+        <div className="player__button">
+          <PausePlayButton
+            showPauseButton={!this.props.isPaused}
+            play={this.props.play}
+            pause={this.props.pause}
+          />
+        </div>
 
-        <button
-          onClick={this.props.playNextTrack}
-        >
-          Play Next Song
-        </button>
+        <div className="player__button">
+          <button
+            className="button"
+            onClick={this.props.playNextTrack}
+          >
+            Play Next Song
+          </button>
+        </div>
       </div>
     )
   }

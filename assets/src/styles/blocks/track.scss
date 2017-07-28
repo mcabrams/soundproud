@@ -12,6 +12,7 @@ $track-active-background-color: $blue-color;
 }
 
 .track__button {
+  display: inline-block;
   margin-right: $sm-spacing;
 }
 

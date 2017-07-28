@@ -8,16 +8,20 @@ function Track(props) {
     <li className={'track ' + (props.isActive && 'track--active')}
       data-id={track.id}
     >
-      <PausePlayButton
-        showPauseButton={props.showPauseButton}
-        play={props.playTrack.bind(null, track)}
-        pause={props.pause}
-      />
+      <div className='track__button'>
+        <PausePlayButton
+          showPauseButton={props.showPauseButton}
+          play={props.playTrack.bind(null, track)}
+          pause={props.pause}
+        />
+      </div>
 
-      <button
-        onClick={props.archiveTrack.bind(null, track)}
-        className='track__button track__button--archive'
-      >Archive</button>
+      <div className='track__button'>
+        <button
+          onClick={props.archiveTrack.bind(null, track)}
+          className='track__button track__button--archive'
+        >Archive</button>
+      </div>
       <span className='track__name'>
         {track.title} - {track.username}
       </span>
