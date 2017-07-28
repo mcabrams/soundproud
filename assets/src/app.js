@@ -42,6 +42,14 @@ class Main extends React.Component {
     })
   }
 
+  playPreviousTrack = () => {
+    if (!this.state.activeTrack) {
+      return this.playFirstTrack()
+    }
+
+    return this.setActiveTrack(this.previousTrack)
+  }
+
   playNextTrack = () => {
     if (!this.state.activeTrack) {
       return this.playFirstTrack()
@@ -83,8 +91,16 @@ class Main extends React.Component {
     return this.state.tracks[this.currentTrackIndex + 1] || this.firstTrack
   }
 
+  get previousTrack() {
+    return this.state.tracks[this.currentTrackIndex - 1] || this.lastTrack
+  }
+
   get firstTrack() {
     return this.state.tracks[0]
+  }
+
+  get lastTrack() {
+    return this.state.tracks.slice(-1)[0]
   }
 
   render() {
@@ -101,6 +117,7 @@ class Main extends React.Component {
           <Player
             activeTrack={this.state.activeTrack}
             isPaused={this.state.isPaused}
+            playPreviousTrack={this.playPreviousTrack}
             playNextTrack={this.playNextTrack}
             pauseTrack={this.pauseTrack}
           />

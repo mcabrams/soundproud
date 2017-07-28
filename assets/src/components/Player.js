@@ -26,6 +26,11 @@ export default class Player extends React.Component {
         <p className="player__track-info">
           Currently playing: {activeTrack.title}
         </p>
+        <button
+          onClick={this.props.playPreviousTrack}
+        >
+          Play Previous Song
+        </button>
         <audio
             ref={audio => this.audio = audio}
             src={activeTrack.stream_url + '?client_id=' + CLIENT_ID}
