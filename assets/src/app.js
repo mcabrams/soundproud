@@ -8,7 +8,9 @@ import style from './styles/main.scss'
 function Header(props) {
   return (
     <div className='header'>
-      <h1>Soundproud</h1>
+      <h1 className='header__heading'>
+        Soundproud
+      </h1>
     </div>
   )
 }

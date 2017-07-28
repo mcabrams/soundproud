@@ -9,13 +9,13 @@ function Track(props) {
     >
       <button
         onClick={props.playTrack.bind(null, track)}
-        className='play-button'
+        className='track__button track__button--play'
       >Play</button>
       <button
         onClick={props.archiveTrack.bind(null, track)}
-        className='archive-button'
+        className='track__button track__button--archive'
       >Archive</button>
-      <span>
+      <span className='track__name'>
         {track.title} - {track.username}
       </span>
     </li>
@@ -27,9 +27,11 @@ export default function Stream(props) {
     <ul className='stream'>
       {props.tracks.map(track => {
         return (
-          <div className='stream__track'>
+          <div
+            className='stream__track'
+            key={track.gateway_id}
+          >
             <Track
-              key={track.gateway_id}
               track={track}
               playTrack={props.setActiveTrack}
               archiveTrack={props.archiveTrack}

@@ -1,4 +1,5 @@
 body {
+  margin: 0;
   font-family: 'Lato', sans-serif;
 }
 
@@ -24,9 +25,9 @@ body {
     "#{repeat-area-name('footer', 12)}"
 }
 
-.header {
-  grid-area: header;
-}
+@import "variables/colors";
+@import "variables/spacings";
 
+@import "blocks/header";
 @import "blocks/stream";
 @import "blocks/track";

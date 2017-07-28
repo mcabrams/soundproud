@@ -1,0 +1,9 @@
+.header {
+  grid-area: header;
+  background-color: $red-color;
+
+  .header__heading {
+    color: $light-color;
+    margin: $md-spacing;
+  }
+}

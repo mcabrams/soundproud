@@ -1,10 +1,22 @@
+$track-active-background-color: $blue-color;
+
 .track {
-  padding: .5rem;
-  background: #efe9f1;
-  border-radius: 2px;
+  padding: $sm-spacing;
+  border: 2px solid $light-color;
+  border-radius: 4px;
 }
 
 .track--active {
-  background-color: #5cacca;
+  background-color: $track-active-background-color;
+  border: 2px solid $track-active-background-color;
 }
 
+.track__button {
+  margin-right: $sm-spacing;
+}
+
+.track__name {
+  .track--active & {
+    color: $light-color;
+  }
+}
