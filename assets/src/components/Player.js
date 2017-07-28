@@ -1,4 +1,5 @@
 import React from 'react'
+import PausePlayButton from './PausePlayButton'
 
 export default class Player extends React.Component {
   componentDidUpdate() {
@@ -37,11 +38,13 @@ export default class Player extends React.Component {
             onEnded={this.props.playNextTrack}
           >
         </audio>
-        <button
-          onClick={this.props.pauseTrack}
-        >
-          Pause Song
-        </button>
+
+        <PausePlayButton
+          showPauseButton={!this.props.isPaused}
+          play={this.props.play}
+          pause={this.props.pause}
+        />
+
         <button
           onClick={this.props.playNextTrack}
         >

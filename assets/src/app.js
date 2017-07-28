@@ -34,12 +34,20 @@ class Main extends React.Component {
     })
   }
 
-  pauseTrack = () => {
+  setIsPaused = (isPaused) => {
     return this.setState(() => {
       return {
-        isPaused: true
+        isPaused: isPaused
       }
     })
+  }
+
+  pause = () => {
+    this.setIsPaused(true)
+  }
+
+  play = () => {
+    this.setIsPaused(false)
   }
 
   playPreviousTrack = () => {
@@ -65,10 +73,11 @@ class Main extends React.Component {
   setActiveTrack = (track) => {
     this.setState(function() {
       return {
-        isPaused: false,
         activeTrack: track
       }
     })
+
+    this.play()
   }
 
   archiveTrack = (track) => {
@@ -108,18 +117,21 @@ class Main extends React.Component {
       <div className='grid'>
         <Header />
         <Stream
-          tracks={this.state.tracks}
-          setActiveTrack={this.setActiveTrack}
-          archiveTrack={this.archiveTrack}
           activeTrack={this.state.activeTrack}
+          archiveTrack={this.archiveTrack}
+          isPaused={this.state.isPaused}
+          pause={this.pause}
+          setActiveTrack={this.setActiveTrack}
+          tracks={this.state.tracks}
         />
         <div className='grid__player'>
           <Player
             activeTrack={this.state.activeTrack}
             isPaused={this.state.isPaused}
-            playPreviousTrack={this.playPreviousTrack}
+            pause={this.pause}
+            play={this.play}
             playNextTrack={this.playNextTrack}
-            pauseTrack={this.pauseTrack}
+            playPreviousTrack={this.playPreviousTrack}
           />
         </div>
       </div>
