@@ -3,6 +3,15 @@ import ReactDOM from 'react-dom'
 import Stream from './components/Stream'
 import Player from './components/Player'
 import * as api from './utils/api'
+import style from './styles/main.scss'
+
+function Header(props) {
+  return (
+    <div className='header'>
+      <h1>Soundproud</h1>
+    </div>
+  )
+}
 
 class Main extends React.Component {
   constructor(props) {
@@ -68,12 +77,13 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>SoundProud</h1>
+      <div className='grid'>
+        <Header />
         <Stream
           tracks={this.state.tracks}
           setActiveTrack={this.setActiveTrack}
           archiveTrack={this.archiveTrack}
+          activeTrack={this.state.activeTrack}
         />
         <Player
           activeTrack={this.state.activeTrack}

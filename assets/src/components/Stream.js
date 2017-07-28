@@ -4,7 +4,7 @@ function Track(props) {
   const track = props.track
 
   return (
-    <li className='track'
+    <li className={'track ' + (props.isActive && 'track--active')}
       data-id={track.id}
     >
       <button
@@ -24,15 +24,19 @@ function Track(props) {
 
 export default function Stream(props) {
   return (
-    <ul>
+    <ul className='stream'>
       {props.tracks.map(track => {
         return (
-          <Track
-            key={track.gateway_id}
-            track={track}
-            playTrack={props.setActiveTrack}
-            archiveTrack={props.archiveTrack}
-          />
+          <div className='stream__track'>
+            <Track
+              key={track.gateway_id}
+              track={track}
+              playTrack={props.setActiveTrack}
+              archiveTrack={props.archiveTrack}
+              isActive={props.activeTrack &&
+                        track.id === props.activeTrack.id}
+            />
+          </div>
         )
       })}
     </ul>

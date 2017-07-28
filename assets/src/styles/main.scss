@@ -1,0 +1,32 @@
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+@function repeat-area-name($string, $n) {
+  $fullstring:"";
+  @for $i from 1 through $n {
+    $fullstring: $fullstring + $string;
+    @if $i != $n {
+      $fullstring: $fullstring + ' ';
+    }
+  }
+  @return $fullstring;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 1%;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "#{repeat-area-name('header', 12)}"
+    ". #{repeat-area-name('main', 10)} ."
+    "#{repeat-area-name('footer', 12)}"
+}
+
+.header {
+  grid-area: header;
+}
+
+@import "blocks/stream";
+@import "blocks/track";
