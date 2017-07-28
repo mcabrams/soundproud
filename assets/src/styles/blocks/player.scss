@@ -1,0 +1,11 @@
+.player {
+  display: flex;
+  justify-content: center;
+  background-color: $white-color;
+  padding: $md-spacing;
+  border-top: 2px solid #c5c5c3;
+}
+
+.player__track-info {
+  display: inline;
+}

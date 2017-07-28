@@ -20,6 +20,7 @@ class Main extends React.Component {
     super(props)
 
     this.state = {
+      isPaused: null,
       activeTrack: null,
       tracks: []
     }
@@ -30,6 +31,14 @@ class Main extends React.Component {
       this.setState({
         tracks: tracks
       })
+    })
+  }
+
+  pauseTrack = () => {
+    return this.setState(() => {
+      return {
+        isPaused: true
+      }
     })
   }
 
@@ -48,6 +57,7 @@ class Main extends React.Component {
   setActiveTrack = (track) => {
     this.setState(function() {
       return {
+        isPaused: false,
         activeTrack: track
       }
     })
@@ -87,10 +97,14 @@ class Main extends React.Component {
           archiveTrack={this.archiveTrack}
           activeTrack={this.state.activeTrack}
         />
-        <Player
-          activeTrack={this.state.activeTrack}
-          playNextTrack={this.playNextTrack}
-        />
+        <div className='grid__player'>
+          <Player
+            activeTrack={this.state.activeTrack}
+            isPaused={this.state.isPaused}
+            playNextTrack={this.playNextTrack}
+            pauseTrack={this.pauseTrack}
+          />
+        </div>
       </div>
     )
   }

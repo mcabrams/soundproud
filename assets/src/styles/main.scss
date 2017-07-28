@@ -25,9 +25,16 @@ body {
     "#{repeat-area-name('footer', 12)}"
 }
 
+.grid__player {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
 @import "variables/colors";
 @import "variables/spacings";
 
 @import "blocks/header";
+@import "blocks/player";
 @import "blocks/stream";
 @import "blocks/track";
