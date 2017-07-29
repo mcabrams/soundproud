@@ -1,19 +1,22 @@
 import React from 'react'
+import BareIconButton from './BareIconButton'
 
 export default function PausePlayButton(props) {
   if (props.showPauseButton) {
     return (
-      <button
-        onClick={props.pause}
-        className='button button--pause'
-      >Pause</button>
+      <BareIconButton
+        clickHandler={props.pause}
+        iconName='pause'
+        isLarge={props.isLarge}
+      />
     )
   } else {
     return (
-      <button
-        onClick={props.play}
-        className='button button--play'
-      >Play</button>
+      <BareIconButton
+        clickHandler={props.play}
+        iconName='play'
+        isLarge={props.isLarge}
+      />
     )
   }
 }

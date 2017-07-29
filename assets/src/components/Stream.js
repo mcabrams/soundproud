@@ -1,6 +1,7 @@
 import React from 'react'
 import PausePlayButton from './PausePlayButton'
 import TrackByline from './TrackByline'
+import BareIconButton from './BareIconButton'
 
 function Track(props) {
   const track = props.track
@@ -23,10 +24,10 @@ function Track(props) {
         />
       </div>
       <div className='track__button track__button--archive'>
-        <button
-          onClick={props.archiveTrack.bind(null, track)}
-          className='button'
-        >Archive</button>
+        <BareIconButton
+          clickHandler={props.archiveTrack.bind(null, track)}
+          iconName='archive'
+        />
       </div>
     </li>
   )

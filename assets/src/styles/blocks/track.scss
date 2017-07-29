@@ -1,4 +1,5 @@
 $track-active-background-color: $blue-color;
+$track-active-foreground-color: $light-color;
 
 .track {
   display: flex;
@@ -15,6 +16,10 @@ $track-active-background-color: $blue-color;
 
 .track__button {
   display: inline-block;
+
+  .track--active & {
+    fill: $track-active-foreground-color;
+  }
 }
 
 .track__button--pause-play {
@@ -22,6 +27,7 @@ $track-active-background-color: $blue-color;
 }
 
 .track__button--archive {
+  fill: $grey-color;
   display: inline-block;
   margin-left: auto;
 }
@@ -30,6 +36,6 @@ $track-active-background-color: $blue-color;
   display: inline-block;
 
   .track--active & {
-    color: $light-color;
+    color: $track-active-foreground-color;
   }
 }

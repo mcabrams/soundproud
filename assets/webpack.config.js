@@ -29,6 +29,14 @@ const config = {
             options: {sourceMap: true}
           }
         ]
+      },
+      {
+        test: /\.svg$/,
+        use: [
+          'svg-sprite-loader',
+          'svgo-loader'
+        ],
+        include: path.resolve(__dirname, 'src/images/icons')
       }
     ]
   }

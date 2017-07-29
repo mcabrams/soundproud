@@ -1,6 +1,7 @@
 import React from 'react'
 import PausePlayButton from './PausePlayButton'
 import TrackByline from './TrackByline'
+import BareIconButton from './BareIconButton'
 
 export default class Player extends React.Component {
   componentDidUpdate() {
@@ -25,41 +26,41 @@ export default class Player extends React.Component {
 
     return (
       <div className="player">
-        <TrackByline
-          title={activeTrack.title}
-          author={activeTrack.username}
-        />
-        <div className="player__button">
-          <button
-            className="button"
-            onClick={this.props.playPreviousTrack}
-          >
-            Play Previous Song
-          </button>
-        </div>
-        <audio
-            ref={audio => this.audio = audio}
-            src={activeTrack.stream_url + '?client_id=' + CLIENT_ID}
-            onEnded={this.props.playNextTrack}
-          >
-        </audio>
-
-        <div className="player__button">
-          <PausePlayButton
-            showPauseButton={!this.props.isPaused}
-            play={this.props.play}
-            pause={this.props.pause}
+        <div className="player__track-byline">
+          <TrackByline
+            title={activeTrack.title}
+            author={activeTrack.username}
           />
         </div>
-
-        <div className="player__button">
-          <button
-            className="button"
-            onClick={this.props.playNextTrack}
-          >
-            Play Next Song
-          </button>
+        <div className="player__button-group">
+          <div className="player__button">
+            <BareIconButton
+              isLarge={true}
+              clickHandler={this.props.playPreviousTrack}
+              iconName='skip-previous'
+            />
+          </div>
+          <div className="player__button">
+            <PausePlayButton
+              isLarge={true}
+              showPauseButton={!this.props.isPaused}
+              play={this.props.play}
+              pause={this.props.pause}
+            />
+          </div>
+          <div className="player__button">
+            <BareIconButton
+              isLarge={true}
+              clickHandler={this.props.playNextTrack}
+              iconName='skip-next'
+            />
+          </div>
         </div>
+        <audio
+          ref={audio => this.audio = audio}
+          src={activeTrack.stream_url + '?client_id=' + CLIENT_ID}
+          onEnded={this.props.playNextTrack}
+        />
       </div>
     )
   }

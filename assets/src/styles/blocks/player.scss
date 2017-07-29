@@ -3,5 +3,14 @@
   justify-content: center;
   background-color: $white-color;
   padding: $md-spacing;
-  border-top: 2px solid #c5c5c3;
+  border-top: 2px solid $grey-color;
+}
+
+.player__track-byline {
+  margin-right: auto;
+}
+
+.player__button-group {
+  display: flex;
+  justify-content: center;
 }
