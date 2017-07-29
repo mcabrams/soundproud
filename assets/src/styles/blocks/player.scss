@@ -1,16 +1,23 @@
 .player {
   display: flex;
-  justify-content: center;
   background-color: $white-color;
   padding: $md-spacing;
   border-top: 2px solid $grey-color;
 }
 
-.player__track-byline {
-  margin-right: auto;
+.player__archive-button,
+.player__track-byline,
+.player__button-group {
+  flex: 1;
 }
 
 .player__button-group {
   display: flex;
+  align-items: center;
   justify-content: center;
+}
+
+.player__archive-button {
+  display: flex;
+  justify-content: flex-end;
 }

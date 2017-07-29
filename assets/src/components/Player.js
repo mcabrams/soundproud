@@ -56,6 +56,13 @@ export default class Player extends React.Component {
             />
           </div>
         </div>
+        <div className="player__archive-button">
+          <BareIconButton
+            isLarge={true}
+            clickHandler={this.props.archiveTrack}
+            iconName='archive'
+          />
+        </div>
         <audio
           ref={audio => this.audio = audio}
           src={activeTrack.stream_url + '?client_id=' + CLIENT_ID}

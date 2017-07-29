@@ -127,6 +127,7 @@ class Main extends React.Component {
         <div className='grid__player'>
           <Player
             activeTrack={this.state.activeTrack}
+            archiveTrack={this.archiveTrack}
             isPaused={this.state.isPaused}
             pause={this.pause}
             play={this.play}
