@@ -1,6 +1,8 @@
 $track-active-background-color: $blue-color;
 
 .track {
+  display: flex;
+  align-items: center;
   padding: $sm-spacing;
   border: 2px solid $light-color;
   border-radius: 4px;
@@ -13,10 +15,20 @@ $track-active-background-color: $blue-color;
 
 .track__button {
   display: inline-block;
+}
+
+.track__button--pause-play {
   margin-right: $sm-spacing;
 }
 
-.track__name {
+.track__button--archive {
+  display: inline-block;
+  margin-left: auto;
+}
+
+.track__byline {
+  display: inline-block;
+
   .track--active & {
     color: $light-color;
   }

@@ -1,5 +1,6 @@
 import React from 'react'
 import PausePlayButton from './PausePlayButton'
+import TrackByline from './TrackByline'
 
 export default class Player extends React.Component {
   componentDidUpdate() {
@@ -24,9 +25,10 @@ export default class Player extends React.Component {
 
     return (
       <div className="player">
-        <p className="player__track-info">
-          Currently playing: {activeTrack.title}
-        </p>
+        <TrackByline
+          title={activeTrack.title}
+          author={activeTrack.username}
+        />
         <div className="player__button">
           <button
             className="button"

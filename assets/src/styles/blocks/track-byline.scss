@@ -1,0 +1,13 @@
+.track-byline {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.track-byline__artwork {
+  margin-right: $sm-spacing;
+}
+
+.track-byline__text {
+  margin: 0;
+}

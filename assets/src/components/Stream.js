@@ -1,5 +1,6 @@
 import React from 'react'
 import PausePlayButton from './PausePlayButton'
+import TrackByline from './TrackByline'
 
 function Track(props) {
   const track = props.track
@@ -8,23 +9,25 @@ function Track(props) {
     <li className={'track ' + (props.isActive && 'track--active')}
       data-id={track.id}
     >
-      <div className='track__button'>
+      <div className='track__button track__button--pause-play'>
         <PausePlayButton
           showPauseButton={props.showPauseButton}
           play={props.playTrack.bind(null, track)}
           pause={props.pause}
         />
       </div>
-
-      <div className='track__button'>
+      <div className='track__byline'>
+        <TrackByline
+          title={track.title}
+          author={track.username}
+        />
+      </div>
+      <div className='track__button track__button--archive'>
         <button
           onClick={props.archiveTrack.bind(null, track)}
-          className='track__button track__button--archive'
+          className='button'
         >Archive</button>
       </div>
-      <span className='track__name'>
-        {track.title} - {track.username}
-      </span>
     </li>
   )
 }
