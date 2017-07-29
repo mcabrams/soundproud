@@ -5,10 +5,10 @@ export default function TrackByline(props) {
     <div className='track-byline'>
       <img
         className='track-byline__artwork'
-        src="http://placehold.it/50x50.jpg"
+        src={props.track.artwork_url}
       />
       <p className='track-byline__text'>
-        {props.title} - {props.author}
+        {props.track.title} - {props.track.username}
       </p>
     </div>
   )

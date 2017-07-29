@@ -67,6 +67,11 @@ class SoundcloudGatewayGetStreamTracksTests(TestCase):
         stream_urls = [c['origin']['stream_url'] for c in self.collection]
         self.assertEqual(set(t.stream_url for t in tracks), set(stream_urls))
 
+    def test_get_stream_tracks_creates_artwork_urls(self):
+        tracks = self.gateway.get_stream_tracks()
+        stream_urls = [c['origin']['artwork_url'] for c in self.collection]
+        self.assertEqual(set(t.artwork_url for t in tracks), set(stream_urls))
+
     def test_get_stream_tracks_creates_username(self):
         tracks = self.gateway.get_stream_tracks()
         usernames = [c['origin']['user']['username'] for c in self.collection]

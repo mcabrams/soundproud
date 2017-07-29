@@ -19,8 +19,7 @@ function Track(props) {
       </div>
       <div className='track__byline'>
         <TrackByline
-          title={track.title}
-          author={track.username}
+          track={track}
         />
       </div>
       <div className='track__button track__button--archive'>

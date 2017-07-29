@@ -9,6 +9,7 @@ def soundcloud_track():
                 'kind': 'track',
                 'title': fake.sentence(nb_words=3),
                 'stream_url': fake.uri(),
+                'artwork_url': fake.uri(),
                 'user': {
                     'username': fake.name(),
                     },

@@ -28,8 +28,7 @@ export default class Player extends React.Component {
       <div className="player">
         <div className="player__track-byline">
           <TrackByline
-            title={activeTrack.title}
-            author={activeTrack.username}
+            track={activeTrack}
           />
         </div>
         <div className="player__button-group">

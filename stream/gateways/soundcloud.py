@@ -43,6 +43,7 @@ def _entry_to_track_params(entry):
     return {
         'gateway_id': entry['id'],
         'title': entry['title'],
+        'artwork_url': entry['artwork_url'],
         'stream_url': entry['stream_url'],
         'username': entry['user']['username']
     }
