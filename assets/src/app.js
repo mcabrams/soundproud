@@ -22,14 +22,20 @@ class Main extends React.Component {
     this.state = {
       isPaused: null,
       activeTrack: null,
-      tracks: []
+      tracks: [],
+      pagesLoaded: 0,
+      pagesLeft: null
     }
   }
 
-  componentDidMount() {
-    api.getTracks().then(tracks => {
-      this.setState({
-        tracks: tracks
+  loadMoreTracks = () => {
+    api.getTracks(this.state.pagesLoaded + 1).then(data => {
+      this.setState((prevState) => {
+        return {
+          tracks: prevState.tracks.concat(data.tracks),
+          pagesLoaded: prevState.pagesLoaded + 1,
+          pagesLeft: data.pagesLeft
+        }
       })
     })
   }
@@ -82,10 +88,10 @@ class Main extends React.Component {
 
   archiveTrack = (track) => {
     api.archiveTrack(track).then(() => {
-      api.getTracks().then(tracks => {
-        this.setState({
-          tracks: tracks
-        })
+      this.setState((prevState) => {
+        return {
+          tracks: prevState.tracks.filter((t) => t.id !== track.id)
+        }
       })
     })
   }
@@ -119,7 +125,11 @@ class Main extends React.Component {
         <Stream
           activeTrack={this.state.activeTrack}
           archiveTrack={this.archiveTrack}
+          hasMore={this.state.pagesLeft === null ||
+                   this.state.pagesLeft > 0}
           isPaused={this.state.isPaused}
+          loadMore={this.loadMoreTracks}
+          pagesLoaded={this.state.pagesLoaded}
           pause={this.pause}
           setActiveTrack={this.setActiveTrack}
           tracks={this.state.tracks}

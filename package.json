@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "## Getting started Copy and rename `web.env.example` to `web.env` with necessary secrets/configured environment variables.",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "react-infinite-scroller": "^1.0.14"
+  },
   "devDependencies": {
     "axios": "^0.16.2",
     "babel-cli": "^6.24.1",

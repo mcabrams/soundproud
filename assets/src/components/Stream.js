@@ -1,10 +1,11 @@
 import React from 'react'
+import InfiniteScroll from 'react-infinite-scroller'
 import Track from './Track'
 
 
 export default function Stream(props) {
-  return (
-    <ul className='stream'>
+  const content = (
+    <ul className="stream__tracks">
       {props.tracks.map(track => {
         const isActive = props.activeTrack && track.id === props.activeTrack.id
         const showPauseButton = isActive && !props.isPaused
@@ -27,4 +28,18 @@ export default function Stream(props) {
       })}
     </ul>
   )
+
+  return (
+    <div className='stream'>
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={props.loadMore}
+        hasMore={props.hasMore}
+        loader={<div className='loader'>Loading ...</div>}
+        useWindow={true}
+      >
+        {content}
+      </InfiniteScroll>
+    </div>
+)
 }
