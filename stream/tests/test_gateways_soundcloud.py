@@ -3,6 +3,7 @@ from django.conf import settings
 from django.test import TestCase
 
 from . import factories
+from track.tests.factories import TrackFactory
 from stream.gateways.soundcloud import (SoundcloudAPI, SoundcloudGateway,
                                         soundcloud_client)
 
@@ -91,3 +92,9 @@ class SoundcloudGatewayGetStreamTracksTests(TestCase):
         tracks = self.gateway.get_stream_tracks()
         self.assertEqual(len(tracks), 1)
         self.assertEqual(tracks[0].title, track['origin']['title'])
+
+    def test_get_stream_tracks_excludes_already_persisted_tracks(self):
+        existing_id = self.collection[0]['origin']['id']
+        TrackFactory(gateway_id=existing_id)
+        tracks = self.gateway.get_stream_tracks()
+        self.assertNotIn(existing_id, [t.gateway_id for t in tracks])

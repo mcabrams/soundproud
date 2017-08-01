@@ -25,6 +25,10 @@ class SoundcloudGateway:
         api = SoundcloudAPI()
         resource = api.retrieve_affiliated_tracks()
         track_entries = _resource_to_track_entries(resource)
+        existing_gateway_ids = Track.objects.values_list('gateway_id',
+                                                         flat=True)
+        track_entries = [t for t in track_entries
+                         if t['id'] not in existing_gateway_ids]
 
         return [Track(**_entry_to_track_params(t)) for t in track_entries]
 
