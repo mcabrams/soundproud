@@ -5,6 +5,8 @@ volumes:
 
 services:
   db:
+    ports:
+      - "5434:5432"
     image: postgres
   broker:
     image: rabbitmq
