@@ -11,6 +11,7 @@ secrets/configured environment variables.
 Then run in the container
 ```
 ./manage.py migrate
+./manage.py persist_new_tracks
 ```
 
 Then outside run
