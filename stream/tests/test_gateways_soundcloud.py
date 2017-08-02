@@ -1,3 +1,4 @@
+from collections import Counter
 from unittest.mock import Mock, patch
 from django.conf import settings
 from django.test import TestCase
@@ -99,8 +100,42 @@ class SoundcloudGatewayGetStreamTracksTests(TestCase):
         self.assertEqual(len(tracks), 1)
         self.assertEqual(tracks[0].title, track['origin']['title'])
 
-    def test_get_stream_tracks_excludes_already_persisted_tracks(self):
-        existing_id = self.collection[0]['origin']['id']
-        TrackFactory(gateway_id=existing_id)
-        tracks = self.gateway.get_stream_tracks()
-        self.assertNotIn(existing_id, [t.gateway_id for t in tracks])
+
+class SoundcloudGatewayGetUnpersistedStreamTracksTests(TestCase):
+    def setUp(self):
+        self.gateway = SoundcloudGateway()
+        patcher = patch.object(self.gateway, 'get_stream_tracks')
+        self.get_stream_tracks = patcher.start()
+        self.addCleanup(patcher.stop)
+
+    def test_calls_get_stream_tracks_properly(self):
+        self.gateway.get_unpersisted_stream_tracks()
+        self.get_stream_tracks.assert_called_once_with()
+
+    def test_returns_only_tracks_that_do_not_match_existing_gateway_id(self):
+        existing_id = TrackFactory().gateway_id
+        already_persisted_track = TrackFactory.build(gateway_id=existing_id)
+        unpersisted_track = TrackFactory.build()
+        self.get_stream_tracks.return_value = [
+            unpersisted_track, already_persisted_track
+        ]
+
+        self.assertEqual([unpersisted_track],
+                         self.gateway.get_unpersisted_stream_tracks())
+
+    def test_does_not_return_multiple_entries_for_duplicate_gateway_ids(self):
+        repeated_gateway_id = 5
+        repeats = [TrackFactory.build(gateway_id=repeated_gateway_id)
+                   for i in range(2)]
+        unique_track = TrackFactory.build()
+        self.get_stream_tracks.return_value = [*repeats, unique_track]
+
+        tracks = self.gateway.get_unpersisted_stream_tracks()
+
+        with self.subTest('returns get stream tracks minus duplicate'):
+            self.assertEqual(len(tracks), len(self.get_stream_tracks()) - 1)
+
+        with self.subTest('returns only one instance of track w/ gateway_id'):
+            track_gateway_ids = [t.gateway_id for t in tracks]
+            count = Counter(track_gateway_ids)
+            self.assertEqual(count[repeated_gateway_id], 1)

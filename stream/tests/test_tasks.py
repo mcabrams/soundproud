@@ -13,6 +13,6 @@ class PersistLatestStreamTracksTestCase(TestCase):
 
     @patch('track.models.Track.objects')
     def test_persists_stream_tracks(self, TrackManager):
-        tracks = self.SoundcloudGateway().get_stream_tracks()
+        tracks = self.SoundcloudGateway().get_unpersisted_stream_tracks()
         tasks.persist_latest_stream_tracks()
         TrackManager.bulk_create.assert_called_once_with(tracks)

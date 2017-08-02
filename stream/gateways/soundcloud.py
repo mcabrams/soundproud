@@ -25,12 +25,34 @@ class SoundcloudGateway:
         api = SoundcloudAPI()
         resource = api.retrieve_affiliated_tracks()
         track_entries = _resource_to_track_entries(resource)
-        existing_gateway_ids = Track.objects.values_list('gateway_id',
-                                                         flat=True)
-        track_entries = [t for t in track_entries
-                         if t['id'] not in existing_gateway_ids]
 
         return [Track(**_entry_to_track_params(t)) for t in track_entries]
+
+    def get_unpersisted_stream_tracks(self):
+        """ Returns list of unpersisted Track instances; excludes tracks that
+        are already present in database by comparing gateway_id; also filters
+        down to single instance of tracks if multiples are included. """
+
+        tracks = self.get_stream_tracks()
+        tracks = _remove_duplicate_tracks(tracks)
+        return _remove_already_persisted_tracks(tracks)
+
+
+def _remove_duplicate_tracks(tracks):
+    existing_gateway_ids = Track.objects.values_list(
+        'gateway_id', flat=True)
+    return [t for t in tracks if t.gateway_id not in existing_gateway_ids]
+
+
+def _remove_already_persisted_tracks(tracks):
+    seen_gateway_ids = set()
+    filtered_tracks = []
+    for track in tracks:
+        if track.gateway_id not in seen_gateway_ids:
+            seen_gateway_ids.add(track.gateway_id)
+            filtered_tracks.append(track)
+
+    return filtered_tracks
 
 
 def _resource_to_track_entries(resource):
