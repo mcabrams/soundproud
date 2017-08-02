@@ -32,7 +32,7 @@ class Main extends React.Component {
     api.getTracks(this.state.pagesLoaded + 1).then(data => {
       this.setState((prevState) => {
         return {
-          tracks: data.tracks.concat(prevState.tracks),
+          tracks: prevState.tracks.concat(data.tracks),
           pagesLoaded: prevState.pagesLoaded + 1,
           pagesLeft: data.pagesLeft
         }

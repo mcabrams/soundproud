@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'stream',
     'track',
     'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

@@ -11,3 +11,5 @@ def stream(request):
 class TrackList(generics.ListAPIView):
     serializer_class = TrackSerializer
     queryset = Track.objects.all()
+    filter_fields = ('archived',)
+    ordering = ('created_at',)
