@@ -15,7 +15,7 @@ def soundcloud_client():
 
 
 class SoundcloudAPI:
-    def retrieve_affiliated_tracks(self, limit=100):
+    def retrieve_affiliated_tracks(self, limit=10):
         client = soundcloud_client()
         return client.get('/me/activities/tracks/affiliated/', limit=limit)
 
