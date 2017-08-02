@@ -33,7 +33,7 @@ class SoundcloudAPIRetrieveAffiliatedTracksTests(TestCase):
 
     def test_retrieve_affiliated_tracks_calls_api_correctly(self, client):
         self.api.retrieve_affiliated_tracks()
-        client().get.assert_called_once_with(self.expected_path, limit=10)
+        client().get.assert_called_once_with(self.expected_path, limit=100)
 
     def test_retrieve_affiliated_tracks_returns_api_call(self, client):
         self.assertEqual(self.api.retrieve_affiliated_tracks(), client().get())
