@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const PAGE_SIZE = 5
+const PAGE_SIZE = 10
 
 export function archiveTrack(track) {
   return axios.patch('/tracks/' + track.id + '/', {
