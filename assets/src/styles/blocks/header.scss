@@ -1,9 +1,17 @@
 .header {
+  display: flex;
+  align-items: baseline;
   grid-area: header;
   background-color: $red-color;
+  padding: $md-spacing;
+}
 
-  .header__heading {
-    color: $light-color;
-    margin: $md-spacing;
-  }
+.header__heading {
+  margin: 0 $md-spacing 0 0;
+  color: $light-color;
+}
+
+.header__nav-link {
+  color: $light-color;
+  margin-right: $md-spacing;
 }

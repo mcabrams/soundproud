@@ -4,14 +4,29 @@ import Stream from './components/Stream'
 import Player from './components/Player'
 import * as api from './utils/api'
 import style from './styles/main.scss'
+import { Link, BrowserRouter } from 'react-router-dom'
 
 function Header(props) {
   return (
-    <div className='header'>
+    <header className='header'>
       <h1 className='header__heading'>
         Soundproud
       </h1>
-    </div>
+      <nav className='header__nav'>
+        <Link
+          className='header__nav-link'
+          to='/stream/new'
+        >
+          Stream
+        </Link>
+        <Link
+          className='header__nav-link'
+          to="/stream/archive"
+        >
+          Archived
+        </Link>
+      </nav>
+    </header>
   )
 }
 
@@ -120,32 +135,34 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div className='grid'>
-        <Header />
-        <Stream
-          activeTrack={this.state.activeTrack}
-          archiveTrack={this.archiveTrack}
-          hasMore={this.state.pagesLeft === null ||
-                   this.state.pagesLeft > 0}
-          isPaused={this.state.isPaused}
-          loadMore={this.loadMoreTracks}
-          pagesLoaded={this.state.pagesLoaded}
-          pause={this.pause}
-          setActiveTrack={this.setActiveTrack}
-          tracks={this.state.tracks}
-        />
-        <div className='grid__player'>
-          <Player
+      <BrowserRouter>
+        <div className='grid'>
+          <Header />
+          <Stream
             activeTrack={this.state.activeTrack}
             archiveTrack={this.archiveTrack}
+            hasMore={this.state.pagesLeft === null ||
+                     this.state.pagesLeft > 0}
             isPaused={this.state.isPaused}
+            loadMore={this.loadMoreTracks}
+            pagesLoaded={this.state.pagesLoaded}
             pause={this.pause}
-            play={this.play}
-            playNextTrack={this.playNextTrack}
-            playPreviousTrack={this.playPreviousTrack}
+            setActiveTrack={this.setActiveTrack}
+            tracks={this.state.tracks}
           />
+          <div className='grid__player'>
+            <Player
+              activeTrack={this.state.activeTrack}
+              archiveTrack={this.archiveTrack}
+              isPaused={this.state.isPaused}
+              pause={this.pause}
+              play={this.play}
+              playNextTrack={this.playNextTrack}
+              playPreviousTrack={this.playPreviousTrack}
+            />
+          </div>
         </div>
-      </div>
+      </BrowserRouter>
     )
   }
 }

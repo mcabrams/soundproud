@@ -24,10 +24,25 @@
         }
       }
     },
+    "history": {
+      "version": "4.6.3",
+      "from": "history@>=4.5.1 <5.0.0",
+      "resolved": "https://registry.npmjs.org/history/-/history-4.6.3.tgz"
+    },
+    "hoist-non-react-statics": {
+      "version": "1.2.0",
+      "from": "hoist-non-react-statics@>=1.2.0 <2.0.0",
+      "resolved": "https://registry.npmjs.org/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz"
+    },
     "iconv-lite": {
       "version": "0.4.18",
       "from": "iconv-lite@>=0.4.13 <0.5.0",
       "resolved": "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.18.tgz"
+    },
+    "invariant": {
+      "version": "2.2.2",
+      "from": "invariant@>=2.2.0 <3.0.0",
+      "resolved": "https://registry.npmjs.org/invariant/-/invariant-2.2.2.tgz"
     },
     "is-stream": {
       "version": "1.1.0",
@@ -59,6 +74,18 @@
       "from": "object-assign@>=4.1.0 <5.0.0",
       "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz"
     },
+    "path-to-regexp": {
+      "version": "1.7.0",
+      "from": "path-to-regexp@>=1.5.3 <2.0.0",
+      "resolved": "https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-1.7.0.tgz",
+      "dependencies": {
+        "isarray": {
+          "version": "0.0.1",
+          "from": "isarray@0.0.1",
+          "resolved": "https://registry.npmjs.org/isarray/-/isarray-0.0.1.tgz"
+        }
+      }
+    },
     "promise": {
       "version": "7.3.1",
       "from": "promise@>=7.1.1 <8.0.0",
@@ -74,6 +101,21 @@
       "from": "react-infinite-scroller@latest",
       "resolved": "https://registry.npmjs.org/react-infinite-scroller/-/react-infinite-scroller-1.0.14.tgz"
     },
+    "react-router": {
+      "version": "4.1.2",
+      "from": "react-router@>=4.1.1 <5.0.0",
+      "resolved": "https://registry.npmjs.org/react-router/-/react-router-4.1.2.tgz"
+    },
+    "react-router-dom": {
+      "version": "4.1.2",
+      "from": "react-router-dom@latest",
+      "resolved": "https://registry.npmjs.org/react-router-dom/-/react-router-dom-4.1.2.tgz"
+    },
+    "resolve-pathname": {
+      "version": "2.1.0",
+      "from": "resolve-pathname@>=2.0.0 <3.0.0",
+      "resolved": "https://registry.npmjs.org/resolve-pathname/-/resolve-pathname-2.1.0.tgz"
+    },
     "setimmediate": {
       "version": "1.0.5",
       "from": "setimmediate@>=1.0.5 <2.0.0",
@@ -83,6 +125,16 @@
       "version": "0.7.14",
       "from": "ua-parser-js@>=0.7.9 <0.8.0",
       "resolved": "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-0.7.14.tgz"
+    },
+    "value-equal": {
+      "version": "0.2.1",
+      "from": "value-equal@>=0.2.0 <0.3.0",
+      "resolved": "https://registry.npmjs.org/value-equal/-/value-equal-0.2.1.tgz"
+    },
+    "warning": {
+      "version": "3.0.0",
+      "from": "warning@>=3.0.0 <4.0.0",
+      "resolved": "https://registry.npmjs.org/warning/-/warning-3.0.0.tgz"
     },
     "whatwg-fetch": {
       "version": "2.0.3",

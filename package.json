@@ -4,7 +4,8 @@
   "description": "## Getting started Copy and rename `web.env.example` to `web.env` with necessary secrets/configured environment variables.",
   "main": "index.js",
   "dependencies": {
-    "react-infinite-scroller": "^1.0.14"
+    "react-infinite-scroller": "^1.0.14",
+    "react-router-dom": "^4.1.2"
   },
   "devDependencies": {
     "axios": "^0.16.2",
