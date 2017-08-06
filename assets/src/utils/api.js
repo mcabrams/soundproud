@@ -1,8 +1,9 @@
 import axios from 'axios'
+import { throwIfMissing } from './helpers'
 
 const PAGE_SIZE = 10
 
-export function archiveTrack(track) {
+export function archiveTrack(track = throwIfMissing()) {
   return axios.patch(`/tracks/${track.id}/`, {
     archived: true,
   })
