@@ -49,7 +49,7 @@ class Main extends React.Component {
     }))
   }
 
-  setActiveTrack = (track) => {
+  playTrack = (track) => {
     this.setState(() => ({
       activeTrack: track,
     }))
@@ -70,7 +70,7 @@ class Main extends React.Component {
       return this.playFirstTrack()
     }
 
-    return this.setActiveTrack(this.previousTrack)
+    return this.playTrack(this.previousTrack)
   }
 
   playNextTrack = () => {
@@ -78,11 +78,11 @@ class Main extends React.Component {
       return this.playFirstTrack()
     }
 
-    return this.setActiveTrack(this.nextTrack)
+    return this.playTrack(this.nextTrack)
   }
 
   playFirstTrack = () => {
-    this.setActiveTrack(this.firstTrack)
+    this.playTrack(this.firstTrack)
   }
 
   loadMoreTracks = () => {
@@ -139,7 +139,7 @@ class Main extends React.Component {
             loadMore={this.loadMoreTracks}
             pagesLoaded={this.state.pagesLoaded}
             pause={this.pause}
-            setActiveTrack={this.setActiveTrack}
+            playTrack={this.playTrack}
             tracks={this.state.tracks}
           />
           <div className="grid__player">

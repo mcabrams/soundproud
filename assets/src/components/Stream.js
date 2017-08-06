@@ -14,7 +14,7 @@ function StreamTrack(props) {
         archiveTrack={props.archiveTrack}
         isActive={props.isActive}
         pause={props.pause}
-        playTrack={props.setActiveTrack}
+        playTrack={props.playTrack}
         showPauseButton={props.showPauseButton}
         track={props.track}
       />
@@ -42,7 +42,7 @@ export default function Stream(props) {
                 archiveTrack={props.archiveTrack}
                 isActive={isActive}
                 pause={props.pause}
-                setActiveTrack={props.setActiveTrack}
+                playTrack={props.playTrack}
                 showPauseButton={showPauseButton}
                 track={track}
               />
@@ -58,7 +58,7 @@ StreamTrack.propTypes = {
   archiveTrack: PropTypes.func.isRequired,
   isActive: PropTypes.bool.isRequired,
   pause: PropTypes.func.isRequired,
-  setActiveTrack: PropTypes.func.isRequired,
+  playTrack: PropTypes.func.isRequired,
   showPauseButton: PropTypes.bool.isRequired,
   track: PropTypes.object.isRequired,
 }
@@ -69,6 +69,6 @@ Stream.propTypes = {
   isPaused: PropTypes.bool.isRequired,
   loadMore: PropTypes.func.isRequired,
   pause: PropTypes.func.isRequired,
-  setActiveTrack: PropTypes.func.isRequired,
+  playTrack: PropTypes.func.isRequired,
   tracks: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
