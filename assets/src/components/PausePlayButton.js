@@ -22,9 +22,13 @@ export default function PausePlayButton(props) {
   )
 }
 
+PausePlayButton.defaultProps = {
+  isLarge: false,
+}
+
 PausePlayButton.propTypes = {
   showPauseButton: PropTypes.bool.isRequired,
   pause: PropTypes.func.isRequired,
   play: PropTypes.func.isRequired,
-  isLarge: PropTypes.bool.isRequired,
+  isLarge: PropTypes.bool,
 }

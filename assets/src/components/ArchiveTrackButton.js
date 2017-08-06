@@ -12,6 +12,10 @@ export default function ArchiveTrackButton(props) {
   )
 }
 
+ArchiveTrackButton.defaultProps = {
+  isLarge: false,
+}
+
 ArchiveTrackButton.propTypes = {
   archive: PropTypes.func.isRequired,
   isLarge: PropTypes.bool,

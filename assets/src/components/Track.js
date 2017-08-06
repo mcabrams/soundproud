@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import BareIconButton from './BareIconButton'
 import PausePlayButton from './PausePlayButton'
 import TrackByline from './TrackByline'
 import ArchiveTrackButton from './ArchiveTrackButton'

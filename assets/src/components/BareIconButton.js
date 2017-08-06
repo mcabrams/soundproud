@@ -24,8 +24,12 @@ export default function BareIconButton(props) {
   )
 }
 
+BareIconButton.defaultProps = {
+  isLarge: false,
+}
+
 BareIconButton.propTypes = {
   clickHandler: PropTypes.func.isRequired,
   iconName: PropTypes.string.isRequired,
-  isLarge: PropTypes.bool.isRequired,
+  isLarge: PropTypes.bool,
 }
