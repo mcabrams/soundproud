@@ -37,12 +37,26 @@ class TriggerTestCase(FunctionalTestCase):
     def test_tracks_sorted_by_date_created_descending(self):
         self.skipTest('TODO')
 
-    def test_archives_tracks(self):
+    def test_archives_tracks_via_stream(self):
         self.driver.get(self.url('/stream/'))
         page = StreamPage(self.driver)
         track = page.tracks[0]
 
         track.archive_button.click()
+        # TODO: Better fix here for implicit wait
+        time.sleep(1)
+        self.assertFalse(page.is_track_with_id_present(track.id))
+
+        self.driver.refresh()
+        self.assertFalse(page.is_track_with_id_present(track.id))
+
+    def test_archives_tracks_via_player(self):
+        self.driver.get(self.url('/stream/'))
+        page = StreamPage(self.driver)
+        track = page.tracks[0]
+
+        track.play_button.click()
+        page.player.archive_button.click()
         # TODO: Better fix here for implicit wait
         time.sleep(1)
         self.assertFalse(page.is_track_with_id_present(track.id))
@@ -97,6 +111,11 @@ class Player(Element):
     @property
     def play_next_button(self):
         return self.element.find_element_by_tag_name('button')
+
+    @property
+    def archive_button(self):
+        return self.element.find_element_by_css_selector(
+            '.player__archive-button button')
 
 
 class Audio(Element):
