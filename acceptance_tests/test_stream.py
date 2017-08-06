@@ -119,7 +119,7 @@ class Track(Element):
 
     @property
     def play_button(self):
-        return self.element.find_element_by_class_name('track__button--play')
+        return self.element.find_element_by_class_name('track__button--pause-play')
 
     @property
     def archive_button(self):
