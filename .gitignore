@@ -7,5 +7,8 @@ db.sqlite3
 # Docker environment variable file
 web.env
 
+# Node packages
+node_modules/
+
 # Built assets
 assets/dist/bundle.js

@@ -44,4 +44,5 @@ services:
     volumes:
       - .:/django
       - nodemodules:/django/node_modules
-    command: npm run build
+      - ./node_modules:/package/node_modules
+    command: ./assets-entrypoint.sh
