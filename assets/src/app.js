@@ -49,11 +49,14 @@ class Main extends React.Component {
     }))
   }
 
-  playTrack = (track) => {
+  setActiveTrack = (track) => {
     this.setState(() => ({
       activeTrack: track,
     }))
+  }
 
+  playTrack = (track) => {
+    this.setActiveTrack(track)
     this.play()
   }
 
@@ -100,6 +103,12 @@ class Main extends React.Component {
       this.setState(prevState => ({
         tracks: prevState.tracks.filter(t => t.id !== track.id),
       }))
+
+      if (this.state.isPaused) {
+        this.setActiveTrack(this.nextTrack)
+      } else {
+        this.playNextTrack()
+      }
     })
   }
 

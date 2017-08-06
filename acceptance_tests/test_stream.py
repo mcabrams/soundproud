@@ -34,6 +34,12 @@ class TriggerTestCase(FunctionalTestCase):
     def test_plays_next_track_automatically(self):
         self.skipTest('TODO')
 
+    def test_plays_next_track_after_archive_if_playing(self):
+        self.skipTest('TODO')
+
+    def test_sets_next_track_after_archive_if_paused(self):
+        self.skipTest('TODO')
+
     def test_tracks_sorted_by_date_created_descending(self):
         self.skipTest('TODO')
 
