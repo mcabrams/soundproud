@@ -1,26 +1,26 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Link, BrowserRouter } from 'react-router-dom'
 import Stream from './components/Stream'
 import Player from './components/Player'
 import * as api from './utils/api'
-import style from './styles/main.scss'
-import { Link, BrowserRouter } from 'react-router-dom'
+import './styles/main.scss'
 
-function Header(props) {
+function Header() {
   return (
-    <header className='header'>
-      <h1 className='header__heading'>
+    <header className="header">
+      <h1 className="header__heading">
         Soundproud
       </h1>
-      <nav className='header__nav'>
+      <nav className="header__nav">
         <Link
-          className='header__nav-link'
-          to='/stream/new'
+          className="header__nav-link"
+          to="/stream/new"
         >
           Stream
         </Link>
         <Link
-          className='header__nav-link'
+          className="header__nav-link"
           to="/stream/archive"
         >
           Archived
@@ -39,28 +39,22 @@ class Main extends React.Component {
       activeTrack: null,
       tracks: [],
       pagesLoaded: 0,
-      pagesLeft: null
+      pagesLeft: null,
     }
   }
 
-  loadMoreTracks = () => {
-    api.getTracks(this.state.pagesLoaded + 1).then(data => {
-      this.setState((prevState) => {
-        return {
-          tracks: prevState.tracks.concat(data.tracks),
-          pagesLoaded: prevState.pagesLoaded + 1,
-          pagesLeft: data.pagesLeft
-        }
-      })
-    })
+  setIsPaused = (isPaused) => {
+    this.setState(() => ({
+      isPaused,
+    }))
   }
 
-  setIsPaused = (isPaused) => {
-    return this.setState(() => {
-      return {
-        isPaused: isPaused
-      }
-    })
+  setActiveTrack = (track) => {
+    this.setState(() => ({
+      activeTrack: track,
+    }))
+
+    this.play()
   }
 
   pause = () => {
@@ -91,30 +85,28 @@ class Main extends React.Component {
     this.setActiveTrack(this.firstTrack)
   }
 
-  setActiveTrack = (track) => {
-    this.setState(function() {
-      return {
-        activeTrack: track
-      }
+  loadMoreTracks = () => {
+    api.getTracks(this.state.pagesLoaded + 1).then((data) => {
+      this.setState(prevState => ({
+        tracks: prevState.tracks.concat(data.tracks),
+        pagesLoaded: prevState.pagesLoaded + 1,
+        pagesLeft: data.pagesLeft,
+      }))
     })
-
-    this.play()
   }
 
   archiveTrack = (track) => {
     api.archiveTrack(track).then(() => {
-      this.setState((prevState) => {
-        return {
-          tracks: prevState.tracks.filter((t) => t.id !== track.id)
-        }
-      })
+      this.setState(prevState => ({
+        tracks: prevState.tracks.filter(t => t.id !== track.id),
+      }))
     })
   }
 
   get currentTrackIndex() {
-    return this.state.tracks.findIndex(track => {
-      return track.gateway_id === this.state.activeTrack.gateway_id
-    })
+    return this.state.tracks.findIndex(track => (
+      track.gateway_id === this.state.activeTrack.gateway_id
+    ))
   }
 
   get nextTrack() {
@@ -136,7 +128,7 @@ class Main extends React.Component {
   render() {
     return (
       <BrowserRouter>
-        <div className='grid'>
+        <div className="grid">
           <Header />
           <Stream
             activeTrack={this.state.activeTrack}
@@ -150,7 +142,7 @@ class Main extends React.Component {
             setActiveTrack={this.setActiveTrack}
             tracks={this.state.tracks}
           />
-          <div className='grid__player'>
+          <div className="grid__player">
             <Player
               activeTrack={this.state.activeTrack}
               archiveTrack={this.archiveTrack}
