@@ -1,12 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import '../images/icons/play.svg'
 import '../images/icons/pause.svg'
 import '../images/icons/skip-previous.svg'
 import '../images/icons/skip-next.svg'
 import '../images/icons/archive.svg'
 
-export default function BareIconButton(props) {
+export default function BareIconButton(
+  props: { clickHandler: () => void, iconName: string, isLarge?: boolean, }) {
   return (
     <button
       onClick={props.clickHandler}
@@ -26,10 +26,4 @@ export default function BareIconButton(props) {
 
 BareIconButton.defaultProps = {
   isLarge: false,
-}
-
-BareIconButton.propTypes = {
-  clickHandler: PropTypes.func.isRequired,
-  iconName: PropTypes.string.isRequired,
-  isLarge: PropTypes.bool,
 }

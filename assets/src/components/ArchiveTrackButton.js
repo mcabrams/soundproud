@@ -1,8 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import BareIconButton from './BareIconButton'
 
-export default function ArchiveTrackButton(props) {
+export default function ArchiveTrackButton(
+  props: { archive: () => void, isLarge?: boolean }) {
   return (
     <BareIconButton
       isLarge={props.isLarge}
@@ -14,9 +14,4 @@ export default function ArchiveTrackButton(props) {
 
 ArchiveTrackButton.defaultProps = {
   isLarge: false,
-}
-
-ArchiveTrackButton.propTypes = {
-  archive: PropTypes.func.isRequired,
-  isLarge: PropTypes.bool,
 }

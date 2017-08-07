@@ -626,7 +626,7 @@
     },
     "babel-preset-flow": {
       "version": "6.23.0",
-      "from": "babel-preset-flow@>=6.23.0 <7.0.0",
+      "from": "https://registry.npmjs.org/babel-preset-flow/-/babel-preset-flow-6.23.0.tgz",
       "resolved": "https://registry.npmjs.org/babel-preset-flow/-/babel-preset-flow-6.23.0.tgz",
       "dev": true
     },
@@ -2030,6 +2030,12 @@
       "resolved": "https://registry.npmjs.org/flatten/-/flatten-1.0.2.tgz",
       "dev": true
     },
+    "flow-bin": {
+      "version": "0.52.0",
+      "from": "flow-bin@latest",
+      "resolved": "https://registry.npmjs.org/flow-bin/-/flow-bin-0.52.0.tgz",
+      "dev": true
+    },
     "follow-redirects": {
       "version": "1.2.4",
       "from": "follow-redirects@>=1.2.3 <2.0.0",
@@ -3063,8 +3069,7 @@
     "json-stringify-safe": {
       "version": "5.0.1",
       "from": "json-stringify-safe@>=5.0.1 <5.1.0",
-      "resolved": "https://registry.npmjs.org/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz",
-      "dev": true
+      "resolved": "https://registry.npmjs.org/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz"
     },
     "json5": {
       "version": "0.5.1",
@@ -3515,6 +3520,11 @@
       "from": "natural-compare@>=1.4.0 <2.0.0",
       "resolved": "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz",
       "dev": true
+    },
+    "node-common-errors": {
+      "version": "0.4.0",
+      "from": "node-common-errors@latest",
+      "resolved": "https://registry.npmjs.org/node-common-errors/-/node-common-errors-0.4.0.tgz"
     },
     "node-fetch": {
       "version": "1.7.1",

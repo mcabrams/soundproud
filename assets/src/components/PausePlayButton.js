@@ -1,8 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import BareIconButton from './BareIconButton'
 
-export default function PausePlayButton(props) {
+export default function PausePlayButton(props: {
+  showPauseButton: boolean, pause: () => void, play: () => void,
+  isLarge?: boolean,
+}) {
   if (props.showPauseButton) {
     return (
       <BareIconButton
@@ -24,11 +26,4 @@ export default function PausePlayButton(props) {
 
 PausePlayButton.defaultProps = {
   isLarge: false,
-}
-
-PausePlayButton.propTypes = {
-  showPauseButton: PropTypes.bool.isRequired,
-  pause: PropTypes.func.isRequired,
-  play: PropTypes.func.isRequired,
-  isLarge: PropTypes.bool,
 }

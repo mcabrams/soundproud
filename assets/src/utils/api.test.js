@@ -1,6 +1,5 @@
 import axios from 'axios'
 import * as api from './api'
-import { MissingParamaterError } from './errors'
 
 jest.mock('axios', () => ({ patch: jest.fn() }))
 
@@ -13,9 +12,5 @@ describe('archiveTrack', () => {
     expect(axios.patch).toHaveBeenCalledWith('/tracks/42/', {
       archived: true,
     })
-  })
-
-  it('should raise error if track not passed', () => {
-    expect(api.archiveTrack).toThrow(MissingParamaterError)
   })
 })

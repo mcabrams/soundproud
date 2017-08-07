@@ -1,9 +1,8 @@
 import axios from 'axios'
-import { throwIfMissing } from './helpers'
 
 const PAGE_SIZE = 10
 
-export function archiveTrack(track = throwIfMissing()) {
+export function archiveTrack(track: { id: number }) {
   return axios.patch(`/tracks/${track.id}/`, {
     archived: true,
   })
@@ -21,7 +20,7 @@ function responseToTracks(response) {
     })
 }
 
-export function getTracks(page = 1) {
+export function getTracks(page: number = 1) {
   return axios.get(`/tracks/?page=${page}&archived=false`)
     .then(response => ({
       tracks: responseToTracks(response),

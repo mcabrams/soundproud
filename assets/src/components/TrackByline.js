@@ -1,7 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import type { TrackAlias } from '../typechecking/aliases'
 
-export default function TrackByline(props) {
+export default function TrackByline(props: {track: TrackAlias}) {
   return (
     <div className="track-byline">
       <img
@@ -14,8 +14,4 @@ export default function TrackByline(props) {
       </p>
     </div>
   )
-}
-
-TrackByline.propTypes = {
-  track: PropTypes.object.isRequired,
 }

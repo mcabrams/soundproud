@@ -12,3 +12,6 @@ node_modules/
 
 # Built assets
 assets/dist/bundle.js
+
+# Type checking files
+flow-typed/

@@ -1,11 +1,22 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import PausePlayButton from './PausePlayButton'
 import TrackByline from './TrackByline'
 import BareIconButton from './BareIconButton'
 import ArchiveTrackButton from './ArchiveTrackButton'
+import type { TrackAlias } from '../typechecking/aliases'
 
 export default class Player extends React.Component {
+  audio: ?HTMLAudioElement
+  props: {
+    archiveTrack: (TrackAlias) => void,
+    activeTrack: TrackAlias,
+    isPaused: boolean,
+    play: () => void,
+    pause: () => void,
+    playNextTrack: () => void,
+    playPreviousTrack: () => void,
+  }
+
   componentDidUpdate() {
     if (!this.audio) {
       return
@@ -77,14 +88,4 @@ export default class Player extends React.Component {
       </div>
     )
   }
-}
-
-Player.propTypes = {
-  archiveTrack: PropTypes.func.isRequired,
-  activeTrack: PropTypes.object.isRequired,
-  isPaused: PropTypes.bool.isRequired,
-  play: PropTypes.func.isRequired,
-  pause: PropTypes.func.isRequired,
-  playNextTrack: PropTypes.func.isRequired,
-  playPreviousTrack: PropTypes.func.isRequired,
 }

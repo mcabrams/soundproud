@@ -1,10 +1,20 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import InfiniteScroll from 'react-infinite-scroller'
 import Track from './Track'
+import type { TrackAlias } from '../typechecking/aliases'
 
+function StreamTrack(props: {
+  activeTrack: ?TrackAlias,
+  archiveTrack: (TrackAlias) => void,
+  isPaused: boolean,
+  pause: () => void,
+  playTrack: (TrackAlias) => void,
+  track: TrackAlias,
+}) {
+  const isActive = !!(props.activeTrack &&
+                      props.track.id === props.activeTrack.id)
+  const showPauseButton: boolean = !!(isActive && !props.isPaused)
 
-function StreamTrack(props) {
   return (
     <div
       className="stream__track"
@@ -12,17 +22,26 @@ function StreamTrack(props) {
     >
       <Track
         archiveTrack={props.archiveTrack}
-        isActive={props.isActive}
+        isActive={isActive}
         pause={props.pause}
         playTrack={props.playTrack}
-        showPauseButton={props.showPauseButton}
+        showPauseButton={showPauseButton}
         track={props.track}
       />
     </div>
   )
 }
 
-export default function Stream(props) {
+export default function Stream(props: {
+  activeTrack: TrackAlias,
+  archiveTrack: (TrackAlias) => void,
+  hasMore: boolean,
+  isPaused: boolean,
+  loadMore: () => void,
+  pause: () => void,
+  playTrack: (TrackAlias) => void,
+  tracks: Array<TrackAlias>,
+}) {
   return (
     <div className="stream">
       <InfiniteScroll
@@ -33,42 +52,18 @@ export default function Stream(props) {
         useWindow
       >
         <ul className="stream__tracks">
-          {props.tracks.map((track) => {
-            const isActive = props.activeTrack && track.id === props.activeTrack.id
-            const showPauseButton = isActive && !props.isPaused
-
-            return (
-              <StreamTrack
-                archiveTrack={props.archiveTrack}
-                isActive={isActive}
-                pause={props.pause}
-                playTrack={props.playTrack}
-                showPauseButton={showPauseButton}
-                track={track}
-              />
-            )
-          })}
+          {props.tracks.map(track => (
+            <StreamTrack
+              activeTrack={props.activeTrack}
+              archiveTrack={props.archiveTrack}
+              isPaused={props.isPaused}
+              pause={props.pause}
+              playTrack={props.playTrack}
+              track={track}
+            />
+          ))}
         </ul>
       </InfiniteScroll>
     </div>
   )
-}
-
-StreamTrack.propTypes = {
-  archiveTrack: PropTypes.func.isRequired,
-  isActive: PropTypes.bool.isRequired,
-  pause: PropTypes.func.isRequired,
-  playTrack: PropTypes.func.isRequired,
-  showPauseButton: PropTypes.bool.isRequired,
-  track: PropTypes.object.isRequired,
-}
-
-Stream.propTypes = {
-  activeTrack: PropTypes.object.isRequired,
-  hasMore: PropTypes.bool.isRequired,
-  isPaused: PropTypes.bool.isRequired,
-  loadMore: PropTypes.func.isRequired,
-  pause: PropTypes.func.isRequired,
-  playTrack: PropTypes.func.isRequired,
-  tracks: PropTypes.arrayOf(PropTypes.object).isRequired,
 }

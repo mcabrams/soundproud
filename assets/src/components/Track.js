@@ -1,10 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import PausePlayButton from './PausePlayButton'
 import TrackByline from './TrackByline'
 import ArchiveTrackButton from './ArchiveTrackButton'
+import type { TrackAlias } from '../typechecking/aliases'
 
-function TrackButton(props) {
+function TrackButton(props: {
+  track: TrackAlias, archiveTrack: (TrackAlias) => void, }) {
   const archive = () => props.archiveTrack(props.track)
 
   return (
@@ -16,13 +17,17 @@ function TrackButton(props) {
   )
 }
 
-export default function Track(props) {
+export default function Track(props: {
+  archiveTrack: (TrackAlias) => void, isActive: boolean, pause: () => void,
+  playTrack: (TrackAlias) => void, showPauseButton: boolean, track: TrackAlias,
+}) {
   const track = props.track
   const playTrack = () => props.playTrack(track)
+  const additionalClasses = props.isActive ? 'track--active' : ''
 
   return (
     <li
-      className={`track ${(props.isActive && 'track--active')}`}
+      className={`track ${additionalClasses}`}
       data-id={track.id}
     >
       <div
@@ -46,18 +51,4 @@ export default function Track(props) {
       />
     </li>
   )
-}
-
-Track.propTypes = {
-  archiveTrack: PropTypes.func.isRequired,
-  isActive: PropTypes.bool.isRequired,
-  pause: PropTypes.func.isRequired,
-  playTrack: PropTypes.func.isRequired,
-  showPauseButton: PropTypes.bool.isRequired,
-  track: PropTypes.object.isRequired,
-}
-
-TrackButton.propTypes = {
-  archiveTrack: PropTypes.func.isRequired,
-  track: PropTypes.object.isRequired,
 }

@@ -23,6 +23,9 @@ Then run in the container
 npm run watch
 ```
 
+You may also want to run `flow-typed install`, then `flow` as another job to
+see typechecking via static analysis.
+
 
 ```
 Then open localhost:8082/stream
@@ -30,6 +33,11 @@ Then open localhost:8082/stream
 
 
 ## Tests
+
+Javascript (in assets container):
+```
+npm run test
+```
 
 Unit/Integration:
 ```

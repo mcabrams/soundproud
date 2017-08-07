@@ -4,6 +4,7 @@ import { Link, BrowserRouter } from 'react-router-dom'
 import Stream from './components/Stream'
 import Player from './components/Player'
 import * as api from './utils/api'
+// $FlowFixMe
 import './styles/main.scss'
 
 function Header() {
