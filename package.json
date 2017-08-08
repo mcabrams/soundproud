@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "axios": "^0.16.2",
+    "global": "https://registry.npmjs.org/global/-/global-4.3.2.tgz",
     "node-common-errors": "^0.4.0",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",

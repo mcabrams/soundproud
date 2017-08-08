@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { document } from 'global'
 import { Link, BrowserRouter } from 'react-router-dom'
 import Stream from './components/Stream'
 import Player from './components/Player'
