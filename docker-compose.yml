@@ -45,4 +45,4 @@ services:
       - .:/django
       - nodemodules:/django/node_modules
       - ./node_modules:/package/node_modules
-    command: ./assets-entrypoint.sh
+    command: ./scripts/assets-entrypoint.sh
