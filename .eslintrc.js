@@ -15,13 +15,14 @@ module.exports = {
     'react/jsx-closing-bracket-location': 1,
     'flowtype/no-types-missing-file-annotation': 0,
     'react/sort-comp': [1, {
-      order: [
-        'type-annotations',
-        'static-methods',
-        'lifecycle',
-        'everything-else',
-        'render',
-      ],
+    'no-use-before-define': ['error', 'nofunc'],
+    order: [
+      'type-annotations',
+      'static-methods',
+      'lifecycle',
+      'everything-else',
+      'render',
+    ],
     }]
   },
   plugins: [
