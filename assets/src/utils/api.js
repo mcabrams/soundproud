@@ -2,12 +2,6 @@ import axios from 'axios'
 
 const PAGE_SIZE = 10
 
-export function archiveTrack(track: { id: number }) {
-  return axios.patch(`/tracks/${track.id}/`, {
-    archived: true,
-  })
-}
-
 function responseToTracks(response) {
   const tracks = response.data.results
 
@@ -20,10 +14,21 @@ function responseToTracks(response) {
     })
 }
 
+function pagesLeft(currentPage, totalEntries) {
+  const totalPages = Math.ceil(totalEntries / PAGE_SIZE)
+  return totalPages === 0 ? 0 : totalPages - currentPage
+}
+
+export function archiveTrack(track: { id: number }) {
+  return axios.patch(`/tracks/${track.id}/`, {
+    archived: true,
+  })
+}
+
 export function getTracks(page: number = 1) {
   return axios.get(`/tracks/?page=${page}&archived=false`)
     .then(response => ({
       tracks: responseToTracks(response),
-      pagesLeft: Math.ceil(response.data.count / PAGE_SIZE) - page,
+      pagesLeft: pagesLeft(page, response.data.count),
     }))
 }
