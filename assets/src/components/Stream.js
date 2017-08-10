@@ -33,7 +33,7 @@ function StreamTrack(props: {
 }
 
 export default function Stream(props: {
-  activeTrack: TrackAlias,
+  activeTrack: ?TrackAlias,
   archiveTrack: (TrackAlias) => void,
   hasMore: boolean,
   isPaused: boolean,

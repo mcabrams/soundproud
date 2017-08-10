@@ -1,43 +1,25 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { document } from 'global'
-import { Link, BrowserRouter } from 'react-router-dom'
-import Stream from './components/Stream'
-import Player from './components/Player'
-import * as api from './utils/api'
-// $FlowFixMe
-import './styles/main.scss'
+import { BrowserRouter } from 'react-router-dom'
+import Header from './Header'
+import Player from './Player'
+import Stream from './Stream'
+import * as api from '../utils/api'
+import type { TrackAlias } from '../typechecking/aliases'
 
-function Header() {
-  return (
-    <header className="header">
-      <h1 className="header__heading">
-        Soundproud
-      </h1>
-      <nav className="header__nav">
-        <Link
-          className="header__nav-link"
-          to="/stream/new"
-        >
-          Stream
-        </Link>
-        <Link
-          className="header__nav-link"
-          to="/stream/archive"
-        >
-          Archived
-        </Link>
-      </nav>
-    </header>
-  )
-}
+export default class App extends React.Component {
+  state: {
+    isPaused: boolean,
+    activeTrack: ?TrackAlias,
+    tracks: Array<TrackAlias>,
+    pagesLoaded: ?number,
+    pagesLeft: ?number,
+  }
 
-class Main extends React.Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
 
     this.state = {
-      isPaused: null,
+      isPaused: false,
       activeTrack: null,
       tracks: [],
       pagesLoaded: 0,
@@ -45,28 +27,28 @@ class Main extends React.Component {
     }
   }
 
-  setIsPaused = (isPaused) => {
+  setIsPaused = (isPaused: boolean): void => {
     this.setState(() => ({
       isPaused,
     }))
   }
 
-  setActiveTrack = (track) => {
+  setActiveTrack = (track: TrackAlias): void => {
     this.setState(() => ({
       activeTrack: track,
     }))
   }
 
-  playTrack = (track) => {
+  playTrack = (track: TrackAlias): void => {
     this.setActiveTrack(track)
     this.play()
   }
 
-  pause = () => {
+  pause = (): void => {
     this.setIsPaused(true)
   }
 
-  play = () => {
+  play = (): void => {
     this.setIsPaused(false)
   }
 
@@ -86,11 +68,11 @@ class Main extends React.Component {
     return this.playTrack(this.nextTrack)
   }
 
-  playFirstTrack = () => {
+  playFirstTrack = (): void => {
     this.playTrack(this.firstTrack)
   }
 
-  loadMoreTracks = () => {
+  loadMoreTracks = (): void => {
     api.getTracks(this.state.pagesLoaded + 1).then((data) => {
       this.setState(prevState => ({
         tracks: prevState.tracks.concat(data.tracks),
@@ -100,7 +82,7 @@ class Main extends React.Component {
     })
   }
 
-  archiveTrack = (track) => {
+  archiveTrack = (track: TrackAlias): void => {
     api.archiveTrack(track).then(() => {
       this.setState(prevState => ({
         tracks: prevState.tracks.filter(t => t.id !== track.id),
@@ -114,25 +96,31 @@ class Main extends React.Component {
     })
   }
 
-  get currentTrackIndex() {
+  get currentTrackIndex(): number {
+    const activeTrack = this.state.activeTrack
+
+    if (!activeTrack) {
+      return 0
+    }
+
     return this.state.tracks.findIndex(track => (
-      track.gateway_id === this.state.activeTrack.gateway_id
+      track.gateway_id === activeTrack.gateway_id
     ))
   }
 
-  get nextTrack() {
+  get nextTrack(): TrackAlias {
     return this.state.tracks[this.currentTrackIndex + 1] || this.firstTrack
   }
 
-  get previousTrack() {
+  get previousTrack(): TrackAlias {
     return this.state.tracks[this.currentTrackIndex - 1] || this.lastTrack
   }
 
-  get firstTrack() {
+  get firstTrack(): TrackAlias {
     return this.state.tracks[0]
   }
 
-  get lastTrack() {
+  get lastTrack(): TrackAlias {
     return this.state.tracks.slice(-1)[0]
   }
 
@@ -144,7 +132,7 @@ class Main extends React.Component {
           <Stream
             activeTrack={this.state.activeTrack}
             archiveTrack={this.archiveTrack}
-            hasMore={this.state.pagesLeft === null ||
+            hasMore={this.state.pagesLeft == null ||
                      this.state.pagesLeft > 0}
             isPaused={this.state.isPaused}
             loadMore={this.loadMoreTracks}
@@ -169,6 +157,3 @@ class Main extends React.Component {
     )
   }
 }
-
-const app = document.getElementById('app')
-ReactDOM.render(<Main />, app)

@@ -6,7 +6,7 @@ const path = require('path')
 
 const config = {
   devtool: 'inline-source-map',
-  entry: path.resolve(__dirname, 'src/app.js'),
+  entry: path.resolve(__dirname, 'src/main.js'),
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',

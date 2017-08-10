@@ -9,7 +9,7 @@ export default class Player extends React.Component {
   audio: ?HTMLAudioElement
   props: {
     archiveTrack: (TrackAlias) => void,
-    activeTrack: TrackAlias,
+    activeTrack: ?TrackAlias,
     isPaused: boolean,
     play: () => void,
     pause: () => void,
@@ -30,7 +30,11 @@ export default class Player extends React.Component {
     this.audio.play()
   }
 
-  archiveCurrentlyPlayingTrack = () => {
+  archiveCurrentlyPlayingTrack = (): void => {
+    if (!this.props.activeTrack) {
+      return
+    }
+
     this.props.archiveTrack(this.props.activeTrack)
   }
 
