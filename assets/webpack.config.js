@@ -1,3 +1,7 @@
+const postCSSImport = require('postcss-import')
+const postCSSReporter = require('postcss-reporter')
+const stylelint = require('stylelint')
+
 const path = require('path')
 
 const config = {
@@ -25,11 +29,27 @@ const config = {
           },
           {
             loader: 'css-loader', // translates CSS into CommonJS
-            options: { sourceMap: true },
+            options: {
+              importLoaders: 2,
+              sourceMap: true,
+            },
           },
           {
             loader: 'sass-loader', // compiles Sass to CSS
             options: { sourceMap: true },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: [
+                stylelint(),
+                postCSSImport({
+                  plugins: [stylelint()],
+                }),
+                postCSSReporter({ clearReportedMessages: true }),
+              ],
+              sourceMap: true,
+            },
           },
         ],
       },

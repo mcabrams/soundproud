@@ -1,43 +1,9 @@
-body {
-  margin: 0;
-  font-family: 'Lato', sans-serif;
-}
-
-@function repeat-area-name($string, $n) {
-  $fullstring:"";
-  @for $i from 1 through $n {
-    $fullstring: $fullstring + $string;
-    @if $i != $n {
-      $fullstring: $fullstring + ' ';
-    }
-  }
-  @return $fullstring;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-gap: 1%;
-  grid-template-rows: auto;
-  grid-template-areas:
-    "#{repeat-area-name('header', 12)}"
-    ". #{repeat-area-name('main', 10)} ."
-    "#{repeat-area-name('footer', 12)}"
-}
-
-.grid__player {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-}
-
-@import "variables/colors";
-@import "variables/spacings";
-
-@import "blocks/bare-button";
-@import "blocks/button";
-@import "blocks/header";
-@import "blocks/player";
-@import "blocks/stream";
-@import "blocks/track";
-@import "blocks/track-byline";
+@import 'base.scss';
+@import 'variables/colors.scss';
+@import 'variables/spacings.scss';
+@import 'blocks/bare-button.scss';
+@import 'blocks/header.scss';
+@import 'blocks/player.scss';
+@import 'blocks/stream.scss';
+@import 'blocks/track.scss';
+@import 'blocks/track-byline.scss';
