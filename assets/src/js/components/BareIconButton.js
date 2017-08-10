@@ -1,9 +1,9 @@
 import React from 'react'
-import '../images/icons/play.svg'
-import '../images/icons/pause.svg'
-import '../images/icons/skip-previous.svg'
-import '../images/icons/skip-next.svg'
-import '../images/icons/archive.svg'
+import '../../images/icons/play.svg'
+import '../../images/icons/pause.svg'
+import '../../images/icons/skip-previous.svg'
+import '../../images/icons/skip-next.svg'
+import '../../images/icons/archive.svg'
 
 export default function BareIconButton(
   props: { clickHandler: () => void, iconName: string, isLarge?: boolean, }) {
