@@ -17,6 +17,7 @@ describe('archiveTrack', () => {
   })
 
   it('should return axios.patch correctly', () => {
+    // $FlowFixMe
     expect(api.archiveTrack(track)).toEqual(axios.patch())
   })
 })
@@ -66,6 +67,7 @@ describe('getTracks', () => {
   })
 
   it('should return axios.get', () => {
+    // $FlowFixMe
     expect(api.getTracks()).toEqual(axios.get())
   })
 })
