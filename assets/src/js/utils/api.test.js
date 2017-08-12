@@ -54,8 +54,8 @@ describe('getTracks', () => {
     const countsAndExpecteds = [[0, 0], [1, 0], [10, 0], [11, 1], [21, 2]]
     const testCountYieldsExpected = ([count, expected]) => {
       it(`should have ${expected} pages left when count of ${count}`, () => {
-        const call = nock(host)
-          .get(/tracks/)
+        nock(host)
+          .get(/^\/tracks\//)
           .reply(200, getResponseObject([], count))
 
         return api.getTracks(1).then((response) => {
