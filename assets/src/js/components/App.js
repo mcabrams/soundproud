@@ -73,7 +73,7 @@ export default class App extends React.Component {
   }
 
   loadMoreTracks = (): void => {
-    api.getTracks(this.state.pagesLoaded + 1).then((data) => {
+    api.fetchTracksData(this.state.pagesLoaded + 1).then((data) => {
       this.setState(prevState => ({
         tracks: prevState.tracks.concat(data.tracks),
         pagesLoaded: prevState.pagesLoaded + 1,

@@ -1,12 +1,10 @@
-import axios from 'axios'
-// $FlowFixMe
-import httpAdapter from 'axios/lib/adapters/http'
 import nock from 'nock'
+import { host } from '../tests/axios'
 import * as api from './api'
 
-const host = 'http://localhost'
-axios.defaults.baseURL = host
-axios.defaults.adapter = httpAdapter
+afterEach(() => {
+  nock.cleanAll()
+})
 
 describe('archiveTrack', () => {
   const track = { id: 42 }
@@ -22,7 +20,7 @@ describe('archiveTrack', () => {
   })
 })
 
-describe('getTracks', () => {
+describe('fetchTracksData', () => {
   function getResponseObject(results = [], count = 1) {
     return {
       results,
@@ -35,7 +33,7 @@ describe('getTracks', () => {
       .get('/tracks/?page=1&archived=false')
       .reply(200, getResponseObject())
 
-    return api.getTracks().then((response) => {
+    return api.fetchTracksData().then((response) => {
       expect(response.tracks).toEqual([])
     })
   })
@@ -45,7 +43,7 @@ describe('getTracks', () => {
       .get('/tracks/?page=5&archived=false')
       .reply(200, getResponseObject())
 
-    return api.getTracks(5).then(() => {
+    return api.fetchTracksData(5).then(() => {
       expect(call.isDone()).toBeTruthy()
     })
   })
@@ -58,7 +56,7 @@ describe('getTracks', () => {
           .get(/^\/tracks\//)
           .reply(200, getResponseObject([], count))
 
-        return api.getTracks(1).then((response) => {
+        return api.fetchTracksData(1).then((response) => {
           expect(response.pagesLeft).toEqual(expected)
         })
       })
