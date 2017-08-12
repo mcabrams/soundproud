@@ -215,6 +215,11 @@
       "from": "redux-devtools-extension@>=2.13.2 <3.0.0",
       "resolved": "https://registry.npmjs.org/redux-devtools-extension/-/redux-devtools-extension-2.13.2.tgz"
     },
+    "redux-thunk": {
+      "version": "2.2.0",
+      "from": "redux-thunk@latest",
+      "resolved": "https://registry.npmjs.org/redux-thunk/-/redux-thunk-2.2.0.tgz"
+    },
     "resolve-pathname": {
       "version": "2.1.0",
       "from": "resolve-pathname@>=2.0.0 <3.0.0",
