@@ -6,7 +6,7 @@ export type Action =
       page: number
     }
   | { type: 'RECEIVE_TRACKS',
-      tracks?: Array<TrackAlias>,
+      tracks: Array<TrackAlias>,
       pagesLeft: number,
       pagesLoaded: number,
     }
