@@ -3,6 +3,10 @@ import type { TrackAlias } from '../typechecking/aliases'
 
 const initialStateById = {}
 
+type StateById = {
+  [trackId: number]: TrackAlias,
+}
+
 const initialState = {
   isFetching: false,
   byId: initialStateById,
@@ -13,15 +17,30 @@ const initialState = {
 
 type State = {
   +isFetching: boolean,
-  +byId: {
-    [track_id: number]: TrackAlias,
-  },
+  +byId: StateById,
   +pagesRequested: number,
   +pagesLoaded: number,
   +pagesLeft: ?number,
 }
 
-function byId(state: State = initialStateById, action: Action) {
+export type ArchiveTrackAction = {
+  type: 'REQUEST_ARCHIVE_TRACK',
+  trackId: number,
+}
+
+function archiveTrack(state: StateById, action: ArchiveTrackAction) {
+  const track = state[action.trackId]
+
+  return {
+    ...state,
+    [action.trackId]: {
+      ...track,
+      archived: true,
+    },
+  }
+}
+
+function byId(state: StateById = initialStateById, action: Action) {
   switch (action.type) {
     case 'RECEIVE_TRACKS':
       return {
@@ -31,6 +50,8 @@ function byId(state: State = initialStateById, action: Action) {
           [track.id]: track,
         }), {}),
       }
+    case 'REQUEST_ARCHIVE_TRACK':
+      return archiveTrack(state, action)
     default:
       return state
   }
@@ -51,6 +72,11 @@ export default function tracks(state: State = initialState, action: Action) {
         ...state,
         isFetching: true,
         pagesRequested: action.page,
+      }
+    case 'REQUEST_ARCHIVE_TRACK':
+      return {
+        ...state,
+        byId: byId(state.byId, action),
       }
     default:
       return state

@@ -1,4 +1,5 @@
 import type { TrackAlias } from '../typechecking/aliases'
+import type { ArchiveTrackAction } from '../reducers/tracks'
 
 export type Action =
   | { type: '@@INIT' }
@@ -10,4 +11,5 @@ export type Action =
       pagesLeft: number,
       pagesLoaded: number,
     }
+  | ArchiveTrackAction
   | { type: 'SET_VISIBILITY_FILTER', filter: string }

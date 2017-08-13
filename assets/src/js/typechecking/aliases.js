@@ -13,6 +13,7 @@ export type TrackAlias = {
   stream_url: string,
   title: string,
   username: string,
+  archived: boolean,
 }
 
 export type Dispatch = ReduxDispatch<Action>

@@ -61,7 +61,7 @@ describe('tracks reducer', () => {
       const existingTrack = trackFactory()
 
       const state = {
-        isFetching: true,
+        isFetching: false,
         byId: {
           [existingTrack.id]: existingTrack,
         },
@@ -88,6 +88,32 @@ describe('tracks reducer', () => {
         pagesLeft: 5,
         pagesLoaded: 1,
       })
+    })
+  })
+
+  it('should handle REQUEST_ARCHIVE_TRACK', () => {
+    const existingTrack = trackFactory()
+    const state = {
+      isFetching: false,
+      byId: {
+        [existingTrack.id]: existingTrack,
+      },
+      pagesRequested: 1,
+      pagesLeft: 5,
+      pagesLoaded: 0,
+    }
+
+    expect(reducer(state, {
+      type: 'REQUEST_ARCHIVE_TRACK',
+      trackId: existingTrack.id,
+    })).toEqual({
+      isFetching: false,
+      byId: {
+        [existingTrack.id]: { ...existingTrack, archived: true },
+      },
+      pagesRequested: 1,
+      pagesLeft: 5,
+      pagesLoaded: 0,
     })
   })
 })

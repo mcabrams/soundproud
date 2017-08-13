@@ -18,6 +18,7 @@ export function trackFactory({
     stream_url: faker.internet.url(),
     title: faker.lorem.sentence(),
     username: faker.internet.userName(),
+    archived: false,
   }
 }
 
@@ -39,5 +40,6 @@ export function apiTrackFactory({
     stream_url: faker.internet.url(),
     title: faker.lorem.sentence(),
     username: faker.internet.userName(),
+    archived: false,
   }
 }
