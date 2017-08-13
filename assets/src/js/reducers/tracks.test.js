@@ -14,9 +14,9 @@ describe('tracks reducer', () => {
     expect(reducer(undefined, { type: '@@INIT' })).toEqual(initialState)
   })
 
-  it('should handle REQUEST_TRACKS', () => {
+  it('should handle TRACKS_REQUEST', () => {
     expect(reducer(initialState, {
-      type: 'REQUEST_TRACKS',
+      type: 'TRACKS_REQUEST',
       page: 1,
       pagesLoaded: 0,
     })).toEqual({
@@ -28,7 +28,7 @@ describe('tracks reducer', () => {
     })
   })
 
-  describe('should hanlde RECEIVE_TRACKS', () => {
+  describe('should hanlde TRACKS_RECEIVAL', () => {
     it('when no tracks present', () => {
       const state = {
         isFetching: true,
@@ -41,7 +41,7 @@ describe('tracks reducer', () => {
       const receivedTracks = [trackFactory(), trackFactory()]
 
       expect(reducer(state, {
-        type: 'RECEIVE_TRACKS',
+        type: 'TRACKS_RECEIVAL',
         tracks: receivedTracks,
         pagesLeft: 5,
         pagesLoaded: 1,
@@ -73,7 +73,7 @@ describe('tracks reducer', () => {
       const receivedTracks = [trackFactory(), trackFactory()]
 
       expect(reducer(state, {
-        type: 'RECEIVE_TRACKS',
+        type: 'TRACKS_RECEIVAL',
         tracks: receivedTracks,
         pagesLeft: 5,
         pagesLoaded: 1,
@@ -91,7 +91,7 @@ describe('tracks reducer', () => {
     })
   })
 
-  it('should handle REQUEST_ARCHIVE_TRACK', () => {
+  it('should handle ARCHIVE_TRACK_REQUEST', () => {
     const existingTrack = trackFactory()
     const state = {
       isFetching: false,
@@ -104,7 +104,7 @@ describe('tracks reducer', () => {
     }
 
     expect(reducer(state, {
-      type: 'REQUEST_ARCHIVE_TRACK',
+      type: 'ARCHIVE_TRACK_REQUEST',
       trackId: existingTrack.id,
     })).toEqual({
       isFetching: false,

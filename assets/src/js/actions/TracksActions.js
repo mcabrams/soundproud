@@ -3,7 +3,7 @@ import type { Dispatch, TrackAlias } from '../typechecking/aliases'
 
 export function requestTracks(page: number = 1) {
   return {
-    type: 'REQUEST_TRACKS',
+    type: 'TRACKS_REQUEST',
     page,
   }
 }
@@ -14,7 +14,7 @@ export function receiveTracks(
   },
   pagesLoaded: number) {
   return {
-    type: 'RECEIVE_TRACKS',
+    type: 'TRACKS_RECEIVAL',
     tracks: data.tracks,
     pagesLeft: data.pagesLeft,
     pagesLoaded,

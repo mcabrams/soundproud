@@ -11,14 +11,14 @@ const mockStore = configureMockStore(middlewares)
 describe('request tracks action creator', () => {
   it('should create an action to request tracks with default page 1', () => {
     expect(actions.requestTracks()).toEqual({
-      type: 'REQUEST_TRACKS',
+      type: 'TRACKS_REQUEST',
       page: 1,
     })
   })
 
   it('should request specific page if passed', () => {
     expect(actions.requestTracks(3)).toEqual({
-      type: 'REQUEST_TRACKS',
+      type: 'TRACKS_REQUEST',
       page: 3,
     })
   })
@@ -32,7 +32,7 @@ describe('receive tracks action creator', () => {
 
   it('should handle data', () => {
     expect(actions.receiveTracks(data, 2)).toEqual({
-      type: 'RECEIVE_TRACKS',
+      type: 'TRACKS_RECEIVAL',
       tracks: data.tracks,
       pagesLeft: data.pagesLeft,
       pagesLoaded: 2,
@@ -51,8 +51,8 @@ describe('fetch tracks action creator', () => {
     jest.spyOn(api, 'fetchTracksData').mockImplementation(fetchMock)
 
     const expectedActions = [
-      { type: 'REQUEST_TRACKS', page: 1 },
-      { type: 'RECEIVE_TRACKS', tracks, pagesLeft: 1, pagesLoaded: 1 },
+      { type: 'TRACKS_REQUEST', page: 1 },
+      { type: 'TRACKS_RECEIVAL', tracks, pagesLeft: 1, pagesLoaded: 1 },
     ]
 
     const store = mockStore({

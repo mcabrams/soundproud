@@ -24,7 +24,7 @@ type State = {
 }
 
 export type ArchiveTrackAction = {
-  type: 'REQUEST_ARCHIVE_TRACK',
+  type: 'ARCHIVE_TRACK_REQUEST',
   trackId: number,
 }
 
@@ -42,7 +42,7 @@ function archiveTrack(state: StateById, action: ArchiveTrackAction) {
 
 function byId(state: StateById = initialStateById, action: Action) {
   switch (action.type) {
-    case 'RECEIVE_TRACKS':
+    case 'TRACKS_RECEIVAL':
       return {
         ...state,
         ...action.tracks.reduce((accumulator, track) => ({
@@ -50,7 +50,7 @@ function byId(state: StateById = initialStateById, action: Action) {
           [track.id]: track,
         }), {}),
       }
-    case 'REQUEST_ARCHIVE_TRACK':
+    case 'ARCHIVE_TRACK_REQUEST':
       return archiveTrack(state, action)
     default:
       return state
@@ -59,7 +59,7 @@ function byId(state: StateById = initialStateById, action: Action) {
 
 export default function tracks(state: State = initialState, action: Action) {
   switch (action.type) {
-    case 'RECEIVE_TRACKS':
+    case 'TRACKS_RECEIVAL':
       return {
         ...state,
         isFetching: false,
@@ -67,13 +67,13 @@ export default function tracks(state: State = initialState, action: Action) {
         pagesLeft: action.pagesLeft,
         pagesLoaded: action.pagesLoaded,
       }
-    case 'REQUEST_TRACKS':
+    case 'TRACKS_REQUEST':
       return {
         ...state,
         isFetching: true,
         pagesRequested: action.page,
       }
-    case 'REQUEST_ARCHIVE_TRACK':
+    case 'ARCHIVE_TRACK_REQUEST':
       return {
         ...state,
         byId: byId(state.byId, action),
