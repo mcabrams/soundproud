@@ -9,9 +9,17 @@ const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
 
 describe('request tracks action creator', () => {
-  it('should create an action to request tracks', () => {
+  it('should create an action to request tracks with default page 1', () => {
     expect(actions.requestTracks()).toEqual({
       type: 'REQUEST_TRACKS',
+      page: 1,
+    })
+  })
+
+  it('should request specific page if passed', () => {
+    expect(actions.requestTracks(3)).toEqual({
+      type: 'REQUEST_TRACKS',
+      page: 3,
     })
   })
 })
@@ -23,10 +31,11 @@ describe('receive tracks action creator', () => {
   }
 
   it('should handle data', () => {
-    expect(actions.receiveTracks(data)).toEqual({
+    expect(actions.receiveTracks(data, 2)).toEqual({
       type: 'RECEIVE_TRACKS',
       tracks: data.tracks,
       pagesLeft: data.pagesLeft,
+      pagesLoaded: 2,
     })
   })
 })
@@ -38,15 +47,23 @@ describe('fetch tracks action creator', () => {
 
   it('creates expected actions when fetching tracks has been done', () => {
     const tracks = [1, 2]
-    const fetchMock = () => Promise.resolve({ tracks })
+    const fetchMock = () => Promise.resolve({ tracks, pagesLeft: 1 })
     jest.spyOn(api, 'fetchTracksData').mockImplementation(fetchMock)
 
     const expectedActions = [
-      { type: 'REQUEST_TRACKS' },
-      { type: 'RECEIVE_TRACKS', tracks },
+      { type: 'REQUEST_TRACKS', page: 1 },
+      { type: 'RECEIVE_TRACKS', tracks, pagesLeft: 1, pagesLoaded: 1 },
     ]
 
-    const store = mockStore()
+    const store = mockStore({
+      tracks: {
+        isFetching: false,
+        items: [],
+        pagesRequested: 0,
+        pagesLoaded: 0,
+        pagesLeft: null,
+      },
+    })
 
     // $FlowFixMe
     return store.dispatch(actions.fetchTracks()).then(() => {

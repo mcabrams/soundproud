@@ -4,6 +4,9 @@ import { trackFactory } from '../test/factories'
 const initialState = {
   isFetching: false,
   items: [],
+  pagesRequested: 0,
+  pagesLeft: null,
+  pagesLoaded: 0,
 }
 
 describe('tracks reducer', () => {
@@ -12,9 +15,16 @@ describe('tracks reducer', () => {
   })
 
   it('should handle REQUEST_TRACKS', () => {
-    expect(reducer(initialState, { type: 'REQUEST_TRACKS' })).toEqual({
+    expect(reducer(initialState, {
+      type: 'REQUEST_TRACKS',
+      page: 1,
+      pagesLoaded: 0,
+    })).toEqual({
       isFetching: true,
       items: [],
+      pagesRequested: 1,
+      pagesLeft: null,
+      pagesLoaded: 0,
     })
   })
 
@@ -22,6 +32,9 @@ describe('tracks reducer', () => {
     const state = {
       isFetching: true,
       items: [],
+      pagesRequested: 1,
+      pagesLeft: 5,
+      pagesLoaded: 0,
     }
 
     const receivedTracks = [trackFactory(), trackFactory()]
@@ -30,10 +43,13 @@ describe('tracks reducer', () => {
       type: 'RECEIVE_TRACKS',
       tracks: receivedTracks,
       pagesLeft: 5,
+      pagesLoaded: 1,
     })).toEqual({
       isFetching: false,
       items: receivedTracks,
+      pagesRequested: 1,
       pagesLeft: 5,
+      pagesLoaded: 1,
     })
   })
 })
