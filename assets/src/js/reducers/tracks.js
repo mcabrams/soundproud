@@ -23,19 +23,28 @@ type State = {
   +pagesLeft: ?number,
 }
 
-export type ArchiveTrackAction = {
+export type ArchiveTrackRequestAction = {
   type: 'ARCHIVE_TRACK_REQUEST',
   trackId: number,
 }
 
-function archiveTrack(state: StateById, action: ArchiveTrackAction) {
+export type ArchiveTrackFailureAction = {
+  type: 'ARCHIVE_TRACK_FAILURE',
+  trackId: number,
+}
+
+function setTrackArchived(
+  state: StateById,
+  action: ArchiveTrackRequestAction | ArchiveTrackFailureAction,
+  archived: boolean,
+) {
   const track = state[action.trackId]
 
   return {
     ...state,
     [action.trackId]: {
       ...track,
-      archived: true,
+      archived,
     },
   }
 }
@@ -51,7 +60,9 @@ function byId(state: StateById = initialStateById, action: Action) {
         }), {}),
       }
     case 'ARCHIVE_TRACK_REQUEST':
-      return archiveTrack(state, action)
+      return setTrackArchived(state, action, true)
+    case 'ARCHIVE_TRACK_FAILURE':
+      return setTrackArchived(state, action, false)
     default:
       return state
   }
@@ -74,6 +85,11 @@ export default function tracks(state: State = initialState, action: Action) {
         pagesRequested: action.page,
       }
     case 'ARCHIVE_TRACK_REQUEST':
+      return {
+        ...state,
+        byId: byId(state.byId, action),
+      }
+    case 'ARCHIVE_TRACK_FAILURE':
       return {
         ...state,
         byId: byId(state.byId, action),

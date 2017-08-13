@@ -116,4 +116,30 @@ describe('tracks reducer', () => {
       pagesLoaded: 0,
     })
   })
+
+  it('should handle ARCHIVE_TRACK_FAILURE', () => {
+    const archivedTrack = trackFactory({ archived: true })
+    const state = {
+      isFetching: false,
+      byId: {
+        [archivedTrack.id]: archivedTrack,
+      },
+      pagesRequested: 1,
+      pagesLeft: 5,
+      pagesLoaded: 0,
+    }
+
+    expect(reducer(state, {
+      type: 'ARCHIVE_TRACK_FAILURE',
+      trackId: archivedTrack.id,
+    })).toEqual({
+      isFetching: false,
+      byId: {
+        [archivedTrack.id]: { ...archivedTrack, archived: false },
+      },
+      pagesRequested: 1,
+      pagesLeft: 5,
+      pagesLoaded: 0,
+    })
+  })
 })

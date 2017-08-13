@@ -3,11 +3,13 @@ import faker from 'faker'
 type TrackFactoryOptions = {|
   createdAt?: Date,
   updatedAt?: Date,
+  archived?: boolean,
 |}
 
 export function trackFactory({
   createdAt,
   updatedAt,
+  archived,
   }: TrackFactoryOptions = {}) {
   return {
     created_at: createdAt || faker.date.past(),
@@ -18,7 +20,7 @@ export function trackFactory({
     stream_url: faker.internet.url(),
     title: faker.lorem.sentence(),
     username: faker.internet.userName(),
-    archived: false,
+    archived: archived || false,
   }
 }
 
