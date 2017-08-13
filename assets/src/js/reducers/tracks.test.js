@@ -1,5 +1,4 @@
 import reducer from './tracks'
-import * as types from '../constants/ActionTypes'
 import { trackFactory } from '../test/factories'
 
 const initialState = {
@@ -9,11 +8,11 @@ const initialState = {
 
 describe('tracks reducer', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, { type: 'foo' })).toEqual(initialState)
+    expect(reducer(undefined, { type: '@@INIT' })).toEqual(initialState)
   })
 
   it('should handle REQUEST_TRACKS', () => {
-    expect(reducer(initialState, { type: types.REQUEST_TRACKS })).toEqual({
+    expect(reducer(initialState, { type: 'REQUEST_TRACKS' })).toEqual({
       isFetching: true,
       items: [],
     })
@@ -28,11 +27,13 @@ describe('tracks reducer', () => {
     const receivedTracks = [trackFactory(), trackFactory()]
 
     expect(reducer(state, {
-      type: types.RECEIVE_TRACKS,
+      type: 'RECEIVE_TRACKS',
       tracks: receivedTracks,
+      pagesLeft: 5,
     })).toEqual({
       isFetching: false,
       items: receivedTracks,
+      pagesLeft: 5,
     })
   })
 })

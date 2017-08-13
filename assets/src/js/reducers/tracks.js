@@ -1,4 +1,4 @@
-import { REQUEST_TRACKS, RECEIVE_TRACKS } from '../constants/ActionTypes'
+import type { Action } from '../actions/types'
 import type { TrackAlias } from '../typechecking/aliases'
 
 const initialState = {
@@ -11,20 +11,16 @@ type State = {
   +items: Array<TrackAlias>,
 }
 
-type Action = {
-  +type: string,
-  +tracks?: Array<TrackAlias>,
-}
-
 export default function tracks(state: State = initialState, action: Action) {
   switch (action.type) {
-    case RECEIVE_TRACKS:
+    case 'RECEIVE_TRACKS':
       return {
         ...state,
         isFetching: false,
         items: action.tracks,
+        pagesLeft: action.pagesLeft,
       }
-    case REQUEST_TRACKS:
+    case 'REQUEST_TRACKS':
       return {
         ...state,
         isFetching: true,

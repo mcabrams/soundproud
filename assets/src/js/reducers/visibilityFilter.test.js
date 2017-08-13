@@ -1,11 +1,10 @@
 import reducer from './visibilityFilter'
-import * as types from '../constants/ActionTypes'
 import * as filters from '../constants/VisibilityFilterConstants'
 
 describe('visibility filter reducer', () => {
   it('should return the initial state', () => {
     expect(
-      reducer(undefined, { type: 'foo', filter: 'bar' }),
+      reducer(undefined, { type: '@@INIT', filter: 'bar' }),
     ).toEqual(filters.SHOW_UNARCHIVED)
   })
 
@@ -14,7 +13,7 @@ describe('visibility filter reducer', () => {
       reducer(
         filters.SHOW_UNARCHIVED,
         {
-          type: types.SET_VISIBILITY_FILTER,
+          type: 'SET_VISIBILITY_FILTER',
           filter: filters.SHOW_ALL,
         },
       )).toEqual(filters.SHOW_ALL)
