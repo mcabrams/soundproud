@@ -21,9 +21,27 @@ export function receiveTracks(
   }
 }
 
+function shouldFetchTracks(tracksState) {
+  if (tracksState.isFetching) {
+    return false
+  }
+
+  if (tracksState.pagesLeft === null) {
+    return true
+  }
+
+  return (tracksState.pagesLeft > 0)
+}
+
 export function fetchTracks() {
   return (dispatch: Dispatch, getState) => {
-    const pageToRequest = getState().tracks.pagesLoaded + 1
+    const currentTracksState = getState().tracks
+
+    if (!shouldFetchTracks(currentTracksState)) {
+      return Promise.resolve()
+    }
+
+    const pageToRequest = currentTracksState.pagesLoaded + 1
 
     dispatch(requestTracks(pageToRequest))
 

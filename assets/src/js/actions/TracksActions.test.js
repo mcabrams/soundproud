@@ -70,4 +70,38 @@ describe('fetch tracks action creator', () => {
       expect(store.getActions()).toEqual(expectedActions)
     })
   })
+
+  it('creates no actions when 0 pages left', () => {
+    const store = mockStore({
+      tracks: {
+        isFetching: false,
+        items: [],
+        pagesRequested: 0,
+        pagesLoaded: 0,
+        pagesLeft: 0,
+      },
+    })
+
+    // $FlowFixMe
+    return store.dispatch(actions.fetchTracks()).then(() => {
+      expect(store.getActions()).toEqual([])
+    })
+  })
+
+  it('creates no actions when is currently fetching', () => {
+    const store = mockStore({
+      tracks: {
+        isFetching: true,
+        items: [],
+        pagesRequested: 0,
+        pagesLoaded: 0,
+        pagesLeft: 3,
+      },
+    })
+
+    // $FlowFixMe
+    return store.dispatch(actions.fetchTracks()).then(() => {
+      expect(store.getActions()).toEqual([])
+    })
+  })
 })
