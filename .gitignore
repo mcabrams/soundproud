@@ -15,3 +15,6 @@ assets/dist/bundle.js
 
 # Type checking files
 flow-typed/
+
+# Test coverage
+coverage/
