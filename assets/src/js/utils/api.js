@@ -8,8 +8,8 @@ function responseToTracks(response) {
   return tracks
     .map((track) => {
       const dateParsedTrack = track
-      dateParsedTrack.created_at = Date.parse(track.created_at)
-      dateParsedTrack.updated_at = Date.parse(track.updated_at)
+      dateParsedTrack.created_at = new Date(Date.parse(track.created_at))
+      dateParsedTrack.updated_at = new Date(Date.parse(track.updated_at))
       return dateParsedTrack
     })
 }

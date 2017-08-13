@@ -3,6 +3,8 @@ import type {
 } from 'redux'
 
 export type TrackAlias = {
+  created_at: Date,
+  updated_at: Date,
   artwork_url: string,
   gateway_id: number,
   id: number,

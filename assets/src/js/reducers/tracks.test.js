@@ -1,6 +1,6 @@
 import reducer from './tracks'
 import * as types from '../constants/ActionTypes'
-import { trackFactory } from '../tests/factories'
+import { trackFactory } from '../test/factories'
 
 const initialState = {
   isFetching: false,

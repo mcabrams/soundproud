@@ -73,6 +73,12 @@
     "type": "git",
     "url": "git+https://mcabrams@bitbucket.org/mcabrams/soundproud.git"
   },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/assets/src/js/test/",
+      "<rootDir>/node_modules/"
+    ]
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

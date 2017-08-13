@@ -4,7 +4,7 @@ import nock from 'nock'
 import * as actions from './TracksActions'
 import * as types from '../constants/ActionTypes'
 import * as api from '../utils/api'
-import { trackFactory } from '../tests/factories'
+import { trackFactory } from '../test/factories'
 
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
