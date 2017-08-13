@@ -15,7 +15,7 @@ const initialState = {
   pagesLeft: null,
 }
 
-type State = {
+export type State = {
   +isFetching: boolean,
   +byId: StateById,
   +pagesRequested: number,

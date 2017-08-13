@@ -176,12 +176,14 @@ describe('archive track action creator', () => {
       { type: 'ARCHIVE_TRACK_REQUEST', trackId },
     ]
 
+    // $FlowFixMe
     return store.dispatch(actions.archiveTrack(trackId)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
   })
 
   it('uses api to archive track', () => (
+    // $FlowFixMe
     store.dispatch(actions.archiveTrack(trackId)).then(() => {
       expect(archiveSpy).toHaveBeenCalledTimes(1)
       expect(archiveSpy).toHaveBeenCalledWith(trackId)
@@ -197,6 +199,7 @@ describe('archive track action creator', () => {
       { type: 'ARCHIVE_TRACK_FAILURE', trackId },
     ]
 
+    // $FlowFixMe
     return store.dispatch(actions.archiveTrack(trackId)).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })

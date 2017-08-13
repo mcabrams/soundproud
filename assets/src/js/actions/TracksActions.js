@@ -1,5 +1,6 @@
 import * as api from '../utils/api'
-import type { Dispatch, TrackAlias } from '../typechecking/aliases'
+import type { Dispatch, GetState, TrackAlias } from '../typechecking/aliases'
+import type { State as TracksState } from '../reducers/tracks'
 
 export function requestTracks(page: number = 1) {
   return {
@@ -21,12 +22,12 @@ export function receiveTracks(
   }
 }
 
-function shouldFetchTracks(tracksState) {
+function shouldFetchTracks(tracksState: TracksState) {
   if (tracksState.isFetching) {
     return false
   }
 
-  if (tracksState.pagesLeft === null) {
+  if (tracksState.pagesLeft !== 0 && tracksState.pagesLeft == null) {
     return true
   }
 
@@ -34,7 +35,7 @@ function shouldFetchTracks(tracksState) {
 }
 
 export function fetchTracks() {
-  return (dispatch: Dispatch, getState) => {
+  return (dispatch: Dispatch, getState: GetState) => {
     const currentTracksState = getState().tracks
 
     if (!shouldFetchTracks(currentTracksState)) {
@@ -57,10 +58,10 @@ export function archiveTrack(trackId: number) {
     })
 
     return api.archiveTrackWithId(trackId)
-      .catch(() => {
+      .catch(() => (
         dispatch({
           type: 'ARCHIVE_TRACK_FAILURE', trackId,
         })
-      })
+      ))
   }
 }
