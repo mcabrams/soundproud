@@ -19,8 +19,8 @@ function pagesLeft(currentPage, totalEntries) {
   return totalPages === 0 ? 0 : totalPages - currentPage
 }
 
-export function archiveTrack(track: { id: number }) {
-  return axios.patch(`/tracks/${track.id}/`, {
+export function archiveTrackWithId(id: number) {
+  return axios.patch(`/tracks/${id}/`, {
     archived: true,
   })
 }

@@ -7,15 +7,15 @@ afterEach(() => {
   nock.cleanAll()
 })
 
-describe('archiveTrack', () => {
-  const track = { id: 42 }
+describe('archiveTrackWithId', () => {
+  const trackId = 42
 
   it('should send patch request to correct uri', () => {
     const archiveCall = nock(host)
       .patch('/tracks/42/')
       .reply(200, 'foo')
 
-    return api.archiveTrack(track).then(() => {
+    return api.archiveTrackWithId(trackId).then(() => {
       expect(archiveCall.isDone()).toBeTruthy()
     })
   })

@@ -1,6 +1,5 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import nock from 'nock'
 import * as actions from './TracksActions'
 import * as api from '../utils/api'
 import { trackFactory } from '../test/factories'
@@ -41,10 +40,10 @@ describe('receive tracks action creator', () => {
 })
 
 describe('fetch tracks action creator', () => {
-  let tracks
   let fetchMock
   let fetchSpy
   let store
+  let tracks
 
   beforeEach(() => {
     tracks = [1, 2]
@@ -62,7 +61,7 @@ describe('fetch tracks action creator', () => {
   })
 
   afterEach(() => {
-    nock.cleanAll()
+    fetchSpy.mockRestore()
   })
 
   it('creates expected actions when fetching tracks has been done', () => {
@@ -104,6 +103,7 @@ describe('fetch tracks action creator', () => {
   it('calls api to fetch tracks data', () => (
     // $FlowFixMe
     store.dispatch(actions.fetchTracks()).then(() => {
+      expect(fetchSpy).toHaveBeenCalledTimes(1)
       expect(fetchSpy).toHaveBeenCalledWith(1)
     })
   ))
@@ -139,6 +139,66 @@ describe('fetch tracks action creator', () => {
     // $FlowFixMe
     return store.dispatch(actions.fetchTracks()).then(() => {
       expect(store.getActions()).toEqual([])
+    })
+  })
+})
+
+describe('archive track action creator', () => {
+  let archiveSpy
+  let store
+  let trackToArchive
+  let trackId
+
+  beforeEach(() => {
+    archiveSpy = jest.spyOn(api, 'archiveTrackWithId')
+      .mockImplementation(() => Promise.resolve())
+    trackToArchive = trackFactory()
+    trackId = trackToArchive.id
+    store = mockStore({
+      tracks: {
+        isFetching: false,
+        byId: {
+          [trackId]: trackToArchive,
+        },
+        pagesRequested: 0,
+        pagesLoaded: 0,
+        pagesLeft: null,
+      },
+    })
+  })
+
+  afterEach(() => {
+    archiveSpy.mockRestore()
+  })
+
+  it('creates expected actions when archiving track is success', () => {
+    const expectedActions = [
+      { type: 'ARCHIVE_TRACK_REQUEST', trackId },
+    ]
+
+    return store.dispatch(actions.archiveTrack(trackId)).then(() => {
+      expect(store.getActions()).toEqual(expectedActions)
+    })
+  })
+
+  it('uses api to archive track', () => (
+    store.dispatch(actions.archiveTrack(trackId)).then(() => {
+      expect(archiveSpy).toHaveBeenCalledTimes(1)
+      expect(archiveSpy).toHaveBeenCalledWith(trackId)
+    })
+  ))
+
+  it('creates expected actions when archiving track is a failure', () => {
+    archiveSpy = jest.spyOn(api, 'archiveTrackWithId')
+      .mockImplementation(() => Promise.reject())
+
+    const expectedActions = [
+      { type: 'ARCHIVE_TRACK_REQUEST', trackId },
+      { type: 'ARCHIVE_TRACK_FAILURE', trackId },
+    ]
+
+    return store.dispatch(actions.archiveTrack(trackId)).then(() => {
+      expect(store.getActions()).toEqual(expectedActions)
     })
   })
 })

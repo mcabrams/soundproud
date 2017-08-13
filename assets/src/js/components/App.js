@@ -83,7 +83,7 @@ export default class App extends React.Component {
   }
 
   archiveTrack = (track: TrackAlias): void => {
-    api.archiveTrack(track).then(() => {
+    api.archiveTrackWithId(track.id).then(() => {
       this.setState(prevState => ({
         tracks: prevState.tracks.filter(t => t.id !== track.id),
       }))

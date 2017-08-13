@@ -49,3 +49,18 @@ export function fetchTracks() {
       .then(data => dispatch(receiveTracks(data, pageToRequest)))
   }
 }
+
+export function archiveTrack(trackId: number) {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: 'ARCHIVE_TRACK_REQUEST', trackId,
+    })
+
+    return api.archiveTrackWithId(trackId)
+      .catch(() => {
+        dispatch({
+          type: 'ARCHIVE_TRACK_FAILURE', trackId,
+        })
+      })
+  }
+}
