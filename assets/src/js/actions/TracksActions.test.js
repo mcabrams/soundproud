@@ -41,29 +41,35 @@ describe('receive tracks action creator', () => {
 })
 
 describe('fetch tracks action creator', () => {
-  afterEach(() => {
-    nock.cleanAll()
-  })
+  let tracks
+  let fetchMock
+  let fetchSpy
+  let store
 
-  it('creates expected actions when fetching tracks has been done', () => {
-    const tracks = [1, 2]
-    const fetchMock = () => Promise.resolve({ tracks, pagesLeft: 1 })
-    jest.spyOn(api, 'fetchTracksData').mockImplementation(fetchMock)
-
-    const expectedActions = [
-      { type: 'TRACKS_REQUEST', page: 1 },
-      { type: 'TRACKS_RECEIVAL', tracks, pagesLeft: 1, pagesLoaded: 1 },
-    ]
-
-    const store = mockStore({
+  beforeEach(() => {
+    tracks = [1, 2]
+    fetchMock = () => Promise.resolve({ tracks, pagesLeft: 1 })
+    fetchSpy = jest.spyOn(api, 'fetchTracksData').mockImplementation(fetchMock)
+    store = mockStore({
       tracks: {
         isFetching: false,
-        items: [],
+        byId: {},
         pagesRequested: 0,
         pagesLoaded: 0,
         pagesLeft: null,
       },
     })
+  })
+
+  afterEach(() => {
+    nock.cleanAll()
+  })
+
+  it('creates expected actions when fetching tracks has been done', () => {
+    const expectedActions = [
+      { type: 'TRACKS_REQUEST', page: 1 },
+      { type: 'TRACKS_RECEIVAL', tracks, pagesLeft: 1, pagesLoaded: 1 },
+    ]
 
     // $FlowFixMe
     return store.dispatch(actions.fetchTracks()).then(() => {
@@ -71,11 +77,42 @@ describe('fetch tracks action creator', () => {
     })
   })
 
-  it('creates no actions when 0 pages left', () => {
-    const store = mockStore({
+  it('calls api to fetch tracks data page 1 by default', () => (
+    // $FlowFixMe
+    store.dispatch(actions.fetchTracks()).then(() => {
+      expect(fetchSpy).toHaveBeenCalledWith(1)
+    })
+  ))
+
+  it('calls api to fetch tracks data page based on pagesLoaded', () => {
+    store = mockStore({
       tracks: {
         isFetching: false,
-        items: [],
+        byId: {},
+        pagesRequested: 0,
+        pagesLoaded: 3,
+        pagesLeft: 1,
+      },
+    })
+
+    // $FlowFixMe
+    return store.dispatch(actions.fetchTracks()).then(() => {
+      expect(fetchSpy).toHaveBeenCalledWith(4)
+    })
+  })
+
+  it('calls api to fetch tracks data', () => (
+    // $FlowFixMe
+    store.dispatch(actions.fetchTracks()).then(() => {
+      expect(fetchSpy).toHaveBeenCalledWith(1)
+    })
+  ))
+
+  it('creates no actions when 0 pages left', () => {
+    store = mockStore({
+      tracks: {
+        isFetching: false,
+        byId: {},
         pagesRequested: 0,
         pagesLoaded: 0,
         pagesLeft: 0,
@@ -89,10 +126,10 @@ describe('fetch tracks action creator', () => {
   })
 
   it('creates no actions when is currently fetching', () => {
-    const store = mockStore({
+    store = mockStore({
       tracks: {
         isFetching: true,
-        items: [],
+        byId: {},
         pagesRequested: 0,
         pagesLoaded: 0,
         pagesLeft: 3,
