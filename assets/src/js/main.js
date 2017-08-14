@@ -7,7 +7,7 @@ import { render } from 'react-dom'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import rootReducer from './reducers'
 import App from './components/App'
-import { fetchTracks } from './actions/TracksActions'
+import { fetchTracks } from './actions/tracks'
 // $FlowFixMe
 import '../styles/main.scss'
 

@@ -1,6 +1,6 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import * as actions from './TracksActions'
+import * as actions from './tracks'
 import * as api from '../utils/api'
 import { trackFactory } from '../test/factories'
 
