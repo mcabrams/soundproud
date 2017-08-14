@@ -11,4 +11,3 @@ describe('set active track id action creator', () => {
     })
   })
 })
-

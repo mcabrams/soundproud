@@ -3,6 +3,7 @@ import { trackFactory } from '../test/factories'
 
 const initialState = {
   isFetching: false,
+  allIds: [],
   byId: {},
   pagesRequested: 0,
   pagesLeft: null,
@@ -22,6 +23,7 @@ describe('tracks reducer', () => {
     })).toEqual({
       isFetching: true,
       byId: {},
+      allIds: [],
       pagesRequested: 1,
       pagesLeft: null,
       pagesLoaded: 0,
@@ -33,6 +35,7 @@ describe('tracks reducer', () => {
       const state = {
         isFetching: true,
         byId: {},
+        allIds: [],
         pagesRequested: 1,
         pagesLeft: 5,
         pagesLoaded: 0,
@@ -51,6 +54,7 @@ describe('tracks reducer', () => {
           [receivedTracks[0].id]: receivedTracks[0],
           [receivedTracks[1].id]: receivedTracks[1],
         },
+        allIds: [receivedTracks[0].id, receivedTracks[1].id],
         pagesRequested: 1,
         pagesLeft: 5,
         pagesLoaded: 1,
@@ -62,6 +66,7 @@ describe('tracks reducer', () => {
 
       const state = {
         isFetching: false,
+        allIds: [existingTrack.id],
         byId: {
           [existingTrack.id]: existingTrack,
         },
@@ -84,6 +89,7 @@ describe('tracks reducer', () => {
           [receivedTracks[0].id]: receivedTracks[0],
           [receivedTracks[1].id]: receivedTracks[1],
         },
+        allIds: [existingTrack.id, receivedTracks[0].id, receivedTracks[1].id],
         pagesRequested: 1,
         pagesLeft: 5,
         pagesLoaded: 1,
@@ -98,6 +104,7 @@ describe('tracks reducer', () => {
       byId: {
         [existingTrack.id]: existingTrack,
       },
+      allIds: [existingTrack.id],
       pagesRequested: 1,
       pagesLeft: 5,
       pagesLoaded: 0,
@@ -111,6 +118,7 @@ describe('tracks reducer', () => {
       byId: {
         [existingTrack.id]: { ...existingTrack, archived: true },
       },
+      allIds: [existingTrack.id],
       pagesRequested: 1,
       pagesLeft: 5,
       pagesLoaded: 0,
@@ -124,6 +132,7 @@ describe('tracks reducer', () => {
       byId: {
         [archivedTrack.id]: archivedTrack,
       },
+      allIds: [archivedTrack.id],
       pagesRequested: 1,
       pagesLeft: 5,
       pagesLoaded: 0,
@@ -137,6 +146,7 @@ describe('tracks reducer', () => {
       byId: {
         [archivedTrack.id]: { ...archivedTrack, archived: false },
       },
+      allIds: [archivedTrack.id],
       pagesRequested: 1,
       pagesLeft: 5,
       pagesLoaded: 0,

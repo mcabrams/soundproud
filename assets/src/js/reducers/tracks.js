@@ -8,6 +8,7 @@ type StateById = {
 }
 
 const initialState = {
+  allIds: [],
   byId: initialStateById,
   isFetching: false,
   pagesLeft: null,
@@ -16,6 +17,7 @@ const initialState = {
 }
 
 export type State = {
+  +allIds: Array<number>,
   +byId: StateById,
   +isFetching: boolean,
   +pagesLeft: ?number,
@@ -75,6 +77,7 @@ export default function tracks(state: State = initialState, action: Action) {
         ...state,
         isFetching: false,
         byId: byId(state.byId, action),
+        allIds: state.allIds.concat(action.tracks.map(track => track.id)),
         pagesLeft: action.pagesLeft,
         pagesLoaded: action.pagesLoaded,
       }
