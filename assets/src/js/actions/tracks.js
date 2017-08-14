@@ -65,10 +65,3 @@ export function archiveTrack(trackId: number) {
       ))
   }
 }
-
-export function setActiveTrackId(trackId: number) {
-  return {
-    type: 'ACTIVE_TRACK_CHANGE',
-    trackId,
-  }
-}
