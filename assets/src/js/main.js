@@ -12,12 +12,10 @@ import { fetchTracks } from './actions/tracks'
 import '../styles/main.scss'
 
 
-/* eslint-disable no-underscore-dangle */
 const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(thunkMiddleware)),
 )
-/* eslint-enable */
 
 store.dispatch(fetchTracks())
 
