@@ -1,5 +1,6 @@
 import type { TrackAlias } from '../typechecking/aliases'
 import type {
+  ActiveTrackChange,
   ArchiveTrackRequestAction,
   ArchiveTrackFailureAction,
 } from '../reducers/tracks'
@@ -16,4 +17,5 @@ export type Action =
     }
   | ArchiveTrackRequestAction
   | ArchiveTrackFailureAction
+  | ActiveTrackChange
   | { type: 'SET_VISIBILITY_FILTER', filter: string }
