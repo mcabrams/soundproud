@@ -7,7 +7,6 @@ const initialState = {
   pagesRequested: 0,
   pagesLeft: null,
   pagesLoaded: 0,
-  activeTrackId: null,
 }
 
 describe('tracks reducer', () => {
@@ -26,11 +25,10 @@ describe('tracks reducer', () => {
       pagesRequested: 1,
       pagesLeft: null,
       pagesLoaded: 0,
-      activeTrackId: null,
     })
   })
 
-  describe('should hanlde TRACKS_RECEIVAL', () => {
+  describe('should handle TRACKS_RECEIVAL', () => {
     it('when no tracks present', () => {
       const state = {
         isFetching: true,
@@ -38,7 +36,6 @@ describe('tracks reducer', () => {
         pagesRequested: 1,
         pagesLeft: 5,
         pagesLoaded: 0,
-        activeTrackId: null,
       }
 
       const receivedTracks = [trackFactory(), trackFactory()]
@@ -57,7 +54,6 @@ describe('tracks reducer', () => {
         pagesRequested: 1,
         pagesLeft: 5,
         pagesLoaded: 1,
-        activeTrackId: null,
       })
     })
 
@@ -72,7 +68,6 @@ describe('tracks reducer', () => {
         pagesRequested: 1,
         pagesLeft: 5,
         pagesLoaded: 0,
-        activeTrackId: null,
       }
 
       const receivedTracks = [trackFactory(), trackFactory()]
@@ -92,7 +87,6 @@ describe('tracks reducer', () => {
         pagesRequested: 1,
         pagesLeft: 5,
         pagesLoaded: 1,
-        activeTrackId: null,
       })
     })
   })
@@ -107,7 +101,6 @@ describe('tracks reducer', () => {
       pagesRequested: 1,
       pagesLeft: 5,
       pagesLoaded: 0,
-      activeTrackId: null,
     }
 
     expect(reducer(state, {
@@ -121,7 +114,6 @@ describe('tracks reducer', () => {
       pagesRequested: 1,
       pagesLeft: 5,
       pagesLoaded: 0,
-      activeTrackId: null,
     })
   })
 
@@ -135,7 +127,6 @@ describe('tracks reducer', () => {
       pagesRequested: 1,
       pagesLeft: 5,
       pagesLoaded: 0,
-      activeTrackId: null,
     }
 
     expect(reducer(state, {
@@ -149,35 +140,6 @@ describe('tracks reducer', () => {
       pagesRequested: 1,
       pagesLeft: 5,
       pagesLoaded: 0,
-      activeTrackId: null,
-    })
-  })
-
-  it('should handle ACTIVE_TRACK_CHANGE', () => {
-    const track = trackFactory()
-    const state = {
-      isFetching: false,
-      pagesRequested: 0,
-      pagesLeft: null,
-      pagesLoaded: 0,
-      activeTrackId: null,
-      byId: {
-        [track.id]: track,
-      },
-    }
-
-    expect(reducer(state, {
-      type: 'ACTIVE_TRACK_CHANGE',
-      trackId: track.id,
-    })).toEqual({
-      isFetching: false,
-      byId: {
-        [track.id]: track,
-      },
-      pagesRequested: 0,
-      pagesLeft: null,
-      pagesLoaded: 0,
-      activeTrackId: track.id,
     })
   })
 })

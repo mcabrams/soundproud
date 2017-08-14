@@ -8,7 +8,6 @@ type StateById = {
 }
 
 const initialState = {
-  activeTrackId: null,
   byId: initialStateById,
   isFetching: false,
   pagesLeft: null,
@@ -17,7 +16,6 @@ const initialState = {
 }
 
 export type State = {
-  +activeTrackId: ?number,
   +byId: StateById,
   +isFetching: boolean,
   +pagesLeft: ?number,
@@ -32,11 +30,6 @@ export type ArchiveTrackRequestAction = {
 
 export type ArchiveTrackFailureAction = {
   type: 'ARCHIVE_TRACK_FAILURE',
-  trackId: number,
-}
-
-export type ActiveTrackChange = {
-  type: 'ACTIVE_TRACK_CHANGE',
   trackId: number,
 }
 
@@ -100,11 +93,6 @@ export default function tracks(state: State = initialState, action: Action) {
       return {
         ...state,
         byId: byId(state.byId, action),
-      }
-    case 'ACTIVE_TRACK_CHANGE':
-      return {
-        ...state,
-        activeTrackId: action.trackId,
       }
     default:
       return state

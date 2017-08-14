@@ -1,6 +1,5 @@
 import type { TrackAlias } from '../typechecking/aliases'
 import type {
-  ActiveTrackChange,
   ArchiveTrackRequestAction,
   ArchiveTrackFailureAction,
 } from '../reducers/tracks'
@@ -17,6 +16,9 @@ export type Action =
     }
   | ArchiveTrackRequestAction
   | ArchiveTrackFailureAction
-  | ActiveTrackChange
+  | {
+      type: 'ACTIVE_TRACK_CHANGE',
+      trackId: number,
+    }
   | { type: 'TOGGLE_PLAYING' }
   | { type: 'SET_VISIBILITY_FILTER', filter: string }
