@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux'
-// import player from './player'
+import player from './player'
 import tracks from './tracks'
 import visibilityFilter from './visibilityFilter'
 
 
 const reducers = {
   tracks,
-  // player,
+  player,
   visibilityFilter,
 }
 

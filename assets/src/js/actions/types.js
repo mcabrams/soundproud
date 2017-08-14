@@ -18,4 +18,5 @@ export type Action =
   | ArchiveTrackRequestAction
   | ArchiveTrackFailureAction
   | ActiveTrackChange
+  | { type: 'TOGGLE_PLAYING' }
   | { type: 'SET_VISIBILITY_FILTER', filter: string }

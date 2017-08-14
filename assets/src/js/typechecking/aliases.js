@@ -4,6 +4,7 @@ import type {
 } from 'redux'
 
 import type { Action } from '../actions/types'
+import type { Reducers } from '../reducers'
 
 export type TrackAlias = {
   created_at: Date,
@@ -16,8 +17,6 @@ export type TrackAlias = {
   username: string,
   archived: boolean,
 }
-
-import type { Reducers } from '../reducers'
 
 type $ExtractFunctionReturn = <V>(v: (...args: any) => V) => V
 export type State = $ObjMap<Reducers, $ExtractFunctionReturn>
