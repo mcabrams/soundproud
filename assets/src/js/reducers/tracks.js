@@ -104,7 +104,7 @@ export default function tracks(state: State = initialState, action: Action) {
     case 'ACTIVE_TRACK_CHANGE':
       return {
         ...state,
-        activeTrackId: action.trackId
+        activeTrackId: action.trackId,
       }
     default:
       return state
