@@ -16,9 +16,11 @@ export type Action =
     }
   | ArchiveTrackRequestAction
   | ArchiveTrackFailureAction
-  | {
-      type: 'ACTIVE_TRACK_CHANGE',
+  | { type: 'ACTIVE_TRACK_CHANGE',
       trackId: number,
     }
   | { type: 'TOGGLE_PLAYING' }
+  | { type: 'SET_PLAYING',
+      playing: boolean,
+    }
   | { type: 'SET_VISIBILITY_FILTER', filter: string }

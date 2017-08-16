@@ -17,6 +17,11 @@ export default function player(state: State = initialState, action: Action) {
         ...state,
         isPlaying: !state.isPlaying,
       }
+    case 'SET_PLAYING':
+      return {
+        ...state,
+        isPlaying: action.playing,
+      }
     case 'ACTIVE_TRACK_CHANGE':
       return {
         ...state,

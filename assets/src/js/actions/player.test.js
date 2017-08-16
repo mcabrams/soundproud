@@ -11,3 +11,29 @@ describe('set active track id action creator', () => {
     })
   })
 })
+
+describe('toggle playing action creator', () => {
+  it('should return proper action', () => {
+    expect(actions.togglePlaying()).toEqual({
+      type: 'TOGGLE_PLAYING',
+    })
+  })
+})
+
+describe('set playing action creator', () => {
+  it('should return proper action', () => {
+    expect(actions.setPlaying()).toEqual({
+      type: 'SET_PLAYING',
+      playing: true,
+    })
+  })
+})
+
+describe('set paused action creator', () => {
+  it('should return proper action', () => {
+    expect(actions.setPaused()).toEqual({
+      type: 'SET_PLAYING',
+      playing: false,
+    })
+  })
+})
