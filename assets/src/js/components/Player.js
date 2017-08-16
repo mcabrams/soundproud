@@ -3,26 +3,29 @@ import PausePlayButton from './PausePlayButton'
 import TrackByline from './TrackByline'
 import BareIconButton from './BareIconButton'
 import ArchiveTrackButton from './ArchiveTrackButton'
+import { nextTrackId, previousTrackId } from '../reducers/player'
 import type { TrackAlias } from '../typechecking/aliases'
+
+export type PlayerPropsType ={
+  archiveTrack: (TrackAlias) => void,
+  activeTrack: ?TrackAlias,
+  isPlaying: boolean,
+  play: () => void,
+  pause: () => void,
+  setActiveTrackId: (number) => void,
+  trackIds: Array<number>,
+}
 
 export default class Player extends React.Component {
   audio: ?HTMLAudioElement
-  props: {
-    archiveTrack: (TrackAlias) => void,
-    activeTrack: ?TrackAlias,
-    isPaused: boolean,
-    play: () => void,
-    pause: () => void,
-    playNextTrack: () => void,
-    playPreviousTrack: () => void,
-  }
+  props: PlayerPropsType
 
   componentDidUpdate() {
     if (!this.audio) {
       return
     }
 
-    if (this.props.isPaused) {
+    if (!this.props.isPlaying) {
       this.audio.pause()
       return
     }
@@ -36,6 +39,26 @@ export default class Player extends React.Component {
     }
 
     this.props.archiveTrack(this.props.activeTrack)
+  }
+
+  playNextTrack = () => {
+    const activeTrackId = (this.props.activeTrack
+      ? this.props.activeTrack.id : null)
+    const id = nextTrackId(activeTrackId, this.props.trackIds)
+
+    if (id) {
+      this.props.setActiveTrackId(id)
+    }
+  }
+
+  playPreviousTrack = () => {
+    const activeTrackId = (this.props.activeTrack
+      ? this.props.activeTrack.id : null)
+    const id = previousTrackId(activeTrackId, this.props.trackIds)
+
+    if (id != null) {
+      this.props.setActiveTrackId(id)
+    }
   }
 
   render() {
@@ -58,14 +81,14 @@ export default class Player extends React.Component {
           <div className="player__button">
             <BareIconButton
               isLarge
-              clickHandler={this.props.playPreviousTrack}
+              clickHandler={this.playPreviousTrack}
               iconName="skip-previous"
             />
           </div>
           <div className="player__button">
             <PausePlayButton
               isLarge
-              showPauseButton={!this.props.isPaused}
+              showPauseButton={this.props.isPlaying}
               play={this.props.play}
               pause={this.props.pause}
             />
@@ -73,7 +96,7 @@ export default class Player extends React.Component {
           <div className="player__button">
             <BareIconButton
               isLarge
-              clickHandler={this.props.playNextTrack}
+              clickHandler={this.playNextTrack}
               iconName="skip-next"
             />
           </div>
@@ -87,7 +110,7 @@ export default class Player extends React.Component {
         <audio
           ref={(audio) => { this.audio = audio }}
           src={streamUrl}
-          onEnded={this.props.playNextTrack}
+          onEnded={this.playNextTrack}
         />
       </div>
     )

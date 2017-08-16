@@ -2,7 +2,9 @@ import React from 'react'
 import BareIconButton from './BareIconButton'
 
 export default function PausePlayButton(props: {
-  showPauseButton: boolean, pause: () => void, play: () => void,
+  showPauseButton: boolean,
+  play: () => void,
+  pause: () => void,
   isLarge?: boolean,
 }) {
   if (props.showPauseButton) {

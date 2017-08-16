@@ -1,47 +1,15 @@
 import React from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
-import Track from './Track'
 import type { TrackAlias } from '../typechecking/aliases'
+import StreamTrackContainer from '../containers/StreamTrackContainer'
 
-function StreamTrack(props: {
-  activeTrack: ?TrackAlias,
-  archiveTrack: (TrackAlias) => void,
-  isPaused: boolean,
-  pause: () => void,
-  playTrack: (TrackAlias) => void,
-  track: TrackAlias,
-}) {
-  const isActive = !!(props.activeTrack &&
-                      props.track.id === props.activeTrack.id)
-  const showPauseButton: boolean = !!(isActive && !props.isPaused)
-
-  return (
-    <div
-      className="stream__track"
-      key={props.track.gateway_id}
-    >
-      <Track
-        archiveTrack={props.archiveTrack}
-        isActive={isActive}
-        pause={props.pause}
-        playTrack={props.playTrack}
-        showPauseButton={showPauseButton}
-        track={props.track}
-      />
-    </div>
-  )
+export type StreamPropsType = {
+  hasMore: boolean,
+  loadMore: () => void,
+  tracks: Array<TrackAlias>,
 }
 
-export default function Stream(props: {
-  activeTrack: ?TrackAlias,
-  archiveTrack: (TrackAlias) => void,
-  hasMore: boolean,
-  isPaused: boolean,
-  loadMore: () => void,
-  pause: () => void,
-  playTrack: (TrackAlias) => void,
-  tracks: Array<TrackAlias>,
-}) {
+export default function Stream(props: StreamPropsType) {
   return (
     <div className="stream">
       <InfiniteScroll
@@ -53,12 +21,8 @@ export default function Stream(props: {
       >
         <ul className="stream__tracks">
           {props.tracks.map(track => (
-            <StreamTrack
-              activeTrack={props.activeTrack}
-              archiveTrack={props.archiveTrack}
-              isPaused={props.isPaused}
-              pause={props.pause}
-              playTrack={props.playTrack}
+            <StreamTrackContainer
+              key={track.id}
               track={track}
             />
           ))}

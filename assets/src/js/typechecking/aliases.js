@@ -29,4 +29,8 @@ export type Dispatch =
   & ReduxDispatch<Action>
   & Thunk<Action>
 
-export type Thunk<A> = ((Dispatch, GetState) => Promise<void> | void) => A
+export type Thunk<A> = ((Dispatch, GetState) => Promise<*> | void) => A
+
+// export type Dispatch = (action: Action | ThunkAction | PromiseAction | Array<Action>) => any;
+// export type ThunkAction = (dispatch: Dispatch, getState: GetState) => any;
+// export type PromiseAction = Promise<Action>;
