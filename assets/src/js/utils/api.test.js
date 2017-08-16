@@ -31,7 +31,7 @@ describe('fetchTracksData', () => {
 
   it('should get expected tracks', () => {
     nock(host)
-      .get('/tracks/?page=1&archived=false')
+      .get('/tracks/?page=1')
       .reply(200, responseObject())
 
     return api.fetchTracksData().then((response) => {
@@ -41,7 +41,7 @@ describe('fetchTracksData', () => {
 
   it('should get specific page if passed', () => {
     const call = nock(host)
-      .get('/tracks/?page=5&archived=false')
+      .get('/tracks/?page=5')
       .reply(200, responseObject())
 
     return api.fetchTracksData(5).then(() => {
@@ -79,7 +79,7 @@ describe('fetchTracksData', () => {
     ))
 
     nock(host)
-      .get('/tracks/?page=1&archived=false')
+      .get('/tracks/?page=1')
       .reply(200, responseObject(tracks))
 
     return api.fetchTracksData().then((response) => {

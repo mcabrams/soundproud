@@ -26,7 +26,7 @@ export function archiveTrackWithId(id: number) {
 }
 
 export function fetchTracksData(page: number = 1) {
-  return axios.get(`/tracks/?page=${page}&archived=false`)
+  return axios.get(`/tracks/?page=${page}`)
     .then(response => ({
       tracks: responseToTracks(response),
       pagesLeft: pagesLeft(page, response.data.count),
