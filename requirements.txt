@@ -6,6 +6,7 @@ django-filter==1.0.4
 djangorestframework==3.6.3
 factory_boy==2.8.1
 isort
+mypy
 psycopg2==2.7.1
 selenium==2.53.6
 soundcloud
