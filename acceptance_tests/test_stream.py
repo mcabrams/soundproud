@@ -1,5 +1,11 @@
+from enum import Enum, auto
 from base import FunctionalTestCase
 import time
+
+
+class ArchiveTrackEntry(Enum):
+    STREAM_TRACK = auto()
+    PLAYER = auto()
 
 
 class TriggerTestCase(FunctionalTestCase):
@@ -43,32 +49,11 @@ class TriggerTestCase(FunctionalTestCase):
     def test_tracks_sorted_by_date_created_descending(self):
         self.skipTest('TODO')
 
-    def test_archives_tracks_via_stream(self):
-        self.driver.get(self.url('/stream/'))
-        page = StreamPage(self.driver)
-        track = page.tracks[0]
-
-        track.archive_button.click()
-        # TODO: Better fix here for implicit wait
-        time.sleep(1)
-        self.assertFalse(page.is_track_with_id_present(track.id))
-
-        self.driver.refresh()
-        self.assertFalse(page.is_track_with_id_present(track.id))
-
     def test_archives_tracks_via_player(self):
-        self.driver.get(self.url('/stream/'))
-        page = StreamPage(self.driver)
-        track = page.tracks[0]
+        self._test_archives_tracks_via(ArchiveTrackEntry.PLAYER)
 
-        track.play_button.click()
-        page.player.archive_button.click()
-        # TODO: Better fix here for implicit wait
-        time.sleep(1)
-        self.assertFalse(page.is_track_with_id_present(track.id))
-
-        self.driver.refresh()
-        self.assertFalse(page.is_track_with_id_present(track.id))
+    def test_archives_tracks_via_stream_track(self):
+        self._test_archives_tracks_via(ArchiveTrackEntry.STREAM_TRACK)
 
     def test_archiving_track_plays_next_track(self):
         self.skipTest('TODO')
@@ -81,6 +66,46 @@ class TriggerTestCase(FunctionalTestCase):
 
         self.driver.refresh()
         self.assertTrue(page.is_track_with_id_present(track.id))
+
+    def test_filtering_stream_shows_correct_tracks(self):
+        self.driver.get(self.url('/stream/'))
+        page = StreamPage(self.driver)
+        archived_track = page.tracks[0]
+        unarchived_track = page.tracks[1]
+        archived_track.archive_button.click()
+
+        time.sleep(1)
+
+        self.assertTrue(page.is_track_with_id_present(unarchived_track.id))
+        self.assertFalse(page.is_track_with_id_present(archived_track.id))
+
+        page.archived_filter.click()
+        self.assertFalse(page.is_track_with_id_present(unarchived_track.id))
+        self.assertTrue(page.is_track_with_id_present(archived_track.id))
+
+        page.unarchived_filter.click()
+        self.assertTrue(page.is_track_with_id_present(unarchived_track.id))
+        self.assertFalse(page.is_track_with_id_present(archived_track.id))
+
+    def _test_archives_tracks_via(self, entrypoint: ArchiveTrackEntry):
+        self.driver.get(self.url('/stream/'))
+        page = StreamPage(self.driver)
+        track = page.tracks[0]
+        track.play_button.click()
+
+        if entrypoint is ArchiveTrackEntry.STREAM_TRACK:
+            track.archive_button.click()
+        elif entrypoint is ArchiveTrackEntry.PLAYER:
+            page.player.archive_button.click()
+        else:
+            raise TypeError('Must use an ArchiveTrackEntry for entrypoint')
+
+        # TODO: Better fix here for implicit wait
+        time.sleep(1)
+        self.assertFalse(page.is_track_with_id_present(track.id))
+
+        self.driver.refresh()
+        self.assertFalse(page.is_track_with_id_present(track.id))
 
 
 class Page:
@@ -106,6 +131,14 @@ class StreamPage(Page):
     @property
     def player(self):
         return Player(self.driver.find_element_by_class_name('player'))
+
+    @property
+    def archived_filter(self):
+        return self.driver.find_element_by_link_text('Archived')
+
+    @property
+    def unarchived_filter(self):
+        return self.driver.find_element_by_link_text('Unarchived')
 
 
 class Element:
@@ -144,8 +177,10 @@ class Track(Element):
 
     @property
     def play_button(self):
-        return self.element.find_element_by_class_name('track__button--pause-play')
+        return self.element.find_element_by_class_name(
+            'track__button--pause-play')
 
     @property
     def archive_button(self):
-        return self.element.find_element_by_class_name('track__button--archive')
+        return self.element.find_element_by_class_name(
+            'track__button--archive')

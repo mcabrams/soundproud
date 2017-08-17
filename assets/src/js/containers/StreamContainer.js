@@ -3,35 +3,16 @@ import type { Connector } from 'react-redux'
 import Stream from '../components/Stream'
 import type { StreamPropsType } from '../components/Stream'
 import { fetchTracks } from '../actions/tracks'
+import type { TrackAlias } from '../typechecking/aliases'
 
-type OwnProps = { filter?: string }
+type OwnProps = { tracks: Array<TrackAlias> }
 
-function filterTracks(tracks, filter) {
-  switch (filter) {
-    case 'all':
-      return tracks
-    case 'archived':
-      return tracks.filter(track => track.archived)
-    case 'unarchived':
-      return tracks.filter(track => !track.archived)
-    default:
-      return tracks.filter(track => !track.archived)
-  }
-}
-
-const mapStateToProps = (state, ownProps: OwnProps) => {
-  const { tracks: { allIds, byId, pagesLeft } } = state
-
-  const tracks = allIds.reduce(
-    (accumulator, id) => [...accumulator, byId[id]],
-    [],
-  )
-
-  const filtered = filterTracks(tracks, ownProps.filter)
+const mapStateToProps = (state, { tracks }: OwnProps) => {
+  const { tracks: { pagesLeft } } = state
 
   return {
     hasMore: pagesLeft > 0,
-    tracks: filtered,
+    tracks,
   }
 }
 

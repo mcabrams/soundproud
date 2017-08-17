@@ -1,9 +1,8 @@
 import React from 'react'
 import Header from './Header'
-import PlayerContainer from '../containers/PlayerContainer'
-import StreamContainer from '../containers/StreamContainer'
+import TracksProviderContainer from '../containers/TracksProviderContainer'
 
-type Props = {
+export type Props = {
   match: Object,
 }
 
@@ -11,12 +10,7 @@ export default function Root({ match }: Props) {
   return (
     <div className="grid">
       <Header />
-      <StreamContainer
-        filter={match.params.filter}
-      />
-      <div className="grid__player">
-        <PlayerContainer />
-      </div>
+      <TracksProviderContainer filter={match.params.filter} />
     </div>
   )
 }

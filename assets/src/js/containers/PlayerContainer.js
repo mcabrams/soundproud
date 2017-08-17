@@ -6,6 +6,7 @@ import { setActiveTrackId, setPlaying, setPaused } from '../actions/player'
 import type { PlayerPropsType } from '../components/Player'
 import type { TrackAlias } from '../typechecking/aliases'
 
+type OwnProps = { tracks: Array<TrackAlias> }
 
 const mapStateToProps = (state) => {
   const { player: { isPlaying, activeTrackId } } = state
@@ -32,7 +33,7 @@ const mapDispatchToProps = (dispatch: *) => {
   }
 }
 
-const connector: Connector<{}, PlayerPropsType> = connect(
+const connector: Connector<OwnProps, PlayerPropsType> = connect(
   mapStateToProps,
   mapDispatchToProps,
 )
