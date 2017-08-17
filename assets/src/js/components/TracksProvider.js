@@ -9,10 +9,16 @@ export type Props = {
 
 export default function TracksProvider(props: Props) {
   return [
-    <StreamContainer tracks={props.tracks} />,
+    <StreamContainer
+      tracks={props.tracks}
+      key="streamcontainer"
+    />,
     (
       <div className="grid__player">
-        <PlayerContainer tracks={props.tracks} />
+        <PlayerContainer
+          tracks={props.tracks}
+          key="playercontainer"
+        />
       </div>
     ),
   ]
