@@ -6,7 +6,7 @@ import { applyMiddleware, createStore } from 'redux'
 import { render } from 'react-dom'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import rootReducer from './reducers'
-import App from './components/App'
+import Root from './components/Root'
 import { fetchTracks } from './actions/tracks'
 // $FlowFixMe
 import '../styles/main.scss'
@@ -21,7 +21,7 @@ store.dispatch(fetchTracks())
 
 render(
   <Provider store={store}>
-    <App />
+    <Root />
   </Provider>,
   document.getElementById('app'),
 )

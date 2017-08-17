@@ -11,17 +11,18 @@ type OwnProps = {
   track: TrackAlias,
 }
 
-const mapStateToProps = (state, ownProps: OwnProps) => {
+const mapStateToProps = (state, { track }: OwnProps) => {
   const { player: { isPlaying, activeTrackId } } = state
   const { tracks: { byId } } = state
   const activeTrack = byId[activeTrackId]
 
-  const isActive = !!(activeTrack && ownProps.track.id === activeTrack.id)
+  const isActive = !!(activeTrack && track.id === activeTrack.id)
   const showPauseButton: boolean = !!(isActive && isPlaying)
 
   return {
     isActive,
     showPauseButton,
+    track,
   }
 }
 

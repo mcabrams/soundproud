@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import StreamFilterLink from './StreamFilterLink'
 
 export default function Header() {
   return (
@@ -8,18 +8,27 @@ export default function Header() {
         Soundproud
       </h1>
       <nav className="header__nav">
-        <Link
-          className="header__nav-link"
-          to="/stream/new"
-        >
-          Stream
-        </Link>
-        <Link
-          className="header__nav-link"
-          to="/stream/archive"
-        >
-          Archived
-        </Link>
+        <div className="header__nav-link">
+          <StreamFilterLink
+            filter="all"
+          >
+            All
+          </StreamFilterLink>
+        </div>
+        <div className="header__nav-link">
+          <StreamFilterLink
+            filter="unarchived"
+          >
+            Unarchived
+          </StreamFilterLink>
+        </div>
+        <div className="header__nav-link">
+          <StreamFilterLink
+            filter="archived"
+          >
+            Archived
+          </StreamFilterLink>
+        </div>
       </nav>
     </header>
   )

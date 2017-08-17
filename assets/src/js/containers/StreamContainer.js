@@ -4,8 +4,22 @@ import Stream from '../components/Stream'
 import type { StreamPropsType } from '../components/Stream'
 import { fetchTracks } from '../actions/tracks'
 
+type OwnProps = { filter?: string }
 
-const mapStateToProps = (state) => {
+function filterTracks(tracks, filter) {
+  switch (filter) {
+    case 'all':
+      return tracks
+    case 'archived':
+      return tracks.filter(track => track.archived)
+    case 'unarchived':
+      return tracks.filter(track => !track.archived)
+    default:
+      return tracks.filter(track => !track.archived)
+  }
+}
+
+const mapStateToProps = (state, ownProps: OwnProps) => {
   const { tracks: { allIds, byId, pagesLeft } } = state
 
   const tracks = allIds.reduce(
@@ -13,9 +27,11 @@ const mapStateToProps = (state) => {
     [],
   )
 
+  const filtered = filterTracks(tracks, ownProps.filter)
+
   return {
     hasMore: pagesLeft > 0,
-    tracks,
+    tracks: filtered,
   }
 }
 
@@ -23,7 +39,7 @@ const mapDispatchToProps = (dispatch: *) => ({
   loadMore: () => dispatch(fetchTracks()),
 })
 
-const connector: Connector<{}, StreamPropsType> = connect(
+const connector: Connector<OwnProps, StreamPropsType> = connect(
   mapStateToProps,
   mapDispatchToProps,
 )
