@@ -8,12 +8,12 @@ export type Props = {
 }
 
 export default function TracksProvider(props: Props) {
-  return (
-    <div>
-      <StreamContainer tracks={props.tracks} />
+  return [
+    <StreamContainer tracks={props.tracks} />,
+    (
       <div className="grid__player">
         <PlayerContainer tracks={props.tracks} />
       </div>
-    </div>
-  )
+    ),
+  ]
 }
