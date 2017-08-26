@@ -32,6 +32,30 @@ Then open localhost:8082/stream
 ```
 
 
+## Deploying to production
+
+`docker-compose -f docker-compose.yml -f docker-compose.production.yml build`
+`docker-compose -f docker-compose.yml -f docker-compose.production.yml up -d`
+`docker-compose exec web bash`
+
+Then run in the container
+
+```
+./manage.py migrate
+./manage.py persist_new_tracks
+```
+
+Set up cron job for persist new tracks
+
+```
+crontab -e
+```
+
+Then add and save:
+```
+*/5 * * * * ./manage.py persist_new_tracks
+```
+
 ## Tests
 
 Javascript (in assets container):

@@ -1,0 +1,9 @@
+version: '3'
+
+volumes:
+  nodemodules:
+
+services:
+  web:
+    ports:
+      - "80:8000"
