@@ -11,6 +11,7 @@ module.exports = {
   rules: {
     semi: ['error', 'never'],
     'react/jsx-filename-extension': [1, { extensions: ['.js'] }],
+    'react/require-default-props': 0, // Not really a concern since we have typechecking in place
     'jsx-a11y/media-has-caption': 0,
     'react/jsx-closing-bracket-location': 1,
     'flowtype/no-types-missing-file-annotation': 0,

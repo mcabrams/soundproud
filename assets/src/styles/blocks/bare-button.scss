@@ -4,24 +4,23 @@
   border: 0;
   padding: 0;
   cursor: pointer;
-}
-
-.bare-button__icon {
-  width: 25px;
-  height: 25px;
-}
-
-.bare-button__icon--large {
-  width: 50px;
-  height: 50px;
-}
-
-.bare-button--play {
-}
-
-.bare-button--pause {
+  display: block;
 }
 
 .bare-button--archive {
   fill: $grey-color;
+}
+
+.bare-button--content {
+  display: block;
+}
+
+.bare-button__svg-icon--bright {
+  fill: $light-color;
+}
+
+.bare-button__svg-icon {
+  &:hover {
+    fill: $red-color;
+  }
 }

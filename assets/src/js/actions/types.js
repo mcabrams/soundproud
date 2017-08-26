@@ -2,6 +2,8 @@ import type { TrackAlias } from '../typechecking/aliases'
 import type {
   ArchiveTrackRequestAction,
   ArchiveTrackFailureAction,
+  IncrementListenCountRequestAction,
+  IncrementListenCountFailureAction,
 } from '../reducers/tracks'
 
 export type Action =
@@ -16,6 +18,8 @@ export type Action =
     }
   | ArchiveTrackRequestAction
   | ArchiveTrackFailureAction
+  | IncrementListenCountRequestAction
+  | IncrementListenCountFailureAction
   | { type: 'ACTIVE_TRACK_CHANGE',
       trackId: number,
     }

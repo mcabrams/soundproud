@@ -25,6 +25,13 @@ export function archiveTrackWithId(id: number) {
   })
 }
 
+export function createListenForTrackWithId(id: number) {
+  return axios.post('/listens/', {
+    track: id,
+  })
+}
+
+
 export function fetchTracksData(page: number = 1) {
   return axios.get(`/tracks/?page=${page}`)
     .then(response => ({

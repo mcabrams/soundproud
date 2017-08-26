@@ -1,12 +1,6 @@
 from django.db import models
 
-
-class Base(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
+from soundproud.models import Base
 
 
 class Track(Base):
@@ -17,3 +11,7 @@ class Track(Base):
     artwork_url = models.URLField(blank=True, max_length=512)
     username = models.CharField(blank=False, max_length=512)
     archived = models.BooleanField(default=False)
+
+    @property
+    def listen_count(self):
+        return self.listen_set.count()

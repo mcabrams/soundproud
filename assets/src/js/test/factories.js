@@ -1,26 +1,29 @@
 import faker from 'faker'
 
 type TrackFactoryOptions = {|
-  createdAt?: Date,
-  updatedAt?: Date,
   archived?: boolean,
+  createdAt?: Date,
+  listenCount?: number,
+  updatedAt?: Date,
 |}
 
 export function trackFactory({
-  createdAt,
-  updatedAt,
   archived,
-  }: TrackFactoryOptions = {}) {
+  createdAt,
+  listenCount,
+  updatedAt,
+}: TrackFactoryOptions = {}) {
   return {
-    created_at: createdAt || faker.date.past(),
-    updated_at: updatedAt || faker.date.past(),
+    archived: archived || false,
     artwork_url: faker.internet.url(),
+    created_at: createdAt || faker.date.past(),
     gateway_id: faker.random.number(),
     id: faker.random.number(),
+    listen_count: listenCount != null ? listenCount : faker.random.number(),
     stream_url: faker.internet.url(),
     title: faker.lorem.sentence(),
+    updated_at: updatedAt || faker.date.past(),
     username: faker.internet.userName(),
-    archived: archived || false,
   }
 }
 
@@ -32,16 +35,17 @@ type ApiTrackFactoryOptions = {|
 export function apiTrackFactory({
   createdAt,
   updatedAt,
-  }: ApiTrackFactoryOptions = {}) {
+}: ApiTrackFactoryOptions = {}) {
   return {
-    created_at: createdAt || faker.date.past().toISOString(),
-    updated_at: updatedAt || faker.date.past().toISOString(),
+    archived: false,
     artwork_url: faker.internet.url(),
+    created_at: createdAt || faker.date.past().toISOString(),
     gateway_id: faker.random.number(),
     id: faker.random.number(),
+    listen_count: faker.random.number(),
     stream_url: faker.internet.url(),
     title: faker.lorem.sentence(),
+    updated_at: updatedAt || faker.date.past().toISOString(),
     username: faker.internet.userName(),
-    archived: false,
   }
 }

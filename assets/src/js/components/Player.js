@@ -2,7 +2,6 @@ import React from 'react'
 import PausePlayButton from './PausePlayButton'
 import TrackByline from './TrackByline'
 import BareIconButton from './BareIconButton'
-import ArchiveTrackButton from './ArchiveTrackButton'
 import { nextTrackId, previousTrackId } from '../reducers/player'
 import type { TrackAlias } from '../typechecking/aliases'
 
@@ -102,9 +101,10 @@ export default class Player extends React.Component {
           </div>
         </div>
         <div className="player__archive-button">
-          <ArchiveTrackButton
+          <BareIconButton
             isLarge
-            archive={this.archiveCurrentlyPlayingTrack}
+            clickHandler={this.archiveCurrentlyPlayingTrack}
+            iconName="archive"
           />
         </div>
         <audio

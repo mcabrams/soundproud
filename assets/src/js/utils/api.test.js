@@ -21,6 +21,23 @@ describe('archiveTrackWithId', () => {
   })
 })
 
+describe('createListenForTrackWithId', () => {
+  const trackId = 42
+
+  it('should send post request to correct uri', () => {
+    const trackListenCall = nock(host)
+      .post('/listens/', {
+        track: trackId,
+      })
+      .reply(200, 'foo')
+
+    return api.createListenForTrackWithId(trackId).then(() => {
+      expect(trackListenCall.isDone()).toBeTruthy()
+    })
+  })
+})
+
+
 describe('fetchTracksData', () => {
   function responseObject(results = [], count = 1) {
     return {

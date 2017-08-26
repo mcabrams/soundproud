@@ -7,15 +7,16 @@ import type { Action } from '../actions/types'
 import type { Reducers } from '../reducers'
 
 export type TrackAlias = {
-  created_at: Date,
-  updated_at: Date,
+  archived: boolean,
   artwork_url: string,
+  created_at: Date,
   gateway_id: number,
   id: number,
+  listen_count: number,
   stream_url: string,
   title: string,
+  updated_at: Date,
   username: string,
-  archived: boolean,
 }
 
 type $ExtractFunctionReturn = <V>(v: (...args: any) => V) => V

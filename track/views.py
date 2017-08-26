@@ -3,6 +3,6 @@ from track.serializers import TrackSerializer
 from rest_framework import generics
 
 
-class TrackDetail(generics.UpdateAPIView):
+class TrackUpdate(generics.UpdateAPIView):
     serializer_class = TrackSerializer
     queryset = Track.objects.all()

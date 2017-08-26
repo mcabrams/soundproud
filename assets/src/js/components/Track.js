@@ -1,17 +1,23 @@
 import React from 'react'
 import PausePlayButton from './PausePlayButton'
+import BareIconButton from './BareIconButton'
 import TrackByline from './TrackByline'
-import ArchiveTrackButton from './ArchiveTrackButton'
 import type { TrackAlias } from '../typechecking/aliases'
 
-function TrackButton(props: {
-  track: TrackAlias, archiveTrack: (TrackAlias) => void, }) {
-  const archive = () => props.archiveTrack(props.track)
+type TrackButtonProps = {
+  archiveTrack: (TrackAlias) => void,
+  track: TrackAlias,
+}
+
+function ArchiveTrackButton({ archiveTrack, track }: TrackButtonProps) {
+  const archive = () => archiveTrack(track)
 
   return (
     <div className="track__button track__button--archive">
-      <ArchiveTrackButton
-        archive={archive}
+      <BareIconButton
+        isBright
+        clickHandler={archive}
+        iconName="archive"
       />
     </div>
   )
@@ -30,25 +36,31 @@ export default function Track(props: {
       className={`track ${additionalClasses}`}
       data-id={track.id}
     >
-      <div
-        className="track__button track__button--pause-play"
-      >
-        <PausePlayButton
-          showPauseButton={props.showPauseButton}
-          play={playTrack}
-          pause={props.pause}
-        />
-      </div>
-      <div className="track__byline">
-        <TrackByline
+      <div className="track__main-content">
+        <div
+          className="track__button track__button--pause-play"
+        >
+          <PausePlayButton
+            showPauseButton={props.showPauseButton}
+            play={playTrack}
+            pause={props.pause}
+          />
+        </div>
+        <div className="track__byline">
+          <TrackByline
+            track={track}
+          />
+        </div>
+        <ArchiveTrackButton
           track={track}
+          archiveTrack={props.archiveTrack}
         />
       </div>
-      <TrackButton
-        classModifier="archive"
-        track={track}
-        archiveTrack={props.archiveTrack}
-      />
+      <div className="track__actions-and-info">
+        <span className="track__listen-count">
+          {track.listen_count} {track.listen_count === 1 ? 'play' : 'plays' }
+        </span>
+      </div>
     </li>
   )
 }

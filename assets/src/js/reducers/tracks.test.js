@@ -152,4 +152,88 @@ describe('tracks reducer', () => {
       pagesLoaded: 0,
     })
   })
+
+  it('should handle INCREMENT_LISTEN_COUNT_REQUEST', () => {
+    const track = trackFactory({ listenCount: 0 })
+    const state = {
+      isFetching: false,
+      byId: {
+        [track.id]: track,
+      },
+      allIds: [track.id],
+      pagesRequested: 1,
+      pagesLeft: 5,
+      pagesLoaded: 0,
+    }
+
+    expect(reducer(state, {
+      type: 'INCREMENT_LISTEN_COUNT_REQUEST',
+      trackId: track.id,
+    })).toEqual({
+      isFetching: false,
+      byId: {
+        [track.id]: { ...track, listen_count: 1 },
+      },
+      allIds: [track.id],
+      pagesRequested: 1,
+      pagesLeft: 5,
+      pagesLoaded: 0,
+    })
+  })
+
+  it('should handle INCREMENT_LISTEN_COUNT_FAILURE', () => {
+    const track = trackFactory({ listenCount: 1 })
+    const state = {
+      isFetching: false,
+      byId: {
+        [track.id]: track,
+      },
+      allIds: [track.id],
+      pagesRequested: 1,
+      pagesLeft: 5,
+      pagesLoaded: 0,
+    }
+
+    expect(reducer(state, {
+      type: 'INCREMENT_LISTEN_COUNT_FAILURE',
+      trackId: track.id,
+    })).toEqual({
+      isFetching: false,
+      byId: {
+        [track.id]: { ...track, listen_count: 0 },
+      },
+      allIds: [track.id],
+      pagesRequested: 1,
+      pagesLeft: 5,
+      pagesLoaded: 0,
+    })
+  })
+
+  it('should handle INCREMENT_LISTEN_COUNT_FAILURE when 0', () => {
+    const track = trackFactory({ listenCount: 0 })
+    const state = {
+      isFetching: false,
+      byId: {
+        [track.id]: track,
+      },
+      allIds: [track.id],
+      pagesRequested: 1,
+      pagesLeft: 5,
+      pagesLoaded: 0,
+    }
+
+    expect(reducer(state, {
+      type: 'INCREMENT_LISTEN_COUNT_FAILURE',
+      trackId: track.id,
+    })).toEqual({
+      isFetching: false,
+      byId: {
+        [track.id]: { ...track, listen_count: 0 },
+      },
+      allIds: [track.id],
+      pagesRequested: 1,
+      pagesLeft: 5,
+      pagesLoaded: 0,
+    })
+  })
 })

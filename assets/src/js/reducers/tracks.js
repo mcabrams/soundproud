@@ -51,6 +51,36 @@ function setTrackArchived(
   }
 }
 
+export type IncrementListenCountRequestAction = {
+  type: 'INCREMENT_LISTEN_COUNT_REQUEST',
+  trackId: number,
+}
+
+export type IncrementListenCountFailureAction = {
+  type: 'INCREMENT_LISTEN_COUNT_FAILURE',
+  trackId: number,
+}
+
+function adjustTrackCount(
+  state: StateById,
+  action: IncrementListenCountRequestAction
+    | IncrementListenCountFailureAction,
+  adjustment: number,
+) {
+  const track = state[action.trackId]
+  const currentListenCount = track.listen_count
+  let newListenCount = currentListenCount + adjustment
+  newListenCount = newListenCount < 0 ? 0 : newListenCount
+
+  return {
+    ...state,
+    [action.trackId]: {
+      ...track,
+      listen_count: newListenCount,
+    },
+  }
+}
+
 function byId(state: StateById = initialStateById, action: Action) {
   switch (action.type) {
     case 'TRACKS_RECEIVAL':
@@ -65,6 +95,10 @@ function byId(state: StateById = initialStateById, action: Action) {
       return setTrackArchived(state, action, true)
     case 'ARCHIVE_TRACK_FAILURE':
       return setTrackArchived(state, action, false)
+    case 'INCREMENT_LISTEN_COUNT_REQUEST':
+      return adjustTrackCount(state, action, 1)
+    case 'INCREMENT_LISTEN_COUNT_FAILURE':
+      return adjustTrackCount(state, action, -1)
     default:
       return state
   }
@@ -93,6 +127,16 @@ export default function tracks(state: State = initialState, action: Action) {
         byId: byId(state.byId, action),
       }
     case 'ARCHIVE_TRACK_FAILURE':
+      return {
+        ...state,
+        byId: byId(state.byId, action),
+      }
+    case 'INCREMENT_LISTEN_COUNT_REQUEST':
+      return {
+        ...state,
+        byId: byId(state.byId, action),
+      }
+    case 'INCREMENT_LISTEN_COUNT_FAILURE':
       return {
         ...state,
         byId: byId(state.byId, action),

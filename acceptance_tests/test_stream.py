@@ -18,9 +18,11 @@ class TriggerTestCase(FunctionalTestCase):
         self.assertGreater(len(page.tracks), 0)
 
         first_track = page.tracks[0]
+        self.assertEqual(first_track.listen_count.text, '0 plays')
         first_track.play_button.click()
         first_audio_source = page.audio.source
         self.assertTrue(page.audio.source_is_prefixed_properly)
+        self.assertEqual(first_track.listen_count.text, '1 play')
         # TODO: Test that song plays
 
         next_track = page.tracks[1]
@@ -184,3 +186,8 @@ class Track(Element):
     def archive_button(self):
         return self.element.find_element_by_class_name(
             'track__button--archive')
+
+    @property
+    def listen_count(self):
+        return self.element.find_element_by_class_name(
+            'track__listen-count')

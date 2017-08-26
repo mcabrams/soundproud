@@ -42,10 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Apps
+    'listen',
     'stream',
     'track',
-    'rest_framework',
+    # Plugins
     'django_filters',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

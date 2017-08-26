@@ -1,7 +1,28 @@
+import * as api from '../utils/api'
+import type { Dispatch, GetState } from '../typechecking/aliases'
+
 export function setActiveTrackId(trackId: number) {
-  return {
-    type: 'ACTIVE_TRACK_CHANGE',
-    trackId,
+  return (dispatch: Dispatch, getState: GetState) => {
+    if (getState().player.activeTrackId === trackId) {
+      return Promise.resolve()
+    }
+
+    dispatch({
+      type: 'ACTIVE_TRACK_CHANGE',
+      trackId,
+    })
+
+    dispatch({
+      type: 'INCREMENT_LISTEN_COUNT_REQUEST',
+      trackId,
+    })
+
+    return api.createListenForTrackWithId(trackId)
+      .catch(() => (
+        dispatch({
+          type: 'INCREMENT_LISTEN_COUNT_FAILURE', trackId,
+        })
+      ))
   }
 }
 
