@@ -28,8 +28,8 @@ describe('filteredTracksSelector', () => {
       .toEqual([unarchivedTrack])
   })
 
-  it('should default to unarchived tracks', () => {
-    expect(filteredTracksSelector(state, 'adfslkj'))
+  it('should filter unarchived tracks if unknown filter', () => {
+    expect(filteredTracksSelector(state, 'afdsljk'))
       .toEqual([unarchivedTrack])
   })
 })

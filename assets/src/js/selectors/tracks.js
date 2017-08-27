@@ -1,26 +1,39 @@
 import { createSelector } from 'reselect'
+import type { TrackAlias } from '../typechecking/aliases'
 
-const getTracks = (state, filter) => {
-  const { tracks: { allIds, byId } } = state
+const getAllIds = state => state.tracks.allIds
+const getTracksById = state => state.tracks.byId
+const getFilter = (state, filter) => filter
 
-  const tracks = allIds.reduce(
-    (accumulator, id) => [...accumulator, byId[id]],
-    [],
-  )
-
-  switch (filter) {
-    case 'all':
-      return tracks
-    case 'archived':
-      return tracks.filter(track => track.archived)
-    case 'unarchived':
-      return tracks.filter(track => !track.archived)
-    default:
-      return tracks.filter(track => !track.archived)
+type TracksState = {
+  tracks: {
+    byId: {
+      [number]: TrackAlias,
+    },
+    allIds: Array<number>
   }
 }
+type FilteredTracksSelector = (TracksState, ?string) => Array<TrackAlias>
 
-export const filteredTracksSelector = createSelector(
-  getTracks,
-  tracks => tracks,
+export const filteredTracksSelector: FilteredTracksSelector = createSelector(
+  getAllIds,
+  getTracksById,
+  getFilter,
+  (allIds, tracksById, filter) => {
+    const tracks = allIds.reduce(
+      (accumulator, id) => [...accumulator, tracksById[id]],
+      [],
+    )
+
+    switch (filter) {
+      case 'all':
+        return tracks
+      case 'archived':
+        return tracks.filter(track => track.archived)
+      case 'unarchived':
+        return tracks.filter(track => !track.archived)
+      default:
+        return tracks.filter(track => !track.archived)
+    }
+  },
 )
