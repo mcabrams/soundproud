@@ -3,16 +3,16 @@ import type { Connector } from 'react-redux'
 import Stream from '../components/Stream'
 import type { StreamPropsType } from '../components/Stream'
 import { fetchTracks } from '../actions/tracks'
-import type { TrackAlias } from '../typechecking/aliases'
+import { filteredTracksSelector } from '../selectors/tracks'
 
-type OwnProps = { tracks: Array<TrackAlias> }
+type OwnProps = { filter: ?string }
 
-const mapStateToProps = (state, { tracks }: OwnProps) => {
+const mapStateToProps = (state, { filter }: OwnProps) => {
   const { tracks: { pagesLeft } } = state
 
   return {
     hasMore: pagesLeft > 0,
-    tracks,
+    tracks: filteredTracksSelector(state, filter),
   }
 }
 
