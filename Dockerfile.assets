@@ -1,6 +1,6 @@
 FROM node:6.11
 WORKDIR /django
-COPY package.json /django/
+COPY package.json yarn.lock /django/
 # Add node modules to path
 ENV PATH $PATH:/django/node_modules/.bin
-RUN npm install
+RUN yarn install
