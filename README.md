@@ -35,7 +35,6 @@ Then open localhost:8082/stream
 ## Deploying to production
 
 Ssh into ec2 instance
-add HOST to `web.env`
 
 `docker-compose -f docker-compose.yml -f docker-compose.production.yml build`
 `docker-compose -f docker-compose.yml -f docker-compose.production.yml up -d`
@@ -44,6 +43,7 @@ add HOST to `web.env`
 Then run in the container
 
 ```
+./manage.py collectstatic
 ./manage.py migrate
 ./manage.py persist_new_tracks
 ```
