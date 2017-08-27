@@ -27,7 +27,7 @@ SECRET_KEY = env.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = not env.PROD
 
-ALLOWED_HOSTS = ['.ngrok.io']
+ALLOWED_HOSTS = [env.HOST]
 
 if DEBUG:
     ALLOWED_HOSTS += ['localhost']
@@ -134,8 +134,29 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/static'
 
 STATICFILES_DIRS = [
     #  os.path.join(BASE_DIR, "static"),
     os.path.join(BASE_DIR, "../assets/dist"),
 ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+        'logfile': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR + "/../logfile",
+        },
+    },
+    'root': {
+        'level': 'INFO',
+        'handlers': ['console', 'logfile']
+    },
+}

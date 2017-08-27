@@ -1,6 +1,7 @@
 from .utility import env_get_or_warn
 
 DOMAIN = env_get_or_warn('DOMAIN')
+HOST = env_get_or_warn('HOST')
 POSTGRESQL_PASSWORD = env_get_or_warn('POSTGRESQL_PASSWORD')
 PROD = env_get_or_warn('PROD')
 PROTOCOL = env_get_or_warn('PROTOCOL')
