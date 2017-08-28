@@ -15,6 +15,7 @@ class FunctionalTestCase(StaticLiveServerTestCase):
         cls.driver = webdriver.WebDriver(
             command_executor='http://selenium:4444/wd/hub',
             desired_capabilities=DesiredCapabilities.CHROME)
+        cls.driver.implicitly_wait(0.3)
         super().setUpClass()
 
     @classmethod

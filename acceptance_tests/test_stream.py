@@ -1,6 +1,7 @@
 from enum import Enum, auto
 from base import FunctionalTestCase
 import time
+import random
 
 
 class ArchiveTrackEntry(Enum):
@@ -11,30 +12,41 @@ class ArchiveTrackEntry(Enum):
 class TriggerTestCase(FunctionalTestCase):
     fixtures = ('track',)
 
-    def test_playing_tracks(self):
+    def setUp(self):
         self.driver.get(self.url('/stream/'))
-        page = StreamPage(self.driver)
+        self.page = StreamPage(self.driver)
 
-        self.assertGreater(len(page.tracks), 0)
+    def test_playing_tracks(self):
+        self.assertGreater(len(self.page.tracks), 0)
 
-        first_track = page.tracks[0]
+        first_track = self.page.tracks[0]
         self.assertEqual(first_track.listen_count.text, '0 plays')
-        first_track.play_button.click()
-        first_audio_source = page.audio.source
-        self.assertTrue(page.audio.source_is_prefixed_properly)
+        first_track.play_or_pause_button.click()
+        first_audio_source = self.page.audio.source
         self.assertEqual(first_track.listen_count.text, '1 play')
-        # TODO: Test that song plays
 
-        next_track = page.tracks[1]
-        next_track.play_button.click()
-        second_audio_source = page.audio.source
+        next_track = self.page.tracks[1]
+        next_track.play_or_pause_button.click()
+        second_audio_source = self.page.audio.source
         self.assertNotEqual(first_audio_source, second_audio_source)
-        self.assertTrue(page.audio.source_is_prefixed_properly)
 
-        page.player.play_next_button.click()
-        third_audio_source = page.audio.source
+        self.page.player.play_next_button.click()
+        third_audio_source = self.page.audio.source
         self.assertNotEqual(second_audio_source, third_audio_source)
-        self.assertTrue(page.audio.source_is_prefixed_properly)
+
+    def test_pausing_tracks(self):
+        track = random.choice(self.page.tracks)
+
+        self.assertFalse(self.page.audio_is_playing)
+
+        track.play_or_pause_button.click()
+
+        self.assertTrue(self.page.audio.source_is_prefixed_properly)
+        self.assertTrue(self.page.audio_is_playing)
+
+        track.play_or_pause_button.click()
+
+        self.assertFalse(self.page.audio_is_playing)
 
     def test_no_tracks_present(self):
         self.skipTest('TODO')
@@ -61,53 +73,47 @@ class TriggerTestCase(FunctionalTestCase):
         self.skipTest('TODO')
 
     def test_track_is_displayed_between_refreshes(self):
-        self.driver.get(self.url('/stream/'))
-        page = StreamPage(self.driver)
-        track = page.tracks[0]
-        self.assertTrue(page.is_track_with_id_present(track.id))
+        track = self.page.tracks[0]
+        self.assertTrue(self.page.is_track_with_id_present(track.id))
 
         self.driver.refresh()
-        self.assertTrue(page.is_track_with_id_present(track.id))
+        self.assertTrue(self.page.is_track_with_id_present(track.id))
 
     def test_filtering_stream_shows_correct_tracks(self):
-        self.driver.get(self.url('/stream/'))
-        page = StreamPage(self.driver)
-        archived_track = page.tracks[0]
-        unarchived_track = page.tracks[1]
+        archived_track = self.page.tracks[0]
+        unarchived_track = self.page.tracks[1]
         archived_track.archive_button.click()
 
         time.sleep(1)
 
-        self.assertTrue(page.is_track_with_id_present(unarchived_track.id))
-        self.assertFalse(page.is_track_with_id_present(archived_track.id))
+        self.assertTrue(self.page.is_track_with_id_present(unarchived_track.id))
+        self.assertFalse(self.page.is_track_with_id_present(archived_track.id))
 
-        page.archived_filter.click()
-        self.assertFalse(page.is_track_with_id_present(unarchived_track.id))
-        self.assertTrue(page.is_track_with_id_present(archived_track.id))
+        self.page.archived_filter.click()
+        self.assertFalse(self.page.is_track_with_id_present(unarchived_track.id))
+        self.assertTrue(self.page.is_track_with_id_present(archived_track.id))
 
-        page.unarchived_filter.click()
-        self.assertTrue(page.is_track_with_id_present(unarchived_track.id))
-        self.assertFalse(page.is_track_with_id_present(archived_track.id))
+        self.page.unarchived_filter.click()
+        self.assertTrue(self.page.is_track_with_id_present(unarchived_track.id))
+        self.assertFalse(self.page.is_track_with_id_present(archived_track.id))
 
     def _test_archives_tracks_via(self, entrypoint: ArchiveTrackEntry):
-        self.driver.get(self.url('/stream/'))
-        page = StreamPage(self.driver)
-        track = page.tracks[0]
-        track.play_button.click()
+        track = self.page.tracks[0]
+        track.play_or_pause_button.click()
 
         if entrypoint is ArchiveTrackEntry.STREAM_TRACK:
             track.archive_button.click()
         elif entrypoint is ArchiveTrackEntry.PLAYER:
-            page.player.archive_button.click()
+            self.page.player.archive_button.click()
         else:
             raise TypeError('Must use an ArchiveTrackEntry for entrypoint')
 
         # TODO: Better fix here for implicit wait
         time.sleep(1)
-        self.assertFalse(page.is_track_with_id_present(track.id))
+        self.assertFalse(self.page.is_track_with_id_present(track.id))
 
         self.driver.refresh()
-        self.assertFalse(page.is_track_with_id_present(track.id))
+        self.assertFalse(self.page.is_track_with_id_present(track.id))
 
 
 class Page:
@@ -142,6 +148,13 @@ class StreamPage(Page):
     def unarchived_filter(self):
         return self.driver.find_element_by_link_text('Unarchived')
 
+    @property
+    def audio_is_playing(self):
+        if self.driver.find_elements_by_tag_name('audio'):
+            return self.audio.is_playing
+
+        return False
+
 
 class Element:
     def __init__(self, element):
@@ -170,6 +183,11 @@ class Audio(Element):
     def source_is_prefixed_properly(self):
         return self.source.startswith(self.URL_PREFIX)
 
+    @property
+    def is_playing(self):
+        is_paused = self.element.get_attribute('paused')
+        return not is_paused
+
 
 class Track(Element):
     def __init__(self, *args, **kwargs):
@@ -178,7 +196,7 @@ class Track(Element):
         self.id = self.element.get_attribute('data-id')
 
     @property
-    def play_button(self):
+    def play_or_pause_button(self):
         return self.element.find_element_by_class_name(
             'track__button--pause-play')
 
