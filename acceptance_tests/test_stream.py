@@ -74,10 +74,10 @@ class TriggerTestCase(FunctionalTestCase):
 
     def test_track_is_displayed_between_refreshes(self):
         track = self.page.tracks[0]
-        self.assertTrue(self.page.is_track_with_id_present(track.id))
+        self.assertTrue(self.page.track_with_id_present(track.id))
 
         self.driver.refresh()
-        self.assertTrue(self.page.is_track_with_id_present(track.id))
+        self.assertTrue(self.page.track_with_id_present(track.id))
 
     def test_filtering_stream_shows_correct_tracks(self):
         archived_track = self.page.tracks[0]
@@ -86,16 +86,16 @@ class TriggerTestCase(FunctionalTestCase):
 
         time.sleep(1)
 
-        self.assertTrue(self.page.is_track_with_id_present(unarchived_track.id))
-        self.assertFalse(self.page.is_track_with_id_present(archived_track.id))
+        self.assertTrue(self.page.track_with_id_present(unarchived_track.id))
+        self.assertFalse(self.page.track_with_id_present(archived_track.id))
 
         self.page.archived_filter.click()
-        self.assertFalse(self.page.is_track_with_id_present(unarchived_track.id))
-        self.assertTrue(self.page.is_track_with_id_present(archived_track.id))
+        self.assertFalse(self.page.track_with_id_present(unarchived_track.id))
+        self.assertTrue(self.page.track_with_id_present(archived_track.id))
 
         self.page.unarchived_filter.click()
-        self.assertTrue(self.page.is_track_with_id_present(unarchived_track.id))
-        self.assertFalse(self.page.is_track_with_id_present(archived_track.id))
+        self.assertTrue(self.page.track_with_id_present(unarchived_track.id))
+        self.assertFalse(self.page.track_with_id_present(archived_track.id))
 
     def _test_archives_tracks_via(self, entrypoint: ArchiveTrackEntry):
         track = self.page.tracks[0]
@@ -110,10 +110,10 @@ class TriggerTestCase(FunctionalTestCase):
 
         # TODO: Better fix here for implicit wait
         time.sleep(1)
-        self.assertFalse(self.page.is_track_with_id_present(track.id))
+        self.assertFalse(self.page.track_with_id_present(track.id))
 
         self.driver.refresh()
-        self.assertFalse(self.page.is_track_with_id_present(track.id))
+        self.assertFalse(self.page.track_with_id_present(track.id))
 
 
 class Page:
@@ -122,7 +122,7 @@ class Page:
 
 
 class StreamPage(Page):
-    def is_track_with_id_present(self, track_id):
+    def track_with_id_present(self, track_id):
         selector = '[data-id="{}"]'.format(track_id)
         matches = self.driver.find_elements_by_css_selector(selector)
         return (len(matches) == 1)
