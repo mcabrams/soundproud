@@ -1,6 +1,5 @@
 from enum import Enum, auto
 from base import FunctionalTestCase
-import time
 import random
 
 
@@ -84,8 +83,6 @@ class TriggerTestCase(FunctionalTestCase):
         unarchived_track = self.page.tracks[1]
         archived_track.archive_button.click()
 
-        time.sleep(1)
-
         self.assertTrue(self.page.track_with_id_present(unarchived_track.id))
         self.assertFalse(self.page.track_with_id_present(archived_track.id))
 
@@ -108,8 +105,6 @@ class TriggerTestCase(FunctionalTestCase):
         else:
             raise TypeError('Must use an ArchiveTrackEntry for entrypoint')
 
-        # TODO: Better fix here for implicit wait
-        time.sleep(1)
         self.assertFalse(self.page.track_with_id_present(track.id))
 
         self.driver.refresh()
