@@ -2,10 +2,10 @@ import React from 'react'
 import PausePlayButton from './PausePlayButton'
 import TrackByline from './TrackByline'
 import BareIconButton from './BareIconButton'
-import { nextTrackId, previousTrackId } from '../reducers/player'
+import { nextTrackId, previousTrackId } from '../selectors/player'
 import type { TrackAlias } from '../typechecking/aliases'
 
-export type PlayerPropsType ={
+export type PlayerPropsType = {
   archiveTrack: (TrackAlias) => void,
   activeTrack: ?TrackAlias,
   isPlaying: boolean,
