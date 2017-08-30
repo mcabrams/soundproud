@@ -1,6 +1,9 @@
+from decimal import Decimal
 from enum import Enum, auto
 from base import FunctionalTestCase
+from selenium.webdriver.common.action_chains import ActionChains
 import random
+import time
 
 
 class ArchiveTrackEntry(Enum):
@@ -46,6 +49,17 @@ class TriggerTestCase(FunctionalTestCase):
         track.play_or_pause_button.click()
 
         self.assertFalse(self.page.audio_is_playing)
+
+    def test_seeking_track(self):
+        track = random.choice(self.page.tracks)
+        track.play_or_pause_button.click()
+        self.assertEqual(self.page.audio.current_time, 0)
+        self.assertEqual(self.page.audio_progress.percentage_complete, 0)
+        time.sleep(1)
+        total_time = self.page.audio.total_time
+        self.assertTrue(0 < self.page.audio.current_time < 2)
+        self.assertEqual(self.page.audio_progress.percentage_complete,
+                         (self.page.audio.current_time / total_time) * 100)
 
     def test_no_tracks_present(self):
         self.skipTest('TODO')
@@ -150,6 +164,11 @@ class StreamPage(Page):
 
         return False
 
+    @property
+    def audio_progress(self):
+        return AudioProgress(
+            self.driver.find_element_by_class_name('audio-progress'))
+
 
 class Element:
     def __init__(self, element):
@@ -182,6 +201,20 @@ class Audio(Element):
     def is_playing(self):
         is_paused = self.element.get_attribute('paused')
         return not is_paused
+
+    @property
+    def current_time(self):
+        return Decimal(self.element.get_attribute('currentTime'))
+
+    @property
+    def total_time(self):
+        return Decimal(self.element.get_attribute('duration'))
+
+
+class AudioProgress(Element):
+    @property
+    def percentage_complete(self):
+        return Decimal(self.element.get_attribute('value'))
 
 
 class Track(Element):
