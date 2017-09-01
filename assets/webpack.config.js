@@ -1,6 +1,7 @@
 const postCSSImport = require('postcss-import')
 const postCSSReporter = require('postcss-reporter')
 const stylelint = require('stylelint')
+const autoprefixer = require('autoprefixer')
 
 const path = require('path')
 
@@ -47,6 +48,7 @@ const config = {
                   plugins: [stylelint()],
                 }),
                 postCSSReporter({ clearReportedMessages: true }),
+                autoprefixer(),
               ],
               sourceMap: true,
             },
