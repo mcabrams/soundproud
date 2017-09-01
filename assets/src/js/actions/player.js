@@ -45,3 +45,11 @@ export function setPaused() {
     playing: false,
   }
 }
+
+export function setCurrentTime(currentTime: number, duration: number) {
+  return {
+    type: 'SET_CURRENT_TIME',
+    currentTime,
+    duration,
+  }
+}

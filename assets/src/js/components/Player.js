@@ -8,7 +8,11 @@ import type { TrackAlias } from '../typechecking/aliases'
 export type PlayerPropsType = {
   archiveTrack: (TrackAlias) => void,
   activeTrack: ?TrackAlias,
+  currentTime: number,
+  duration: number,
   isPlaying: boolean,
+  onTimeUpdate: (number, number) => void,
+  onProgress: (number, number) => void,
   play: () => void,
   pause: () => void,
   setActiveTrackId: (number) => void,
@@ -16,7 +20,7 @@ export type PlayerPropsType = {
 }
 
 export default class Player extends React.Component {
-  audio: ?HTMLAudioElement
+  audio: HTMLAudioElement
   props: PlayerPropsType
 
   componentDidUpdate() {
@@ -38,6 +42,14 @@ export default class Player extends React.Component {
     }
 
     this.props.archiveTrack(this.props.activeTrack)
+  }
+
+  onProgress = () => {
+    this.props.onProgress(this.audio.currentTime, this.audio.duration)
+  }
+
+  onTimeUpdate = () => {
+    this.props.onTimeUpdate(this.audio.currentTime, this.audio.duration)
   }
 
   playNextTrack = () => {
@@ -111,6 +123,12 @@ export default class Player extends React.Component {
           ref={(audio) => { this.audio = audio }}
           src={streamUrl}
           onEnded={this.playNextTrack}
+          onTimeUpdate={this.onTimeUpdate}
+          onProgress={this.onProgress}
+        />
+        <progress
+          className="audio-progress"
+          value={this.props.currentTime / this.props.duration}
         />
       </div>
     )

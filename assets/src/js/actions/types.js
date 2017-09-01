@@ -6,6 +6,13 @@ import type {
   IncrementListenCountFailureAction,
 } from '../reducers/tracks'
 
+import type {
+  ActiveTrackChangeAction,
+  TogglePlayingAction,
+  SetCurrentTimeAction,
+  SetPlayingAction,
+} from '../reducers/player'
+
 export type Action =
   | { type: '@@INIT' }
   | { type: 'TRACKS_REQUEST',
@@ -20,11 +27,8 @@ export type Action =
   | ArchiveTrackFailureAction
   | IncrementListenCountRequestAction
   | IncrementListenCountFailureAction
-  | { type: 'ACTIVE_TRACK_CHANGE',
-      trackId: number,
-    }
-  | { type: 'TOGGLE_PLAYING' }
-  | { type: 'SET_PLAYING',
-      playing: boolean,
-    }
+  | ActiveTrackChangeAction
+  | TogglePlayingAction
+  | SetCurrentTimeAction
+  | SetPlayingAction
   | { type: 'SET_VISIBILITY_FILTER', filter: string }

@@ -117,3 +117,13 @@ describe('set paused action creator', () => {
     })
   })
 })
+
+describe('set current time action creator', () => {
+  it('should return proper action', () => {
+    expect(actions.setCurrentTime(1, 2)).toEqual({
+      type: 'SET_CURRENT_TIME',
+      currentTime: 1,
+      duration: 2,
+    })
+  })
+})

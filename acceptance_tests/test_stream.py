@@ -50,7 +50,7 @@ class TriggerTestCase(FunctionalTestCase):
 
         self.assertFalse(self.page.audio_is_playing)
 
-    def test_seeking_track(self):
+    def test_track_progress(self):
         track = random.choice(self.page.tracks)
         track.play_or_pause_button.click()
         self.assertEqual(self.page.audio.current_time, 0)
@@ -58,8 +58,12 @@ class TriggerTestCase(FunctionalTestCase):
         time.sleep(1)
         total_time = self.page.audio.total_time
         self.assertTrue(0 < self.page.audio.current_time < 2)
-        self.assertEqual(self.page.audio_progress.percentage_complete,
-                         (self.page.audio.current_time / total_time) * 100)
+        self.assertTrue(self.page.audio_progress.percentage_complete > 0)
+        self.assertAlmostEqual(self.page.audio_progress.percentage_complete,
+                         (self.page.audio.current_time / total_time), 2)
+
+    def test_seeking_track(self):
+        self.skipTest('TODO')
 
     def test_no_tracks_present(self):
         self.skipTest('TODO')
