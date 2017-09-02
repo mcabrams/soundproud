@@ -1,7 +1,8 @@
 from decimal import Decimal
 from enum import Enum, auto
-from base import FunctionalTestCase
+from .base import FunctionalTestCase
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.by import By
 import random
 import time
 
@@ -11,7 +12,7 @@ class ArchiveTrackEntry(Enum):
     PLAYER = auto()
 
 
-class TriggerTestCase(FunctionalTestCase):
+class StreamTestCase(FunctionalTestCase):
     fixtures = ('track',)
 
     def setUp(self):
@@ -54,13 +55,41 @@ class TriggerTestCase(FunctionalTestCase):
         track = random.choice(self.page.tracks)
         track.play_or_pause_button.click()
         self.assertEqual(self.page.audio.current_time, 0)
+
         self.assertEqual(self.page.audio_progress.percentage_complete, 0)
+
         time.sleep(1)
+
         total_time = self.page.audio.total_time
-        self.assertTrue(0 < self.page.audio.current_time < 2)
+        self.assertTrue(1 < self.page.audio.current_time < 2,
+                        msg='Expected current time between 1 and 3; was '
+                            '{}'.format(self.page.audio.current_time))
+
         self.assertTrue(self.page.audio_progress.percentage_complete > 0)
-        self.assertAlmostEqual(self.page.audio_progress.percentage_complete,
-                         (self.page.audio.current_time / total_time), 2)
+
+        # Smoke test to check that progress is filling up
+        expected_percent = 100 * (self.page.audio.current_time / total_time)
+        self._assert_within_percentage_delta(
+            self.page.audio_progress.percentage_complete,
+            expected_percent, percentage=50)
+
+    def _assert_within_percentage_delta(self, first, second, percentage=5):
+        msg = ''
+        ratio = Decimal(percentage / 100)
+        high_end = first + first * ratio
+        low_end = first - first * ratio
+
+        is_expected_result = low_end < second < high_end
+
+        if not is_expected_result:
+            actual_ratio = second / first
+            actual_delta = abs(actual_ratio - 1)
+            actual_percentage_delta = actual_delta * 100
+            msg = ('Expected {} to be within {}% delta of {};'
+                   'Actual percentage delta was {}%'.format(
+                       second, percentage, first, actual_percentage_delta))
+
+        self.assertTrue(is_expected_result, msg=msg)
 
     def test_seeking_track(self):
         self.skipTest('TODO')
@@ -217,8 +246,43 @@ class Audio(Element):
 
 class AudioProgress(Element):
     @property
+    def progress_el(self):
+        return self.element.find_element_by_class_name(
+            'audio-progress__progress')
+
+    @property
+    def has_styles(self):
+        return element_has_attribute(self.progress_el, 'style')
+
+    @property
     def percentage_complete(self):
-        return Decimal(self.element.get_attribute('value'))
+        style = self.progress_el.get_attribute('style')
+
+        if style:
+            percent = style.replace('width: ', '').replace('%;', '')
+            return Decimal(percent)
+
+        elif self.progress_el.value_of_css_property('width') == '0px':
+            return 0
+        else:
+            raise AssertionError('Percentage complete was neither zero width'
+                                 ' nor had styles loaded.')
+
+
+class element_has_attribute(object):
+  """An expectation for checking that an element has a particular css class.
+
+  returns the WebElement once it has the particular attribute
+  """
+  def __init__(self, element, attribute):
+    self.element = element
+    self.attribute = attribute
+
+  def __call__(self, driver):
+    if self.element.get_attribute(self.attribute):
+        return self.element
+    else:
+        return False
 
 
 class Track(Element):

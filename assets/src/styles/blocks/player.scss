@@ -3,6 +3,15 @@
   background-color: $white-color;
   padding: $md-spacing;
   border-top: 2px solid $grey-color;
+  position: relative;
+}
+
+.player__audio-progress {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: -5px;
+  height: 5px;
 }
 
 .player__archive-button,

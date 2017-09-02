@@ -1,0 +1,23 @@
+$handle-diameter: 20px;
+
+.audio-progress {
+  position: relative;
+  background-color: $grey-color;
+}
+
+.audio-progress__progress {
+  width: 0;
+  background-color: $blue-color;
+  height: inherit;
+}
+
+.audio-progress__handle {
+  height: $handle-diameter;
+  width: $handle-diameter;
+  margin-left: -$handle-diameter / 2;
+  margin-top: -$handle-diameter / 2;
+  top: 50%;
+  position: absolute;
+  background-color: $blue-color;
+  border-radius: 100%;
+}

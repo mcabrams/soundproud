@@ -2,6 +2,7 @@ import React from 'react'
 import PausePlayButton from './PausePlayButton'
 import TrackByline from './TrackByline'
 import BareIconButton from './BareIconButton'
+import ProgressBar from './ProgressBar'
 import { nextTrackId, previousTrackId } from '../selectors/player'
 import type { TrackAlias } from '../typechecking/aliases'
 
@@ -126,9 +127,9 @@ export default class Player extends React.Component {
           onTimeUpdate={this.onTimeUpdate}
           onProgress={this.onProgress}
         />
-        <progress
-          className="audio-progress"
-          value={this.props.currentTime / this.props.duration}
+        <ProgressBar
+          percentComplete={100 * (this.props.currentTime / this.props.duration)}
+          extraClassNames="player__audio-progress"
         />
       </div>
     )

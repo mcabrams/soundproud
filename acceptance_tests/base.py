@@ -5,6 +5,7 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.remote import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 class FunctionalTestCase(StaticLiveServerTestCase):
@@ -16,6 +17,7 @@ class FunctionalTestCase(StaticLiveServerTestCase):
             command_executor='http://selenium:4444/wd/hub',
             desired_capabilities=DesiredCapabilities.CHROME)
         cls.driver.implicitly_wait(0.3)
+        cls.wait = WebDriverWait(cls.driver, 1)
         super().setUpClass()
 
     @classmethod
