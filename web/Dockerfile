@@ -11,3 +11,5 @@ ADD requirements.txt /django/
 
 # Install python dependencies
 RUN pip install -r /django/requirements.txt
+
+ADD . /django/

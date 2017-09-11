@@ -1,4 +1,4 @@
-import { filteredTracksSelector } from './tracks'
+import filteredTracksSelector from './tracks'
 import { trackFactory } from '../test/factories'
 
 describe('filteredTracksSelector', () => {

@@ -3,7 +3,7 @@ import type { Connector } from 'react-redux'
 import Stream from '../components/Stream'
 import type { StreamPropsType } from '../components/Stream'
 import { fetchTracks } from '../actions/tracks'
-import { filteredTracksSelector } from '../selectors/tracks'
+import filteredTracksSelector from '../selectors/tracks'
 
 type OwnProps = { filter: ?string }
 

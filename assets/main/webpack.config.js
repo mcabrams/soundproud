@@ -9,7 +9,7 @@ const config = {
   devtool: 'inline-source-map',
   entry: path.resolve(__dirname, 'src/js/main.js'),
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve('/dist'),
     filename: 'bundle.js',
   },
   module: {

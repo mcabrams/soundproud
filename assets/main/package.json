@@ -67,8 +67,8 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "webpack --config assets/webpack.config.js",
-    "watch": "webpack --watch --colors --progress --config assets/webpack.config.js",
+    "build": "webpack --config webpack.config.js",
+    "watch": "webpack --watch --colors --progress --config webpack.config.js",
     "flow": "flow"
   },
   "repository": {
@@ -77,7 +77,7 @@
   },
   "jest": {
     "coveragePathIgnorePatterns": [
-      "<rootDir>/assets/src/js/test/",
+      "<rootDir>/src/js/test/",
       "<rootDir>/node_modules/"
     ]
   },

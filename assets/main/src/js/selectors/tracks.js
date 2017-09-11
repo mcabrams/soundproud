@@ -15,7 +15,7 @@ type TracksState = {
 }
 type FilteredTracksSelector = (TracksState, ?string) => Array<TrackAlias>
 
-export const filteredTracksSelector: FilteredTracksSelector = createSelector(
+const filteredTracksSelector: FilteredTracksSelector = createSelector(
   getAllIds,
   getTracksById,
   getFilter,
@@ -37,3 +37,5 @@ export const filteredTracksSelector: FilteredTracksSelector = createSelector(
     }
   },
 )
+
+export default filteredTracksSelector
