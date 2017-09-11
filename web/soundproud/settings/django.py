@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import dj_database_url
 
 from . import env
 
@@ -86,14 +87,7 @@ WSGI_APPLICATION = 'soundproud.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': env.POSTGRESQL_PASSWORD,
-        'HOST': 'db',
-        'PORT': 5432,
-    }
+    'default': dj_database_url.parse(env.DATABASE_URL, conn_max_age=600),
 }
 
 
