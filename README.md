@@ -15,7 +15,7 @@ Then run in the container
 ```
 
 Then outside run
-`docker-compose exec assets bash`
+`docker-compose run assets bash`
 
 Then run in the container
 
