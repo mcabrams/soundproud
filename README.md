@@ -32,32 +32,73 @@ Then open localhost:8082/stream
 ```
 
 
-## Deploying to production
+## Testing production setup locally (without swarm)
 
-Ssh into ec2 instance
-
-`docker-compose -f docker-compose.yml -f docker-compose.production.yml build`
-`docker-compose -f docker-compose.yml -f docker-compose.production.yml up -d`
-`docker-compose exec web bash`
-
-Then run in the container
+Build and push images:
 
 ```
-./manage.py collectstatic
-./manage.py migrate
-./manage.py persist_new_tracks
+docker build -t ./web mcabrams/soundproud_web:x.y.z
+docker push mcabrams/soundproud_web:x.y.z
+docker build -t ./nginx mcabrams/soundproud_nginx:x.y.z
+docker push mcabrams/soundproud_nginx:x.y.z
+docker build -t ./nginx mcabrams/soundproud_assets:x.y.z
+docker push mcabrams/soundproud_assets:x.y.z
 ```
 
-Set up cron job for persist new tracks
+Update `docker-compose.production.yml` with correct images
+i.e.
 
 ```
-crontab -e
+  nginx:
+    image: mcabrams/soundproud_nginx:x.y.z
 ```
 
-Then add and save:
+Spin up instance of postgres container and expose a port
+
 ```
-*/5 * * * * ./manage.py persist_new_tracks
+docker run -d -p 5435:5432 postgres:9.3
 ```
+
+Edit `web.production.env` appropriately:
+
+```
+...
+DATABASE_URL=postgres://postgres:mysecretpassword@db:5435/postgres
+...
+```
+
+Then run
+
+```
+docker-compose -f docker-compose.production.yml up -d
+```
+
+and open `localhost` in browser.
+
+## Testing production setup locally (w/ swarm)
+
+Create a couple vms according to here: https://docs.docker.com/get-started/part4/#create-a-cluster
+
+Make a `web.production.env` file from `web.env.example`
+
+Then copy prod yml file and web.production.env
+
+`docker-machine scp docker-compose.production.yml myvm1:~`
+`docker-machine scp web.production.env myvm1:~`
+
+Then deploy
+`docker-machine ssh myvm1 "docker stack deploy -c docker-compose.production.yml soundproud"`
+
+It seems like right now you have to restart nginx manually, one way is to
+`docker-machine ssh myvm1`
+`docker service scale soundproud_nginx=0`
+`docker service scale soundproud_nginx=1`
+
+Then find ip of one of vms and open in browser.
+
+## Deploying (w/ swarm)
+
+TODO
 
 ## Tests
 

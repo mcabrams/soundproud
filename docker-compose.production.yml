@@ -1,23 +1,62 @@
 version: '3'
 
 volumes:
-  static:
+  assets:
 
 services:
   nginx:
-    image: nginx:1.13
+    image: mcabrams/soundproud_nginx:0.0.1
     ports:
       - "80:8001"
     volumes:
-      - ./config/nginx:/etc/nginx/conf.d
-      - static:/static
+      - assets:/static
     depends_on:
       - web
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "web:8000"]
+      interval: 10s
+      timeout: 3s
+      retries: 20
   web:
-    command: ["./wait-for.sh", "db:5432", "--", "gunicorn", "soundproud.wsgi", "-b", "0.0.0.0:8000"]
+    image: mcabrams/soundproud_web:0.0.1
+    command: ["gunicorn", "-c", "soundproud/gunicorn_config.py",
+              "soundproud.wsgi", "-b", "0.0.0.0:8000"]
+    env_file:
+      - web.production.env
     ports:
       - "8000"
-    volumes:
-      - static:/static
     environment:
       PROD: 1
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+  broker:
+    image: rabbitmq:3.6.11
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+  worker:
+    image: mcabrams/soundproud_web:0.0.1
+    command: celery -A soundproud worker --loglevel=info
+    depends_on:
+      - broker
+    env_file:
+      - web.production.env
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+  assets:
+    image: mcabrams/soundproud_assets:0.0.1
+    volumes:
+      - assets:/dist
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
