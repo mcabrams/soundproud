@@ -5,7 +5,7 @@ __pycache__/
 db.sqlite3
 
 # Docker environment variable file
-web.env
+*.env
 
 # Node packages
 node_modules/
