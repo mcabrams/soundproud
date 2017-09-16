@@ -8,14 +8,14 @@ services:
   db:
     ports:
       - "5434:5432"
-    image: postgres
+    image: postgres:9.3
   broker:
     image: rabbitmq:3.6.11
 
   worker:
     build:
       context: ./web
-    command: celery -A affirmative worker --loglevel=info
+    command: celery -A soundproud worker --loglevel=info
     depends_on:
       - broker
     env_file:
