@@ -23,8 +23,7 @@ services:
       retries: 20
   web:
     image: mcabrams/soundproud_web:0.0.1
-    command: ["gunicorn", "-c", "soundproud/gunicorn_config.py",
-              "soundproud.wsgi", "-b", "0.0.0.0:8000"]
+    command: ["./start.sh", "web-production"]
     env_file:
       - web.production.env
     ports:

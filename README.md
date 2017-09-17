@@ -56,14 +56,14 @@ i.e.
 Spin up instance of postgres container and expose a port
 
 ```
-docker run -d -p 5435:5432 postgres:9.3
+docker run -d -p 5435:5432 postgres:9.3 --network=soundcloud_default
 ```
 
 Edit `web.production.env` appropriately:
 
 ```
 ...
-DATABASE_URL=postgres://postgres:mysecretpassword@db:5435/postgres
+DATABASE_URL=postgres://postgres:mysecretpassword@db/postgres
 ...
 ```
 
@@ -80,6 +80,39 @@ and open `localhost` in browser.
 Create a couple vms according to here: https://docs.docker.com/get-started/part4/#create-a-cluster
 
 Make a `web.production.env` file from `web.env.example`
+
+Spin up instance of postgres container and expose a port
+
+```
+docker network create soundcloud_default
+docker run -d --network=soundcloud_default --name=db -p 5435:5432 postgres:9.3
+```
+
+Sssh into myvm1
+`docker-machine ssh myvm1`
+
+Find ip of host image (gateway value for destination of 0.0.0.0)
+```
+docker@myvm1:~$ netstat -rn
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+0.0.0.0         10.0.2.2        0.0.0.0         UG        0 0          0 eth0
+10.0.2.0        0.0.0.0         255.255.255.0   U         0 0          0 eth0
+127.0.0.1       0.0.0.0         255.255.255.255 UH        0 0          0 lo
+172.17.0.0      0.0.0.0         255.255.0.0     U         0 0          0 docker0
+172.18.0.0      0.0.0.0         255.255.0.0     U         0 0          0 docker_gwbridge
+192.168.99.0    0.0.0.0         255.255.255.0   U         0 0          0 eth1
+```
+
+In this example would be 10.0.2.2
+
+Edit `web.production.env` appropriately (don't forget to replace ip with actual):
+
+```
+...
+DATABASE_URL=postgres://postgres:mysecretpassword@10.0.2.2:5435/postgres
+...
+```
 
 Then copy prod yml file and web.production.env
 
