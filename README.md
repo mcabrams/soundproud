@@ -1,5 +1,7 @@
 # Soundproud
 
+A soundcloud web client with a django backend and react/redux frontend. Broken into 3 services: web, assets (front-end styles and javascript), and nginx.
+
 ## Getting started
 Copy and rename `web.env.example` to `web.env` with necessary
 secrets/configured environment variables.
